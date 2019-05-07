@@ -1,0 +1,119 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<link rel="stylesheet" href="/cockpit/css/intent.min.css">
+<link rel="stylesheet" href="/cockpit/css/table.min.css">
+
+<section>
+  <div class="row">
+    <div class="col-xs-12 text-right">
+      <button class="cockpit-bt success cp-intent-btn" ng-click="openFormIntent('create', {})">
+        <i class="fas fa-plus"></i> {{ 'INTENT.CREATE_NEW' | translate}}
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="table-responsive" ng-if="intents.length>0">
+        <table class="table">
+          <tr class="cp-table-header">
+            <th class="text-center col-xs-1">{{ 'INTENT.ID' | translate}}</th>
+            <th class="text-left col-xs-4">{{ 'INTENT.NAME' | translate}}</th>
+            <th class="text-left col-xs-5">{{ 'INTENT.DESCRIPTION' | translate}}</th>
+            <th class="col-xs-2"></th>
+          </tr>
+          <tr class="cp-table-body-row" ng-repeat="intent in intents">
+            <td class="text-center">{{intent.id}}</td>
+            <td class="text-left">{{intent.name}}</td>
+            <td class="text-left">{{intent.description}}</td>
+            <td class="text-right cp-table-body-icons">
+              <img src="./img/pencil.svg" ng-click="openFormIntent('edit', intent)">
+              <img src="./img/trash.svg" ng-click="deleteIntent(intent)">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="text-center" ng-if="intents.length==0">
+        <h3>{{ 'INTENT.EMPTY' | translate}}</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- modal CREATE / EDIT intent -->
+<div class="modal fade" id="intentModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{action=='edit'? 'Editar Intenção':'Nova Intenção'}}</h4>
+      </div>
+
+      <div class="modal-body modal-fields">
+        <div class="row">
+          <div class="modal-field modal-field-full col-xs-12">
+            <label class="modal-label" ng-class="{'show-modal-label':!selectedIntent.name}">
+              {{ 'SETTINGS-USER-NAME' | translate}}
+            </label>
+            <input type="text" maxlength="255" class="modal-input-text"
+              ng-class="{'empty':!selectedIntent.name,'error':selectedIntentError.name}"
+              placeholder="Nome"
+              ng-model="selectedIntent.name" />
+            <span class="input-error">{{selectedIntentError.name | translate}}&nbsp;</span>
+          </div>
+          <div class="modal-field modal-field-full col-xs-12">
+            <label class="modal-label" ng-class="{'show-modal-label':!selectedIntent.description}">
+              Descrição
+            </label>
+            <textarea rows="2" maxlength="255" class="modal-input-text"
+              ng-class="{'empty':!selectedIntent.description,'error':selectedIntentError.description}"
+              placeholder="Descrição"
+              ng-model="selectedIntent.description"></textarea>
+            <span class="input-error">{{selectedIntentError.description | translate}}&nbsp;</span>
+          </div>
+          <div class="modal-separator">{{'EXAMPLE' | translate}}</div>
+          <div class="modal-field modal-field-full col-xs-11">
+            <input type="text" maxlength="255" class="modal-input-text cp-input-withoutlabel"
+              placeholder="escreva o texto..."
+              ng-model="newExample.text" />
+            <span class="cp-intent-example-removeicon">
+              <button class="cockpit-bt cockpit-bt-slim warning" ng-click="createIntentExample()">
+                <i class="fas fa-plus"></i>
+              </button>
+            </span>
+          </div>
+          <div class="col-xs-12" ng-if="intentExamples && intentExamples.length>0">
+            <div class="table-responsive">
+              <table class="table table-slim">
+                <tbody>
+                  <tr ng-repeat="example in intentExamples">
+                    <td class="text-left">{{example.text}}</td>
+                    <td class="text-right cp-table-body-icons">
+                      <img src="./img/trash.svg" ng-click="deleteIntentExample(example)">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="cockpit-bt danger pull-left" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+        <button type="button" class="cockpit-bt success" ng-click="confirmEditIntent()"
+          ng-if="action=='edit' && selectedIntent.name">SALVAR</button>
+        <button type="button" class="cockpit-bt success" ng-click="confirmCreateIntent()"
+          ng-if="action=='create'">CRIAR</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- modal CREATE / EDIT intent - END -->

@@ -1,0 +1,488 @@
+/*
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved
+*/ 
+
+@import "default";
+
+@bgColor:#e6eeef;
+@opacity:0.4;
+
+body {
+    font-family: Raleway;
+	background-color: @bgColor;
+	overflow-x: hidden;
+	&.cc-open-project-list {
+		overflow: hidden;
+	}
+}
+
+.stg-new-user {
+	background: url('/cockpit/img/user-mngt.svg') no-repeat;
+	background-size: 25px;
+	padding-left: 40px;
+	height: 35px;
+	margin-top: 20px;
+}
+
+//BUTTONS
+.btn-password {
+	float: left;
+}
+
+.btn-large {
+	width: 185px;
+}
+
+//MAIN CONTENT
+.cc-main {
+	width: 100%;
+	min-height: 100vh;
+	padding-left: 75px;
+	transition: padding .4s ease;
+	&-leftbar {
+		position: absolute;
+		display: inline-block;
+		height: 100%;
+	}
+	&-wrap {
+		position: relative;
+	}
+	&.cc-main-content-retract {
+		padding-left: 185px;
+	}
+	&-content {
+		text-align: center;
+		padding-top: 50px;
+	}
+	&-smallloading {
+		width: 300px;
+	}
+}
+
+//campos de modal
+.modal-header {
+	border-bottom: 0;
+}
+.modal-footer {
+	border-top: 0;
+}
+
+.footer-modal-bot {
+	padding: 20px;
+    text-align: right;
+}
+
+.footer-dialog {
+	margin-top: 120px;
+}
+
+.footer-dialog-fs {
+	margin-top: 50px;
+}
+
+.footer-clever {
+	margin-top: 50px;
+}
+
+.footer-luis {
+	margin-top: 41px;
+}
+
+.footer-watson {
+	margin-top: 13px;
+}
+
+.footer-qna {
+	margin-top: 41px;
+}
+
+.modal-select {
+	background-color: @baseColor;
+	height: 32px;
+	width: 200px;
+	font-size: 14px;
+	color: white;
+	text-indent: 10px;
+	border:0;
+}
+.modal-separator {
+	margin-top: 20px;
+	font-weight:bold;
+	font-size: 14px;
+	color: #373737;
+}
+.modal-fields {
+	padding:0 50px;
+}
+.input-error {
+	font-size: 10px;
+	color: #CF2020;
+	font-weight: bold;
+	text-align: right;
+	margin-top:5px;
+	height:12px;
+	font-style: italic;
+	&.user-modal {
+	text-align: left;
+	}
+	&.character-validation {
+		text-align: left;
+	}
+}
+.show-modal-label{
+	visibility: hidden;
+}
+.modal-label {
+	color:#636363;
+	font-size: 12px;
+	display: block;
+	font-weight: 500;
+	margin-bottom: 0;
+}
+.modal-field {
+	padding-top: 10px;
+	display:inline-block;
+	vertical-align: top;
+	&-full {
+		.modal-input-text {
+		  width: 100%;
+		}
+	}
+	&-df {
+		padding-top: 101px;
+	}
+	&-bot {
+		padding-top: 0px;
+	}
+}
+.modal-open {
+	padding-right: 0 !important;
+}
+.modal-input-text {
+	border:0;
+	border-bottom: 1px solid #373737;
+	width: 245px;
+	font-weight: bold;
+	height:24px;
+	background-color: transparent;
+}
+
+.modal-input-text-project {
+	border:0;
+	border-bottom: 1px solid #373737;
+	width: 500px;
+	font-weight: bold;
+	height:1.5em;
+	background-color: transparent;
+}
+
+.modal-input-text.error {
+	border-bottom: 1px solid #CF2020;
+}
+.modal-input-text.empty{
+	font-weight: 500;
+	font-size: 1em;
+	font-weight: bold;
+}
+.modal-input-text.empty.icon{
+	font-weight: 500;
+    font-size: 1.3em;
+	padding-left: 1.2em;
+	padding-bottom: 0.3em;
+}
+
+
+//confirmacao de cancelamento
+.remove-text {
+	padding:0 50px;
+}
+.remove-modal-title {
+	background: url('/cockpit/img/trash.svg') no-repeat;
+	background-size: 26px;
+	font-weight: bold;
+	padding-left: 40px;
+	padding-top: 3px;
+	height:30px;
+	margin-top: 20px;
+}
+
+.publish-modal-title {
+	background: url('/cockpit/img/left-bar-intention.png') no-repeat;
+	background-size: 26px;
+	font-weight: bold;
+	padding-left: 40px;
+	padding-top: 3px;
+	height:30px;
+	margin-top: 20px;
+}
+.cockpit-bt {
+	border: none;
+	background-color: #d24444;
+	color: #373737;
+	font-weight: bold;
+	padding: 8px 16px;
+	min-width: 111px;
+	text-align: center;
+	margin-top:30px;
+	border-radius: 8px;
+  	&.cockpit-bt-slim {
+		min-width: auto;
+		padding: 6px 12px;
+  	}
+	&.success {
+		background-color: #00e79f;
+	}
+	&.danger {
+		background-color: #d24444;
+	}
+	&.warning {
+		background-color: #f0ad4e;
+	}
+	&.clear {
+		background-color: transparent;
+		// text-decoration: underline;
+		float: left;
+		// color: #333333;
+		// outline: none;
+		width: 90px;
+		font-family: Raleway;
+		font-size: 12px;
+		font-weight: bold;
+		color: #afafaf;
+	}
+	&.modal-bot {
+		margin-top:0px;
+		width: 185px;
+		height: 44px;
+	}
+}
+.remove-bt {
+	float: right;
+}
+.cancel {
+	float: left;
+}
+.gen-msg-area {
+	position: fixed;
+	top: 74px;
+	right: 16px;
+	z-index: 1061;
+}
+.cockpit-msg {
+	border-radius: 6px;
+	color: white;
+	min-width: 200px;
+	max-width: 500px;
+	padding: 16px;
+	margin-top:16px;
+	box-shadow: 0 2px 4px 0 rgba(89,89,89,0.5);
+	opacity:0.9;
+	transition: 0.3s opacity linear;
+	z-index:1061;
+}
+.cockpit-msg.success {
+	background-color: @successColor;
+}
+.cockpit-msg.warning {
+	background-color: @warningColor;
+}
+.cockpit-msg.danger {
+	background-color: @dangerColor;
+}
+.fadeout {
+	opacity: 0;
+}
+.danger-text {
+	color:@dangerColor;
+}
+.warning-text {
+	color:@warningColor;
+}
+.success-text {
+	color:@successColor;
+}
+
+.fw500 {
+	font-weight: 500;
+}
+.fw600 {
+	font-weight: 600;
+}
+.fw700 {
+	font-weight: 700;
+}
+.fw800 {
+	font-weight: 800;
+}
+.fw900 {
+	font-weight: 900;
+}
+
+.project-new-title {
+		background-size: 32px;
+		height: 32px;
+		padding-top: 3px;
+		font-weight: bold;
+	}
+
+.modal-text-area{
+	background-color: #EEEEEE;
+	resize: none;
+	padding:15px;
+	box-sizing: border-box;
+	border:0;
+}
+
+.opacity{
+    opacity:0.4;
+}
+
+#loading-bar .bar {
+  height: 3px !important;
+  background: white !important;
+}
+
+#loading-bar-spinner .spinner-icon {
+  width: 14px;
+  height: 14px;
+
+  border-top-color:  white !important;
+  border-left-color: white !important;
+}
+
+.cp-input-withoutlabel {
+  margin-top: 20px;
+  margin-bottom: 12px;
+}
+
+.modal-position {
+	margin-left: -120px;
+}
+
+.modal-hide {
+	display: none;
+}
+
+//FORM
+
+.cp-label {
+	color: #636363;
+}
+
+.btn-return {
+	width: 117px;
+	height: 41px;
+	border-radius: 20.5px;
+	background-color: #373737;
+	color: #fff;
+	text-align: center;
+	margin-top: 20px;
+	text-align: center;
+	cursor: pointer;
+	&-text {
+		display: inline-block;
+		font-size: 16px;
+		font-weight: bold;
+		color: #FFF;
+		padding-top: 9px;
+		margin-left: 4px;
+		transform: translateY(2px);
+	}
+}
+ 
+//ANCHOR TEXT CLICK
+
+.text-click-me {
+	color: #000;
+	text-decoration: underline;
+}
+
+.df-file {
+	padding-top: 10px
+}
+
+// TABLES
+
+.table {
+	&-container {
+		margin-top: 10px;
+		& th {
+			font-weight: 500;
+			opacity: 0.6;
+			font-size: 11px;
+		}
+		&-row {
+			background-color: #FFF;
+			margin-bottom: 10px;
+			padding: 10px 10px;
+			height: 60px;
+			& > td:first-child {
+				border-top-left-radius: 6px;
+				border-bottom-left-radius: 6px;
+				padding-left: 15px;
+			}
+			& > td:last-child {
+				border-top-right-radius: 6px;
+				border-bottom-right-radius: 6px;
+				padding-right: 15px;
+			}
+		}
+
+		&-error {
+			background-color: #dee2e3;
+    		margin-bottom: 10px;
+			padding: 10px 10px;
+			height: 60px;
+			& > td:first-child {
+				border-top-left-radius: 6px;
+				border-bottom-left-radius: 6px;
+				padding-left: 15px;
+			}
+			& > td:last-child {
+				border-top-right-radius: 6px;
+				border-bottom-right-radius: 6px;
+				padding-right: 15px;
+			}
+		}
+	}
+	&-pagination {
+		border: 1px solid #000;
+		height: 50px;
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+}
+
+// PAGINATION
+
+.pagination {
+	&-container {
+		text-align: center;
+		margin: 20px 0 50px 0;
+		& .quote-marks-first > img {
+			transform: rotate(-90deg);
+		}
+		& .quote-marks-last > img {
+			transform: rotate(90deg);
+		}
+		& a {
+			cursor: pointer;
+			color: #000;
+			text-decoration: none;
+			margin: 0 3px;
+			font-size: 18px;
+		}
+		& span {
+			margin: 0 3px;
+		}
+	}
+	&-selected {
+		font-weight: bold;
+		transform: scale(1.5, 1.5);
+	}
+}

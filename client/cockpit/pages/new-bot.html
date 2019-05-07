@@ -1,0 +1,369 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<link href="/cockpit/css/project.min.css" rel="stylesheet">
+<link href="/cockpit/css/modal.min.css" rel="stylesheet">
+<link href="/cockpit/css/intent.min.css" rel="stylesheet" >
+
+
+<div class="container">
+    <div class = "btn-return" ng-click="projectsPage()">
+        <img src="/cockpit/img/seta_botao_return.svg" alt="">
+        <p class= "btn-return-text">{{'BTN-RETURN' | translate}}</p>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-4">
+
+            <h1 class="bot-title">{{project.id?'PROJECT.TITLE-ALTER':'PROJECT.TITLE-ADD' | translate}}</h1>
+            
+            <h1>{{projectInfo}}</h1>
+            
+            <div class="bot-name">
+                <label class="cp-label">{{'PROJECT.NAME-INPUT' | translate}}</label>
+                <input type="text" ng-class="{'empty':!project.name,'error-input':projectError.name}" ng-model="project.name" class="bot-input" maxlength="45"/>
+                <div class="input-error pull-left">{{projectError.name | translate}}</div>
+            </div>
+
+            <div class="bot-select">
+                <select ng-class="{'error-select':projectError.locale}" class="bot-select-combo" ng-model="project.locale">
+                    <option value="">{{'SETTINGS-LOCALE-LEVEL-EMPTY-OPT' | translate}}</option>
+                    <option value="pt-BR">{{'LOCALE-PORTUGUESE' | translate}}</option>
+                    <option value="en-US">{{'LOCALE-ENGLISH' | translate}}</option>
+                    <option value="es-ES">{{'LOCALE-SPANISH' | translate}}</option>
+                    <option value="fr-FR">{{'LOCALE-FRENCH' | translate}}</option>
+                    <option value="it-IT">{{'LOCALE-ITALIAN' | translate}}</option>
+                    <option value="ja-JP">{{'LOCALE-JAPANESE' | translate}}</option>
+                    <option value="de-DE">{{'LOCALE-GERMAN' | translate}}</option>
+                    <option value="ko-KR">{{'LOCALE-KOREAN' | translate}}</option>
+                    <option value="nl-BE">{{'LOCALE-DUTCH' | translate}}</option>
+                    <option value="zh-CHT">{{'LOCALE-CHINESE-TRADITIONAL' | translate}}</option>
+                    <option value="zh-CHS">{{'LOCALE-CHINESE-SIMPLIFIED' | translate}}</option>
+                </select>
+            </div>
+            <div class="input-error pull-left">{{projectError.locale | translate}}</div>
+
+            <div class="bot-image">
+                <div class="project-image" ng-click="openImageSelector($event)" ng-class="{'project-image2': nameImage}">
+                    <input type="file" id="imageSelector" ng-model="image" onchange="angular.element(this).scope().getImage(this)"/>
+                    <span class="upload-image" ng-class="{'upload-image2': nameImage}">{{'PROJECT.IMAGE-UPLOAD' | translate}}</span>
+                </div>
+               
+                <div class="information-image" ng-class="{'information-image2': nameImage}">{{ nameImage || 'PROJECT.IMAGE-INFORMATION' | translate}}</div>
+            </div>
+
+            <label class="project-nlp-title">{{'PROJECT.SELECT-NLP' | translate}}:</label>
+            <div class="project-nlp-list">
+                <div class="bot-nlp" ng-repeat="nlp in nlps" ng-click="selectNLP(nlp.id)">
+                    <div class="project-nlp-card" ng-class="{'project-nlp-card-used': (project.nlp == nlp.id), 'project-nlp-card-selected': (nlp.selected == 1)}">
+                        <img class="project-nlp-img" ng-src="/cockpit/img/NLP/{{nlp.img}}" alt="">
+                        <p class="project-nlp-text text-center">{{nlp.name}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="input-error-chatbase pull-left">{{projectError.nlp | translate}}</div>
+
+            <!-- Alterações Chatbase -->
+
+            <div class="cp-project-enable">
+                <!-- <div class="cp-intent-enable-text"> {{'INTENT.ENABLE' | translate}} </div> -->
+                <div ng-class="{'cp-project-enable-switch-off':!isEnable}" class="cp-project-enable-switch" ng-click="switchEnable()">
+                    <div ng-class="{'cp-project-enable-switch-btn':isEnable}" class="cp-project-enable-switch-btn-off"></div>
+                </div>
+                <div class="cp-project-enable-text"> {{'API-ENABLE' | translate}} </div>
+            </div>
+
+            <div ng-if="isEnable" class="api-key">
+                <label class="cp-label">{{'API-KEY' | translate}}</label>
+                <input type="text" ng-class="{'empty':!project.api_key,'error-input':projectError.api_key}" ng-model="project.api_key" class="api-input" maxlength="45"/>
+                <div class="input-error pull-left">{{projectError.api_key | translate}}</div>
+            </div>
+
+            <div class="col-sm-offset-2">
+                <button type="button" class="cockpit-bt success btn-large bot-save-btn" ng-click="saveProject()" ng-disabled="hideButton">
+                    {{hideButton ? 'SAVING' : 'SAVE-BOT' | translate}}
+                </button>
+            </div>
+
+            <!-- Clever modal -->
+            <div class="modal fade" id="cleverModal" role="dialog">
+                <div class="modal-dialog">
+                <!-- Modal content-->
+                    <div class="modal-content-bot ">
+                        <div class="modal-btn-close">
+                            <button type="button" class="pull-right close-modal-btn" data-dismiss="modal"><i class="fas fa-times"></i></button>	
+                        </div>
+                        <div class="bot-modal-header">
+                            <h4 class="modal-title cockpit-modal-title">CLEVER</h4>
+                        </div>
+                        <div class="bot-modal-separator"></div>
+
+                        <div class="modal-centered-content">
+                            <img src="/cockpit/img/NLP/clever_logo_clean.png" class="nlp-modal-img logo-modal-clever" alt="Clever's logo">
+                            <span class="nlp-modal-bot">Clever</span>
+                            <p class="nlp-modal-info">{{'PROJECT.CLEVER-MODAL' | translate}}</p>
+                        </div>
+                            
+                        <!-- OK/CANCEL content-->
+                        <div class="footer-modal-bot footer-clever">
+                            <button type="button" class="cockpit-bt modal-bot success lg-success" ng-click="closeNlpModal()">{{'PROJECT.FINISH' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Clever modal end -->
+
+            <!-- DialogFlow modal -->
+            <div class="modal fade" id="dialogflowModal" role="dialog">
+                <div class="modal-dialog">
+                <!-- Modal content-->
+                    <div class="modal-content-bot ">
+                        <div class="modal-btn-close">
+                            <button type="button" class="pull-right close-modal-btn" data-dismiss="modal"><i class="fas fa-times"></i></button>	
+                        </div>
+                        <div class="bot-modal-header">
+                            <h4 class="modal-title cockpit-modal-title">DIALOGFLOW</h4>
+                            <h4 class="cockpit-modal-title-complement"> 
+                                - <span class="cockpit-modal-step-current">{{'PROJECT.STEP' | translate}} {{actualStep}}</span> 
+                                <span ng-class="{'cockpit-modal-step-current':totalSteps==actualStep}" class="cockpit-modal-step-total"> / {{totalSteps}}</span>
+                            </h4>
+                        </div>
+                        <div class="bot-modal-separator"></div>
+                        <div class="cockpit-modal-progress-bar">
+                            <div class="cockpit-modal-progress-step" ng-class="{'cockpit-modal-progress-step-selected':actualStep>=step}" ng-repeat="step in steps"></div>
+                        </div>
+
+                        <div ng-if="actualStep==1">
+                            <div class="modal-centered-content">
+                                <img src="/cockpit/img/NLP/logo-dialogflow@2x.png" class="nlp-modal-img logo-modal-dialog" alt="DialogFlow's logo">
+                                <span class="nlp-modal-bot">DialogFlow</span>
+                                <p class="nlp-modal-info">{{'PROJECT.DIALOGFLOW-MODAL' | translate}}<a href="https://support.google.com/a/answer/7378726?hl=en" target="blank"><b class="text-click-me">{{'PROJECT.DIALOGFLOW-MODAL-1' | translate}}</b></a>{{'PROJECT.DIALOGFLOW-MODAL-2' | translate}}</p>
+                                
+                            </div> 
+                        </div>
+
+                        <div ng-if="actualStep==2">
+                            <div class="modal-centered-content">
+                                <div class="cockpit-modal-body cockpit-modal-fields">
+                                    <div class="modal-field modal-field-df">
+                                        <p class="nlp-modal-info second-text">{{'PROJECT.DIALOGFLOW-FILE-INF' | translate}}</p> 
+                                        <div class="df-file nlp-modal-info-df">
+                                            <div class="project-file" ng-click="openFileSelector($event)" ng-class="{'project-file2': fileName, 'project-file-error': fileNameErr}">
+                                                <input type="file"  accept=".json" id="df-key-json" fileread="vm.uploadme"  accept=".json"  ng-model="project.file" onchange="angular.element(this).scope().getFile(this)"  />
+                                                <span class="upload-image" ng-class="{'upload-image2': fileName, 'upload-file-err': fileNameErr}">{{'PROJECT.FILE-UPLOAD' | translate}}</span>
+                                            </div>
+                                           
+                                            <div class="information-image" ng-class="{'information-image2': fileName}">{{ fileName || 'PROJECT.FILE-INFORMATION' | translate}}</div>
+                                        </div>
+                                        <div class="input-error">{{projectError.dialogflow | translate}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            
+                        <!-- OK/CANCEL content-->
+                        <div class="footer-modal-bot footer-dialog-fs " ng-class="{'footer-dialog important!': actualStep == 2}">
+                            <button ng-if="actualStep !== 1" type="button" ng-click="goBack()" class="cockpit-bt modal-bot footer-dialog clear">{{'PROJECT.GO-BACK' | translate}}</button>
+                            <button ng-if="actualStep == totalSteps" type="button" class="cockpit-bt modal-bot success footer-dialog lg-success" ng-click="closeNlpModal()">{{'PROJECT.FINISH' | translate}}</button>
+                            <button ng-if="actualStep !== totalSteps" type="button" class="cockpit-bt modal-bot success footer-dialog lg-success" ng-click="nextStep()">{{'PROJECT.CONTINUE' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- DialogFlow modal end -->
+
+            <!-- Luis modal -->
+            <div class="modal fade" id="luisModal" role="dialog">
+                <div class="modal-dialog">
+                <!-- Modal content-->
+                    <div class="modal-content-bot ">
+                        <div class="modal-btn-close">
+                            <button type="button" class="pull-right close-modal-btn" data-dismiss="modal"><i class="fas fa-times"></i></button>	
+                        </div>
+                        <div class="bot-modal-header">
+                            <h4 class="modal-title cockpit-modal-title">LUIS</h4>
+                            <h4 class="cockpit-modal-title-complement"> 
+                                - <span class="cockpit-modal-step-current">{{'PROJECT.STEP' | translate}} {{actualStep}}</span> 
+                                <span ng-class="{'cockpit-modal-step-current':totalSteps==actualStep}" class="cockpit-modal-step-total"> / {{totalSteps}}</span>
+                            </h4>
+                        </div>
+                        <div class="bot-modal-separator"></div>
+                        <div class="cockpit-modal-progress-bar">
+                            <div class="cockpit-modal-progress-step" ng-class="{'cockpit-modal-progress-step-selected':actualStep>=step}" ng-repeat="step in steps"></div>
+                        </div>
+
+                        <div ng-if="actualStep==1">
+                            <div class="modal-centered-content">
+                                <img src="/cockpit/img/NLP/luis_logo.png" class="nlp-modal-img logo-modal-luis" alt="Luis's logo">
+                                <span class="nlp-modal-bot">Luis</span>
+                                <p class="nlp-modal-info">{{'PROJECT.LUIS-MODAL-1' | translate}}<i><span class="nlp-text-color">{{'PROJECT.LUIS-MODAL-2' | translate}}</span></i></p>
+                            </div>
+                        </div>
+
+                        <div ng-if="actualStep==2">
+                            <div class="modal-centered-content">
+                                <span class="nlp-modal-step-title">{{'PROJECT.CONFIGURATE-PAGE' | translate}}</span>
+                                <img class="cockpit-modal-fullbody-img" src="/cockpit/img/NLP/luis-step-2@2x.png" alt="Luis's steps">
+                                <div class="cockpit-modal-body cockpit-modal-fields modal-centered-content">
+                                    <!-- <div class="modal-field-bot">
+                                        <label class="modal-label">{{'PROJECT.NLP-LUIS-KEY' | translate}}</label>
+                                        <input type="text" ng-class="{'empty':!project.suscriptionKey,'error-input':projectError.luisKeyString}" ng-model="project.metadata.suscriptionKey" class="bot-modal-input" maxlength="100"/>
+                                        <div class="input-error">{{projectError.luisKeyString | translate}}</div>
+                                    </div> -->
+                                    <div class="modal-field-bot">
+                                        <label class="modal-label">{{'PROJECT.NLP-LUIS-URL' | translate}}</label>
+                                        <input type="text" ng-class="{'empty':!project.url,'error-input':projectError.luisUrl}" ng-model="project.metadata.url" class="bot-modal-input" />
+                                        <div class="input-error">{{projectError.luisUrl | translate}}</div>
+                                    </div>
+                                    <!-- <div class="modal-field-bot">
+                                        <label class="modal-label">{{'PROJECT.NLP-LUIS-APPLICATION-ID' | translate}}</label>
+                                        <input type="text" ng-class="{'empty':!project.workspaceId,'error-input':projectError.luisApplicationId}" ng-model="project.metadata.workspaceId" class="bot-modal-input" maxlength="100"/>
+                                        <div class="input-error">{{projectError.luisApplicationId | translate}}</div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>                                                                                          
+                            
+                        <!-- OK/CANCEL content-->
+                        <div class="footer-modal-bot footer-luis-second" ng-class="{'footer-luis': actualStep == 1}">
+                            <button ng-if="actualStep !== 1" type="button" ng-click="goBack()" class="cockpit-bt modal-bot clear">{{'PROJECT.GO-BACK' | translate}}</button>
+                            <button ng-if="actualStep == totalSteps" type="button" class="cockpit-bt success modal-bot lg-success" ng-click="closeNlpModal()">{{'PROJECT.FINISH' | translate}}</button>
+                            <button ng-if="actualStep !== totalSteps" type="button" class="cockpit-bt success modal-bot lg-success" ng-click="nextStep()">{{'PROJECT.CONTINUE' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Luis modal end -->
+
+            <!-- Watson modal -->
+            <div class="modal fade" id="watsonModal" role="dialog">
+                <div class="modal-dialog">
+                <!-- Modal content-->
+                    <div class="modal-content-bot ">
+                        <div class="modal-btn-close">
+                            <button type="button" class="pull-right close-modal-btn" data-dismiss="modal"><i class="fas fa-times"></i></button>	
+                        </div>
+                        <div class="bot-modal-header">
+                            <h4 class="modal-title cockpit-modal-title">WATSON</h4>
+                            <h4 class="cockpit-modal-title-complement"> 
+                                - <span class="cockpit-modal-step-current">{{'PROJECT.STEP' | translate}} {{actualStep}}</span> 
+                                <span ng-class="{'cockpit-modal-step-current':totalSteps==actualStep}" class="cockpit-modal-step-total"> / {{totalSteps}}</span>
+                            </h4>
+                        </div>
+                        <div class="bot-modal-separator"></div>
+                        <div class="cockpit-modal-progress-bar">
+                            <div class="cockpit-modal-progress-step" ng-class="{'cockpit-modal-progress-step-selected':actualStep>=step}" ng-repeat="step in steps"></div>
+                        </div>
+
+                        <div ng-if="actualStep==1">
+                            <div class="modal-centered-content">
+                                <img src="/cockpit/img/NLP/logo-watson@2x.png" class="nlp-modal-img logo-modal-watson" alt="Watsons's logo">
+                                <span class="nlp-modal-bot">Watson</span>
+                                <p class="nlp-modal-info">{{'PROJECT.WATSON-MODAL-1' | translate}}<i><span class="nlp-text-color">{{'PROJECT.WATSON-MODAL-2' | translate}}</span></i>{{'PROJECT.WATSON-MODAL-3' | translate}}</p>
+                            </div>
+                        </div>
+
+                        <div ng-if="actualStep==2">
+                            <div class="modal-centered-content">
+                                <span class="nlp-modal-step-title">{{'PROJECT.MANAGE-PAGE' | translate}}</span>
+                                <img class="cockpit-modal-fullbody-img" src="/cockpit/img/NLP/watson-step-2@2x.png" alt="Watson's steps">
+                                <div class="cockpit-modal-body cockpit-modal-fields modal-centered-content">
+                                    <div class="modal-field-bot">
+                                        <label class="modal-label">{{'PROJECT-WORKSPACE-USERNAME-INPUT' | translate}}</label>
+                                        <input type="text" ng-class="{'empty':!project.workspaceUsername,'error-input':projectError.workspaceUsername}" ng-model="project.metadata.workspaceUsername" class="bot-modal-input" maxlength="50"/>
+                                        <div class="input-error">{{projectError.workspaceUsername | translate}}</div>
+                                    </div>
+                                    <div class="modal-field-bot">
+                                        <label class="modal-label">{{'PROJECT-WORKSPACE-PASSWORD-INPUT' | translate}}</label>
+                                        <input type="password" ng-class="{'empty':!project.workspacePassword,'error-input':projectError.workspacePassword}" ng-model="project.metadata.workspacePassword" class="bot-modal-input" maxlength="50"/>
+                                        <div class="input-error">{{projectError.workspacePassword | translate}}</div>
+                                    </div>
+                                    <div class="modal-field-bot">
+                                        <label class="modal-label">{{'PROJECT-WORKSPACE-INPUT-URL' | translate}}</label>
+                                        <input type="workspaceUrl" ng-class="{'empty':!project.workspaceUrl,'error-input':projectError.workspaceUrl}" ng-model="project.metadata.workspaceUrl" class="bot-modal-input" maxlength="300"/>
+                                        <div class="input-error">{{projectError.workspaceUrl | translate}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer-modal-bot" ng-class="{'footer-watson': actualStep == 1}">
+                            <button ng-if="actualStep !== 1" type="button" ng-click="goBack()" class="cockpit-bt modal-bot clear">{{'PROJECT.GO-BACK' | translate}}</button>
+                            <button ng-if="actualStep == totalSteps" type="button" class="cockpit-bt success modal-bot lg-success" ng-click="closeNlpModal()">{{'PROJECT.FINISH' | translate}}</button>
+                            <button ng-if="actualStep !== totalSteps" type="button" class="cockpit-bt success modal-bot lg-success" ng-click="nextStep()">{{'PROJECT.CONTINUE' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Watson modal end -->
+
+            <!-- QnA modal -->
+            <!-- <div class="modal fade" id="qnAModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content-bot">
+                        <div class="modal-btn-close">
+                            <button type="button" class="pull-right close-modal-btn" data-dismiss="modal"><i class="fas fa-times"></i></button>	
+                        </div>
+                        <div class="bot-modal-header">
+                            <h4 class="modal-title cockpit-modal-title">QnA Maker</h4>
+                            <h4 class="cockpit-modal-title-complement"> 
+                                - <span class="cockpit-modal-step-current">{{'PROJECT.STEP' | translate}} {{actualStep}}</span> 
+                                <span ng-class="{'cockpit-modal-step-current':totalSteps==actualStep}" class="cockpit-modal-step-total"> / {{totalSteps}}</span>
+                            </h4>
+                        </div>
+                        <div class="bot-modal-separator"></div>
+                        <div class="cockpit-modal-progress-bar">
+                            <div class="cockpit-modal-progress-step" ng-class="{'cockpit-modal-progress-step-selected':actualStep>=step}" ng-repeat="step in steps"></div>
+                        </div>
+
+                        <div ng-if="actualStep==1">
+                            <div class="modal-centered-content">
+                                <img src="/cockpit/img/NLP/qnamaker.png" class="nlp-modal-img logo-modal-qna" alt="QnA's logo">
+                                <span class="nlp-modal-bot">Microsoft - QnA Maker</span>
+                                <p class="nlp-modal-info">{{'PROJECT.QNA-MODAL-1' | translate}}<i><span class="nlp-text-color">{{'PROJECT.QNA-MODAL-2' | translate}}</span></i>
+                                    {{'PROJECT.QNA-MODAL-3' | translate}}<i><span class="nlp-text-color">{{'PROJECT.QNA-MODAL-4' | translate}}</span></i>
+                                    {{'PROJECT.QNA-MODAL-5' | translate}}<i><span class="nlp-text-color">{{'PROJECT.QNA-MODAL-6' | translate}}</span></i>{{'PROJECT.QNA-MODAL-7' | translate}}</p>
+                            </div>
+                        </div>
+
+                        <div ng-if="actualStep==2">
+                            <div class="modal-centered-content">
+                                <span class="nlp-modal-step-title">{{'PROJECT.CONFIGURATE-PAGE' | translate}}</span>
+                                <img class="cockpit-modal-fullbody-img" src="/cockpit/img/NLP/qna-maker@3x.png" alt="QnA's steps">
+                                <div class="cockpit-modal-body cockpit-modal-fields modal-centered-content">
+                                    <div class="modal-field-bot">
+                                        <label class="modal-label">{{'PROJECT.QNA-POST' | translate}}</label>
+                                        <input type="text" ng-class="{'empty':!project.qnaPost,'error-input':projectError.qnaPost}" ng-model="project.metadata.qnaPost" class="bot-modal-input" maxlength="100"/>
+                                        <div class="input-error">{{projectError.qnaPost | translate}}</div>
+                                    </div>
+                                    <div class="modal-field-bot">
+                                        <label class="modal-label">{{'PROJECT.QNA-HOST' | translate}}</label>
+                                        <input type="text" ng-class="{'empty':!project.qnaHost,'error-input':projectError.qnaHost}" ng-model="project.metadata.qnaHost" class="bot-modal-input" maxlength="100"/>
+                                        <div class="input-error">{{projectError.qnaHost| translate}}</div>
+                                    </div>
+                                    <div class="modal-field-bot">
+                                        <label class="modal-label">{{'PROJECT.QNA-AUTHORIZATION' | translate}}</label>
+                                        <input type="text" ng-class="{'empty':!project.qnaAuthorization,'error-input':projectError.qnaAuthorization}" ng-model="project.metadata.qnaAuthorization" class="bot-modal-input" maxlength="100"/>
+                                        <div class="input-error">{{projectError.qnaAuthorization | translate}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            
+                         //OK/CANCEL content
+                        <div class="footer-modal-bot" ng-class="{'footer-qna': actualStep == 1}">
+                            <button ng-if="actualStep !== 1" type="button" ng-click="goBack()" class="cockpit-bt modal-bot clear">{{'PROJECT.GO-BACK' | translate}}</button>
+                            <button ng-if="actualStep == totalSteps" type="button" class="cockpit-bt  modal-bot success lg-success" ng-click="closeNlpModal()">{{'PROJECT.FINISH' | translate}}</button>
+                            <button ng-if="actualStep !== totalSteps" type="button" class="cockpit-bt modal-bot success lg-success" ng-click="nextStep()">{{'PROJECT.CONTINUE' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- QnA modal end -->
+
+        </div>
+    </div>
+</div>

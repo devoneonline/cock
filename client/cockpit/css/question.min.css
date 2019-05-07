@@ -1,0 +1,134 @@
+/*!
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved
+*/
+
+
+
+/* <----------------------------------  ROW 1  --------------------------------> */  
+
+
+
+/* <-----  Question Bulk Container  -----> */  
+.question-qlik-question-bulk-kpi{
+    height: 371px;
+    width: 192px;
+    margin: 40px 5px 0px 5px;
+}
+
+
+
+
+/* <----- Question evolution graph Container ------> */ 
+.question-qlik-question-evolution-graph{
+    height: 375px;
+    width: 770px;
+    margin: 20px 5px 0px 5px;
+}
+
+
+
+
+
+
+/* <----------------------------------  ROW 2  --------------------------------> */  
+
+
+/* <----- Question status Container ----> */
+.question-qlik-question-kpi{
+	height: 90px;	
+    width: 230px;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+
+.question-qlik-chit-chat-question-kpi{
+	height: 90px;	
+    width: 230px;
+    margin-left: 24px;
+    margin-top: 5px;
+}
+
+.question-qlik-negative-question-kpi{
+	height: 90px;	
+    width: 230px;
+    margin-left:45px;
+    margin-top: 5px;
+}
+
+.question-qlik-transacional-question-kpi{
+    height: 90px;	
+    width: 230px;
+    margin-left:304px;
+    margin-top: 5px;
+}
+
+
+
+.question-qlik-question-kpi-bar{
+	height: 60px;	
+    width: 746px;
+    margin-left: 15px;
+    margin-top: -11px;
+    
+}
+
+
+/* <----- Average of questions/users ------> */ 
+
+.question-qlik-questions-by-user-average-kpi{
+    height: 264px;
+    width: 192px;
+    margin: 40px 5px 0px 5px;
+}
+
+
+
+
+
+
+/* <----------------------------------  ROW 3  --------------------------------> */ 
+
+
+/* <----- Questions by channel in donut graph  ------> */ 
+.question-qlik-questions-by-channel-donut{
+    height: 356px;
+    width: 396px;
+    margin: 20px 5px 0px 5px;
+}
+
+
+
+/* <----- User questions  ------> */ 
+.question-qlik-questions-top-table{
+    height: 366px;
+    width: 565px;
+    margin: 10px 5px 0px 5px;
+
+}
+
+.question-qlik-questions-top-table.question-top{
+    width: 100%;
+}
+
+
+
+/* <----------------------------------  ROW 4  --------------------------------> */ 
+
+
+
+
+/* <----------------------------------  ROW 5  --------------------------------> */ 
+
+
+/* <----- User questions  ------> */ 
+.question-qlik-questions-graph-faq{
+    height: 314px;
+    width: 995px;
+    margin: 10px 5px 0px 5px;
+
+}

@@ -1,0 +1,268 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<link rel="stylesheet" href="/cockpit/css/settings.min.css">
+<link rel="stylesheet" href="/cockpit/css/table.min.css">
+<link rel="stylesheet" href="/cockpit/css/modal.min.css">
+
+<div class="container" id="settings-container">
+	<input type="button" class="back-bt" value="{{'SETTINGS-BACK-BUTTON' | translate}}" onclick="window.history.back()" />
+	<span id="cockpit-version">{{'EVA-VERSION' | translate}}: {{version}}</span>
+
+	<div class="settings-spacing" user-role any="CREATE_USER">
+		<div class="user-mngt">
+			<span>{{'SETTINGS-USER-MANAGEMENT' | translate}}</span>
+		</div>
+
+		<button class="new-user-bt" ng-click="selectUser({})">{{'SETTINGS-NEW-USER' | translate}}</button>
+
+		<div class="row cp-table-header">
+			<div class="col-md-1"></div>
+			<div class="col-md-3">{{'SETTINGS-USER-NAME' | translate}}</div>
+			<div class="col-md-2">{{'SETTINGS-USER-COMPANY' | translate}}</div>
+			<div class="col-md-4">{{'SETTINGS-USER-POSITION' | translate}}</div>
+			<div class="col-md-2"></div>
+		</div>
+		<div class="row cp-table-body-row" ng-repeat="user in users">
+			<div class="col-md-1 stg-user-icon"></div>
+			<div class="col-md-3 text">{{user.name}}</div>
+			<div class="col-md-2 text">{{user.company}}</div>
+			<div class="col-md-4 text">{{user.position}}</div>
+			<div class="col-md-2 cp-table-body-icons">
+				<img src="/cockpit/img/pencil.svg" ng-click="selectUser(user)" />
+				<img src="/cockpit/img/trash.svg" ng-click="removeUser(user.id)" />
+			</div>
+		</div>
+	</div>
+
+	<div class="settings-spacing" user-role any="CREATE_STATUS">
+		<div class="stg-status">
+			<span>{{'SETTINGS-STATUS-TITLE' | translate}}</span>
+		</div>
+
+		<button class="new-user-bt" ng-click="selectStatus()">{{'SETTINGS-NEW-STATUS' | translate}}</button>
+		<div class="separator-button"></div>
+		<div class="row" ng-repeat="stat in statuses">
+			<div class="col-md-6">
+				<div class="row status-row" ng-class="{selected:stat.defaultStatus}">
+					<div class="col-sm-8 text">{{stat.name | translate}}</div>
+					<div class="col-md-4 user-edit-rem">
+						<img src="/cockpit/img/pencil.svg" ng-click="selectStatus(stat)" height="30"/>
+						<img src="/cockpit/img/trash.svg" ng-click="removeStatus(stat)" height="30"/>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 default-status">{{stat.defaultStatus ? ('SETTINGS-DEFAULT-STATUS' | translate) : ''}}</div>
+		</div>
+	</div>
+
+	<div class="settings-spacing" user-role any="CREATE_PARAMETER">
+		<div class="stg-params">
+			<span>{{'SETTINGS-PARAMS-TITLE' | translate}}</span>
+		</div>
+
+		<!-- versão para tornar os parâmetros mais 'amigáveis' -->
+		<button class="new-user-bt" ng-click="selectConfig()">{{'SETTINGS-NEW-PARAM' | translate}}</button>
+		<div class="separator-button"></div>
+
+		<div class="row" ng-repeat="conf in configurations">
+			<div class="col-md-6">
+				<div class="row status-row">
+					<div class="col-sm-8 text">{{conf.oldKey}}</div>
+					<div class="col-md-4 user-edit-rem">
+						<img src="/cockpit/img/pencil.svg" ng-click="selectConfig(conf)" height="30"/>
+						<img src="/cockpit/img/trash.svg" ng-click="removeConfig(conf.configKey)" height="30"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- USER Modal -->
+<div class="modal fade" id="userModal" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div id="new-user-modal" class="modal-content modal-lg modal-position">
+			<div class="modal-btn-close">
+				<button type="button" class="pull-right close-modal-btn" data-dismiss="modal"><i class="fas fa-times"></i></button>	
+			</div>
+			<div class="modal-header">
+				<h4 class="modal-title stg-new-user">{{(user.id ? 'SETTINGS-EDIT-USER' : 'SETTINGS-ADD-USER') | translate}}</h4>
+			</div>
+			<div class="modal-body modal-fields">
+				<div class="modal-separator">{{'SETTINGS-USER-DATA' | translate}}</div>
+				<div class="modal-field">
+					<label class="modal-label" ng-class="{'show-modal-label':!user.name}">{{'SETTINGS-USER-NAME-INPUT' | translate}}</label>
+					<input type="text" ng-class="{'empty':!user.name,'error':userError.name}" placeholder="{{'SETTINGS-USER-NAME-INPUT' | translate}}" ng-model="user.name" class="modal-input-text" maxlength="255"/>
+					<div class="input-error">{{userError.name | translate}}&nbsp;</div>
+				</div>
+				<div class="modal-field">
+					<label class="modal-label" ng-class="{'show-modal-label':!user.company}">{{'SETTINGS-USER-COMPANY-INPUT' | translate}}</label>
+					<input type="text" ng-class="{'empty':!user.company,'error':userError.company}" placeholder="{{'SETTINGS-USER-COMPANY-INPUT' | translate}}" ng-model="user.company" class="modal-input-text" maxlength="45"/>
+					<div class="input-error">{{userError.company | translate}}&nbsp;</div>
+				</div>
+				<div class="modal-field">
+					<label class="modal-label" ng-class="{'show-modal-label':!user.position}">{{'SETTINGS-USER-POSITION-INPUT' | translate}}</label>
+					<input type="text" ng-class="{'empty':!user.position,'error':userError.position}" placeholder="{{'SETTINGS-USER-POSITION-INPUT' | translate}}" ng-model="user.position" class="modal-input-text" maxlength="45"/>
+					<div class="input-error">{{userError.position | translate}}&nbsp;</div>
+				</div>
+				<div class="stg-elements"></div>
+
+				<div class="modal-separator">{{'' | translate}}</div>
+				<div class="modal-field">
+					<label class="modal-label" ng-class="{'show-modal-label':!user.email}">{{'SETTINGS-USER-EMAIL-INPUT' | translate}}</label>
+					<input type="text" ng-class="{'empty':!user.email,'error':userError.email}" placeholder="{{'SETTINGS-USER-EMAIL-INPUT' | translate}}" ng-model="user.email" class="modal-input-text" maxlength="50"/>
+					<div class="input-error">{{userError.email | translate}}&nbsp;</div>
+				</div>
+				<div class="modal-field">
+					<label class="modal-label" ng-class="{'show-modal-label':!user.password}">{{'SETTINGS-USER-PASSWORD-INPUT' | translate}}</label>
+					<input type="{{showPassword?'text':'password'}}" ng-class="{'empty':!user.password,'error':userError.password}" placeholder="{{'SETTINGS-USER-PASSWORD-INPUT' | translate}}" ng-model="user.password" class="modal-input-text" maxlength="255"/>
+					<div class="input-error">{{userError.password | translate}}&nbsp;</div>
+				</div>
+				<div class="modal-field">
+					<label class="modal-label" ng-class="{'show-modal-label':!user.confirmPassword}">{{'SETTINGS-USER-CONFIRM-PASSWORD-INPUT' | translate}}</label>
+					<input type="{{showPassword?'text':'password'}}" ng-disabled="!user.password" ng-class="{'empty':!user.confirmPassword,'error':userError.confirmPassword}" placeholder="{{'SETTINGS-USER-CONFIRM-PASSWORD-INPUT' | translate}}" ng-model="user.confirmPassword" class="modal-input-text" maxlength="255"/>
+					<div class="input-error">{{userError.confirmPassword | translate}}&nbsp;</div>
+				</div>
+				<img src="/cockpit/img/eye.svg" class="eye-bt" ng-click="showPassword=!showPassword"/>
+				<div class="stg-elements"></div>
+
+				<div class="modal-field" ng-if="user.id">
+					<input type="checkbox" ng-model="user.active" id="active" />
+					<label class="modal-label-check" for="active">{{'SETTINGS-USER-ACTIVE' | translate}}</label>
+				</div>
+				<div class="stg-elements"></div>
+				<div class="modal-field cc-pass-rules">
+					<p>{{'PASSWORD-MESSAGE' | translate}}</p>
+					<li>{{'LETTER' | translate}}</li>
+					<li>{{'NUMBER' | translate}}</li>
+					<li>{{'SPECIAL-CHARACTER' | translate}}</li>
+				</div>
+
+				<div class="modal-separator">{{'SETTINGS-USER-PERMISSION-LEVEL' | translate}}</div>
+				<div class="modal-field">
+					<select class="modal-select" ng-model="user.groupId" ng-change="userChangeGroup">
+						<option value="">{{'SETTINGS-USER-LEVEL-EMPTY-OPT' | translate}}</option>
+						<option value="{{group.id}}" ng-repeat="group in groups">{{group.name}}</option>
+						<!-- <option value="ura">URA</option> -->
+
+					</select>
+					<div class="input-error">{{userError.groupId | translate}}</div>
+				</div>
+				<div class="stg-elements"></div>
+
+				<div ng-class="{fadeout:user.groupId == '1'}">
+					<div class="modal-separator">{{'SETTINGS-USER-PROJECTS' | translate}}</div>
+					<div class="user-projects">
+						<div class="project" ng-class="{selected:project.selected}" ng-click="project.selected = !project.selected" ng-repeat="project in projects">{{project.name}}</div>
+					</div>
+					<div class="stg-elements"></div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="cockpit-bt danger" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+				<button type="button" class="cockpit-bt success" ng-click="saveUser()" ng-disabled="savingUser">{{(savingUser ? 'SAVING' : 'SAVE') | translate}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- USER Modal - END -->
+
+<!-- STATUS Modal -->
+<div class="modal fade" id="statusModal" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-btn-close">
+				<button type="button" class="pull-right close-modal-btn" data-dismiss="modal"><i class="fas fa-times"></i></button>	
+			</div>
+			<div class="modal-header">
+				<h4 class="modal-title stg-new-status">{{(status.id ? 'SETTINGS-UPDATE-STATUS' : 'SETTINGS-NEW-STATUS') | translate}}</h4>
+			</div>
+			<div class="modal-body modal-fields">
+				<div class="modal-field">
+					<label class="modal-label" ng-class="{'show-modal-label':!status.name}">{{'SETTINGS-STATUS-NAME-INPUT' | translate}}</label>
+					<input type="text" ng-class="{'empty':!status.name,'error':statusError.name}"
+						placeholder="{{'SETTINGS-STATUS-NAME-INPUT' | translate}}" ng-model="status.name"
+						class="modal-input-text" maxlength="45" onblur="this.value = this.value.trim()"/>
+					<div class="input-error">{{statusError.name | translate}}</div>
+				</div>
+				<div class="stg-elements"></div>
+
+				<div class="modal-separator">{{'SETTINGS-STATUS-SUCCESS' | translate}}</div>
+				<div class="modal-field">
+					<select class="modal-select" ng-model="status.success">
+						<option value="">{{'SETTINGS-STATUS-SELECT' | translate}}</option>
+						<option value="0">{{'SETTINGS-STATUS-NOT-FOUND' | translate}}</option>
+						<option value="1">{{'SETTINGS-STATUS-FOUND' | translate}}</option>
+					</select>
+					<div class="input-error">{{statusError.success | translate}}</div>
+				</div>
+				<div class="stg-elements"></div>
+
+				<div class="modal-separator">{{'SETTINGS-STATUS-DEFAULT-TITLE' | translate}}</div>
+				<input type="checkbox" class="default-status-sel" id="defaultStatus" ng-model="status.defaultStatus" />
+				<label for="defaultStatus" class="label-default-status">{{'SETTINGS-STATUS-DEFAULT-LABEL' | translate}}</label>
+				<div class="stg-elements"></div>
+				<div class="default-stat-warn">
+					<span ng-show="!status.isDefault && status.defaultStatus">{{'SETTINGS-DEFAULT-STATUS-WARNING' | translate}}</span>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="cockpit-bt danger" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+				<button type="button" class="cockpit-bt success" ng-click="saveStatus()" ng-disabled="savingStatus">{{ (savingStatus ? 'SAVING' : 'SAVE') | translate}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- STATUS Modal - END -->
+
+
+<!-- CONFIG Modal -->
+<div class="modal fade" id="configModal" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-lg modal-position">
+				<div class="modal-btn-close">
+					<button type="button" class="pull-right close-modal-btn" data-dismiss="modal"><i class="fas fa-times"></i></button>	
+				</div>
+				<div class="modal-header">
+					<h4 class="modal-title stg-new-param">{{(configParam.oldKey ? 'SETTINGS-UPDATE-PARAM' : 'SETTINGS-NEW-PARAM') | translate}}</h4>
+				</div>
+				<div class="modal-body modal-fields">
+					<div class="modal-field">
+						<label class="modal-label" ng-class="{'show-modal-label':!configParam.oldKey}">{{'SETTINGS-PARAM-KEY-INPUT' | translate}}</label>
+						<input type="text" ng-class="{'empty':!configParam.oldKey,'error':configParamError.oldKey}" placeholder="{{'SETTINGS-PARAM-KEY-INPUT' | translate}}" ng-model="configParam.configKey" class="modal-input-text" maxlength="50"/>
+						<div class="input-error">{{configParamError.oldKey | translate}}&nbsp;</div>
+					</div>
+					<div class="modal-field">
+						<label class="modal-label" ng-class="{'show-modal-label':!configParam.oldValue}">{{'SETTINGS-PARAM-VALUE-INPUT' | translate}}</label>
+						<input type="text" ng-class="{'empty':!configParam.oldValue,'error':configParamError.oldValue}" placeholder="{{'SETTINGS-PARAM-VALUE-INPUT' | translate}}" ng-model="configParam.configValue" class="modal-input-text" maxlength="255"/>
+						<div class="input-error">{{configParamError.oldValue | translate}}&nbsp;</div>
+					</div>
+					<div class="stg-elements"></div>
+					<div class="row">
+						<div class="col-md-12">
+							<label class="label-left text-separator">{{'SAMPLE-LABEL-COMMENTARY' | translate}}</label>
+							<textarea maxlength="1000" rows="5" cols="50" class="modal-text-area" ng-class="" placeholder="{{'SETTINGS-PARAM-DESCRIPTION-INPUT' | translate}}" ng-model="configParam.description" class="" maxlength="255"/>
+						</div>
+					</div>
+
+				<div class="modal-footer">
+					<button type="button" class="cockpit-bt danger" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+					<button type="button" class="cockpit-bt success" ng-click="updateConfig(configParam)" ng-if="configParam.oldKey" ng-disabled="savingConfig">{{(savingConfig ? 'SAVING' : 'SAVE') | translate}}</button>
+					<button type="button" class="cockpit-bt success" ng-click="createConfig()" ng-if="!configParam.oldKey" ng-disabled="savingConfig">{{(savingConfig ? 'SAVING' : 'SAVE') | translate}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- PARAMS Modal - END -->

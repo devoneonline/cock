@@ -1,0 +1,149 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<link href="/cockpit/css/project.min.css" rel="stylesheet">
+
+<div class='load-container'></div>
+<div class="project-title">
+    <span>{{ 'PROJECT.TITLE' | translate }}</span>
+</div>
+
+<div class="project-list" id="projectsList">
+
+	<projects-list
+		projects="projects"
+		editable="true"
+		createnew="true"
+		pagination="false"
+		on-create="newBot"
+		on-edit="selectProject"
+		on-remove="removeProject"
+		>
+	</projects-list>
+
+</div>
+
+<!-- PROJECT Modal -->
+<div class="modal fade" id="projectModal" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title project-new-title">{{project.id?'PROJECT.TITLE-ALTER':'PROJECT.TITLE-ADD' | translate}}</h4>
+			</div>
+			<div class="modal-body modal-fields">
+
+				<div class="modal-field">
+					<label class="modal-label" ng-class="{'show-modal-label':!project.name}">{{'PROJECT.NAME-INPUT' | translate}}</label>
+					<input type="text" ng-class="{'empty':!project.name,'error':projectError.name}" placeholder="{{'PROJECT.NAME-INPUT' | translate}}" ng-model="project.name" class="modal-input-text-project" maxlength="45"/>
+					<div class="input-error">{{projectError.name | translate}}</div>
+				</div>
+
+				<div class="modal-field">
+					<select class="modal-select" ng-model="project.locale">
+						<option value="">{{'SETTINGS-LOCALE-LEVEL-EMPTY-OPT' | translate}}</option>
+						<option value="pt-BR">{{'LOCALE-PORTUGUESE' | translate}}</option>
+						<option value="en-US">{{'LOCALE-ENGLISH' | translate}}</option>
+						<option value="es-ES">{{'LOCALE-SPANISH' | translate}}</option>
+						<option value="fr-FR">{{'LOCALE-FRENCH' | translate}}</option>
+						<option value="it-IT">{{'LOCALE-ITALIAN' | translate}}</option>
+						<option value="ja-JP">{{'LOCALE-JAPANESE' | translate}}</option>
+						<option value="de-DE">{{'LOCALE-GERMAN' | translate}}</option>
+						<option value="ko-KR">{{'LOCALE-KOREAN' | translate}}</option>
+						<option value="nl-BE">{{'LOCALE-DUTCH' | translate}}</option>
+						<option value="zh-CHT">{{'LOCALE-CHINESE-TRADITIONAL' | translate}}</option>
+						<option value="zh-CHS">{{'LOCALE-CHINESE-SIMPLIFIED' | translate}}</option>
+					</select>
+					<div class="input-error">{{projectError.locale | translate}}</div>
+				</div>
+
+				<div class="modal-field">
+					<div class="project-image" ng-click="openImageSelector($event)" ng-class="{'project-image2': nameImage}">
+						<input type="file" id="imageSelector" ng-model="image" onchange="angular.element(this).scope().getImage(this)"/>
+						<span class="upload-image" ng-class="{'upload-image2': nameImage}">{{'PROJECT.IMAGE-UPLOAD' | translate}}</span>
+					</div>
+					<div class="information-image" ng-class="{'information-image2': nameImage}">{{ nameImage || 'PROJECT.IMAGE-INFORMATION' | translate}}</div>
+				</div>
+
+				<label class="project-nlp-title">{{'PROJECT.SELECT-NLP' | translate}}:</label>
+				<ul class="row project-nlp-list">
+					<li class="col-xs-4" ng-repeat="nlp in nlps" ng-click="selectNLP(nlp.id)">
+						<div class="project-nlp-card" ng-class="{'project-nlp-card-selected': (nlp.selected == 1)}">
+							<img class="project-nlp-img" ng-src="/cockpit/img/NLP/{{nlp.img}}" alt="">
+							<p class="project-nlp-text text-center">{{nlp.name}}</p>
+						</div>
+					</li>
+				</ul>
+				<div class="input-error">{{projectError.nlp | translate}}</div>
+
+				<!-- NLP: Clever -->
+				<span ng-if="project.nlp==1">
+					<div class="modal-field">
+						<label class="modal-label" ng-class="{'show-modal-label':!project.cleverUrl}">{{'PROJECT.NLP-CLEVER-URL' | translate}}</label>
+						<input type="text" ng-class="{'empty':!project.cleverUrl,'error':projectError.cleverUrl}" placeholder="{{'PROJECT.NLP-CLEVER-URL' | translate}}" ng-model="project.cleverUrl" class="modal-input-text-project" maxlength="50"/>
+						<div class="input-error">{{projectError.cleverUrl | translate}}</div>
+					</div>
+				</span>
+
+				<!-- NLP: Luis -->
+				<span ng-if="project.nlp==2">
+					<div class="modal-field">
+						<label class="modal-label" ng-class="{'show-modal-label':!project.luisKeyString}">{{'PROJECT.NLP-LUIS-KEY' | translate}}</label>
+						<input type="text" ng-class="{'empty':!project.luisKeyString,'error':projectError.luisKeyString}" placeholder="{{'PROJECT.NLP-LUIS-KEY' | translate}}" ng-model="project.luisKeyString" class="modal-input-text-project" maxlength="50"/>
+						<div class="input-error">{{projectError.luisKeyString | translate}}</div>
+					</div>
+					<div class="modal-field">
+						<label class="modal-label" ng-class="{'show-modal-label':!project.luisUrl}">{{'PROJECT.NLP-LUIS-URL' | translate}}</label>
+						<input type="text" ng-class="{'empty':!project.luisUrl,'error':projectError.luisUrl}" placeholder="{{'PROJECT.NLP-LUIS-URL' | translate}}" ng-model="project.luisUrl" class="modal-input-text-project" maxlength="50"/>
+						<div class="input-error">{{projectError.luisUrl | translate}}</div>
+					</div>
+					<div class="modal-field">
+						<label class="modal-label" ng-class="{'show-modal-label':!project.luisApplicationId}">{{'PROJECT.NLP-LUIS-APPLICATION-ID' | translate}}</label>
+						<input type="text" ng-class="{'empty':!project.luisApplicationId,'error':projectError.luisApplicationId}" placeholder="{{'PROJECT.NLP-LUIS-APPLICATION-ID' | translate}}" ng-model="project.luisApplicationId" class="modal-input-text-project" maxlength="50"/>
+						<div class="input-error">{{projectError.luisApplicationId | translate}}</div>
+					</div>
+				</span>
+
+				<!-- NLP: Watson -->
+				<span ng-if="project.nlp==3">
+					<div class="modal-field">
+						<label class="modal-label" ng-class="{'show-modal-label':!project.workspaceUrl}">{{'PROJECT-WORKSPACE-INPUT' | translate}}</label>
+						<input type="text" ng-class="{'empty':!project.workspaceUrl,'error':projectError.workspaceUrl}" placeholder="{{'PROJECT-WORKSPACE-INPUT' | translate}}" ng-model="project.workspaceUrl" class="modal-input-text-project" maxlength="50"/>
+						<div class="input-error">{{projectError.workspaceUrl | translate}}</div>
+					</div>
+					<div class="modal-field">
+						<label class="modal-label" ng-class="{'show-modal-label':!project.workspaceUsername}">{{'PROJECT-WORKSPACE-USERNAME-INPUT' | translate}}</label>
+						<input type="text" ng-class="{'empty':!project.workspaceUsername,'error':projectError.workspaceUsername}" placeholder="{{'PROJECT-WORKSPACE-USERNAME-INPUT' | translate}}" ng-model="project.workspaceUsername" class="modal-input-text-project" maxlength="50"/>
+						<div class="input-error">{{projectError.workspaceUsername | translate}}</div>
+					</div>
+					<div class="modal-field">
+						<label class="modal-label" ng-class="{'show-modal-label':!project.workspacePassword}">{{'PROJECT-WORKSPACE-PASSWORD-INPUT' | translate}}</label>
+						<input type="password" ng-class="{'empty':!project.workspacePassword,'error':projectError.workspacePassword}" placeholder="{{'PROJECT-WORKSPACE-PASSWORD-INPUT' | translate}}" ng-model="project.workspacePassword" class="modal-input-text-project" maxlength="50"/>
+						<div class="input-error">{{projectError.workspacePassword | translate}}</div>
+					</div>
+				</span>
+					
+				<!-- Text Area Description -->
+				<div class="modal-separator fw500">{{'PROJECT-LABEL-DESCRIPTION' | translate}}</div>
+				<div class="modal-field">
+					<textarea maxlength="1000" rows="5" cols="50" class="modal-text-area" ng-class="{'empty':!project.description,'error':projectError.description}" placeholder="{{'PROJECT-PLACEHOLDER-DESCRIPTION' | translate}}" ng-model="project.description" class="" maxlength="255"/>
+					<div class="input-error">{{projectError.description}}</div>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="cockpit-bt success" ng-click="saveProject()" ng-disabled="hideButton">
+					{{hideButton ? 'SAVING' : 'SAVE' | translate}}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- PROJECT Modal - END -->

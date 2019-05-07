@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="70px" height="70px" viewBox="0 0 70 70" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>icon / messenger</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="icon-/-messenger" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="if_Facebook_Messenger_1298720">
+            <rect id="Rectangle-path" x="0" y="0" width="70" height="70"></rect>
+            <path d="M38.478125,43.6417187 L29.5651562,34.1359375 L12.1739844,43.6417187 L31.3042187,23.3329687 L40.4348437,32.8392969 L57.6089062,23.3329687 L38.478125,43.6417187 Z M35,0 C15.6701562,0 0,14.5091406 0,32.4072656 C0,42.6059375 5.08976562,51.7026562 13.0435156,57.6433594 L13.0435156,70 L24.9604687,63.459375 C28.1410937,64.3392969 31.5103906,64.8145312 35,64.8145312 C54.3298437,64.8145312 70,50.3053906 70,32.4072656 C70,14.5091406 54.3298437,0 35,0 Z" id="Facebook_Messenger" fill="#007FFF"></path>
+        </g>
+    </g>
+</svg>

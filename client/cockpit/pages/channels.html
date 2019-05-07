@@ -1,0 +1,109 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<link href="/cockpit/css/channel.min.css" rel="stylesheet">
+<link href="/cockpit/css/modal.min.css" rel="stylesheet">
+
+<div>   
+    <!--  Screen without channel  -->
+	<div ng-if="channels.length == 0" ng-value="channels">
+		<div class="channel-desc-empty">
+			<span class="opacity">
+                {{' CHANNEL-DESC-EMPTY-PART1' | translate}} </br>
+                {{' CHANNEL-DESC-EMPTY-PART2' | translate}} </br>
+                {{' CHANNEL-DESC-EMPTY-PART3' | translate}} 
+            </span>
+		</div>
+	</div>
+       
+
+     <!--  Screen with channel  <div ng-if="qtRows > '0'" ng-value="qtRows">-->
+	<div ng-if="channels.length > 0" ng-value="channels">
+        
+        <div class="row">
+                <div class="col-md-2 channel-label-channelname">{{'CHANNEL-LABEL-CHANNELNAME' | translate}}</div>
+                <div class="col-md-2 channel-label-classification">{{'CHANNEL-LABEL-CLASSIFICATION' | translate}}</div>
+        </div>
+
+        <div class="row channel-background-list-channel" ng-repeat="channel in channels" >
+                <div class="col-md-2 channel-value-channelname">{{channel.name}}</div>
+                <div class="col-md-8 channel-value-classification">{{channel.classificationName}}</div>
+   		        <div class="col-md-2 channel-edit-rem">
+				    <img src="/cockpit/img/pencil.svg" ng-click="selectChannel(channel)" height="30"/>
+				    <img src="/cockpit/img/trash.svg" ng-click="removeChannel(channel.id)" height="30" user-role any='REMOVE_CHANNEL'/>
+			    </div>
+        </div>
+		
+	</div>
+
+</div>
+
+<!-- Channel Modal -->
+<div class="modal fade" id="channelModal" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content ">
+			<div class="modal-btn-close">
+				<button type="button" class="pull-right close-modal-btn" data-dismiss="modal"><i class="fas fa-times"></i></button>	
+			</div>
+			<div class="modal-header">
+				<h4 class="modal-title img-channels">{{'CHANNEL-LABEL-EDIT-CHANNEL' | translate}}</h4>
+			</div>
+			<div class="modal-body modal-fields">
+				<div class="modal-separator">{{'CHANNELS-LABEL-DATA' | translate}}</div>
+
+				<!-- Field Name Channel content-->
+				<div class="modal-field"> 
+					<label class="modal-label" ng-class="{'show-modal-label':!channel.name}">{{'CHANNELS-LABEL-NAME' | translate}}</label>
+					<input type="text" ng-class="{'empty':!channel.name,'error':channelError.name || channelError.characterValidation}" placeholder="{{'CHANNELS-LABEL-NAME' | translate}}" ng-model="channel.name" class="modal-input-text" maxlength="45"/>
+					<div ng-if="channelError.name" class="input-error">{{channelError.name}}</div>
+					<div ng-if="channelError.characterValidation" class="input-error character-validation">{{'CHARACTER-VALIDATION' | translate}}</div>
+				</div>
+				
+				<div class="system-name-wrapper">
+					<div>
+						<span class="system-name-label" ng-class="{'show-modal-label':!channel.name}">{{'TERM-IN-THE-SYSTEM' | translate}}
+							
+						</span>
+						<i uib-popover="{{'CONTENT-TERM-SYSTEM' | translate}}" popover-class="popoverChannel" popover-trigger="{click: click, outsideClick: outsideClick}" class="fas fa-info-circle system-name-info"></i>
+					</div>
+					<div class="system-name-text">{{channel.systemName}}</div>
+				</div>
+
+				<div class="channel-elements"></div>
+
+				<!-- List of Channel Classification -->
+				<div class="modal-separator">{{'CHANNELS-LABEL-CLASSIFICATION' | translate}}</div>
+				<div class="modal-field">
+					<select class="modal-select" ng-model="channel.classificationId">
+						<option value="">{{'CHANNELS-LABEL-SELECT-LIST' | translate}}</option>
+						<option value="{{channelClassification.classificationId}}" ng-repeat="channelClassification in channelClassifications">{{channelClassification.name}}</option>
+					</select>
+					<div class="input-error">{{channelError.classificationId}}</div>
+				</div>
+
+				<div class="channel-elements"></div>
+
+				<!-- Text Area Description -->
+				<div class="modal-separator">{{'CHANNELS-LABEL-DESCRIPTION' | translate}}</div>
+				<div class="modal-field">
+					<textarea maxlength="1000" rows="5" cols="50" class="modal-text-area" ng-class="{'empty':!channel.description,'error':channelError.description}" placeholder="{{'CHANNELS-PLACEHOLDER-DESCRIPTION' | translate}}" ng-model="channel.description" class="" maxlength="255"></textarea>
+				</div>
+
+				<div class="channel-elements"></div>
+
+				<!-- OK/CANCEL content-->
+				<div class="modal-footer">
+					<button type="button" class="cockpit-bt danger" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+					<button type="button" class="cockpit-bt success" ng-disabled="savingChannel" ng-click="saveChannel()">{{(savingChannel ? 'SAVING' : 'SAVE') | translate}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

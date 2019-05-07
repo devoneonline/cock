@@ -1,0 +1,609 @@
+/*!
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved
+*/
+
+/* <----- QLIK DESIGN CUSTOM  ------> */ 
+
+
+/*ALTER ICON KPI EXTENSION */ 
+.qv-object-qsstatistic i.large.icon, .qv-object-qsstatistic i.large.icons {
+    font-size: 0.142857em !important;
+}
+
+
+
+
+/*ALTER POSITION DATA FILTER EXTENSION*/ 
+.qv-object .qv-object-header.thin {
+    height: 0px !important;
+    width: 0px !important;
+}
+
+.datelayoutconfig {
+    border-radius: 3px !important;
+    padding: 9px !important;
+}
+
+
+.daterangepicker.dropdown-menu {
+    background: white !important; 
+}
+
+/*.ranges li {
+    background: white !important;
+    color: black !important;
+}*/
+
+
+
+
+/* ALTER LAYOUT TABLE */  
+/*.qv-object .qv-object-content-container table tbody tr td {
+    padding: 7px !important;
+    font-family: Raleway !important;
+}*/
+
+/*.qv-inner-object .qv-st-data-cell:first-child {   
+    color: #666666 !important;	
+    font-size: 13px !important;	
+    font-weight: bold !important;	
+    font-family: Raleway !important;
+
+}*/
+
+/*.qv-object .qv-object-content-container table tbody tr td {
+    color: #010002 !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    font-family: Raleway !important;
+}*/
+
+/*
+.qv-st-data-cell:not(:last-child) .qv-st-value {
+    padding-right: 0px !important;
+}*/
+
+
+/*.qv-st-interactive:not(.qv-st-selections-active) .qv-st-header-sortable:not(.qv-st-custom-header), .qv-st-interactive:not(.qv-st-selections-active) .qv-st-header:not(.qv-st-custom-header) .qv-st-header-cell-search:not(.qv-st-total-cell) {
+    opacity: 0;
+    border: none !important;
+    display: none !important;
+    font-family: Raleway !important;
+}
+
+
+
+
+/* ALTER LAYOUT CURRENT BAR */  
+.qv-panel-current-selections {
+    font-family: Raleway !important;
+    background: transparent !important;
+}
+
+.qv-panel-current-selections .no-selection {
+    color: rgb(102, 102, 102) !important;
+    background:transparent !important;
+    border: none !important;
+}
+
+.qv-panel-current-selections .wrap {
+    color: rgb(102, 102, 102) !important;
+    background:transparent !important;
+    border: none !important;
+}
+
+.qv-panel-current-selections .qv-selections-pager {
+    color: rgb(102, 102, 102) !important;
+    background:transparent !important;
+    border: none !important;
+    padding-left: 0px !important;
+    
+}
+
+.qv-panel-current-selections .buttons-end {
+    display: none !important;
+    background:transparent !important;
+    border: none !important;
+}
+
+/* .qv-panel-current-selections .buttons .qv-subtoolbar-button, .qv-panel-current-selections .buttons-end .qv-subtoolbar-button {
+    background:transparent !important;
+    border: none !important;
+}
+
+.qv-panel-current-selections .buttons .qv-subtoolbar-button i, .qv-panel-current-selections .buttons-end .qv-subtoolbar-button i {
+    font-size: 27px !important;
+}
+
+.qv-panel-current-selections .buttons .qv-subtoolbar-button:enabled, .qv-panel-current-selections .buttons-end .qv-subtoolbar-button:enabled {
+    color: rgb(102, 102, 102) !important;
+    opacity: 0.5;
+} */
+
+.touch-off .qv-panel-current-selections .remove:hover, .touch-off .qv-panel-current-selections .unlock:hover, .touch-off .qv-panel-current-selections .lock:hover {
+    color: #e60d0d !important;
+    opacity: 0.5;
+}
+
+.qv-panel-current-selections .buttons {
+    /* background:transparent !important; */
+    display: none !important;
+}
+
+.qv-panel-current-selections li {
+    border-radius: 25px !important;
+    border-color: white !important;
+}
+
+.qv-panel-current-selections .item {
+    border-radius: 25px !important;
+    background:white !important;
+    margin-left: 10px !important;
+    width: 180px !important;
+    border-color: white;
+}
+
+.qv-panel-current-selections .name{
+    color: #373737 !important;	
+    font-size: 14px !important;	
+    font-weight: bold  !important;	
+    line-height: 16px  !important;	
+    margin-left: 8px !important;
+}
+
+.qv-panel-current-selections .values {
+    color: #373737 !important;	
+    font-size: 14px !important;	
+    line-height: 16px  !important;
+    width: 140px !important;
+    margin-left: 8px !important;
+}
+
+.qv-panel-current-selections .item .qv-state-count-bar{
+    width: 90% !important;
+    left: 10px  !important;
+    height: 3px !important;
+    margin-top: 20px !important;
+}
+
+.qv-pager .qv-pager-nav:active {
+    color: rgb(166, 170, 171) !important;
+    background: transparent !important;
+}
+
+
+.lui-icon--arrow-right{
+    margin-top: 5px !important;
+    margin-left: 15px !important;
+}
+
+.lui-icon--arrow-left{
+    margin-top: 5px !important;
+    margin-left: 0px !important;
+}
+
+ .qv-pager-next{
+    background: transparent !important;
+    width: 24px !important;
+ }
+
+.qv-pager-previous{
+     background: transparent !important;
+     width: 20px !important;
+}
+
+
+
+
+/* MENU FILTER */ 
+.qv-collapsed-listbox {
+    border: none !important;
+}
+
+
+.qv-collapsed-listbox .title-wrapper {
+   background: rgb(237, 237, 237) !important;
+}
+
+
+.qv-state-count-bar .state.optional{
+    background: rgb(237, 237, 237) !important;  
+}
+
+.qv-state-count-bar{
+    background: rgb(237, 237, 237) !important; 
+    color: rgb(237, 237, 237) !important; 
+}
+
+.qv-selection-toolbar {
+    font-family: Raleway !important;
+}
+
+
+
+
+/* MODAL ERROR QLIK */ 
+.qui-modalbackground-centered {
+    background:  #e6eeef !important;
+}
+
+
+.qui-delayedModal {
+    margin-top: -990px !important;
+    position: absolute  !important;
+}
+
+
+
+/*LOCK FILTER PROJECT */ 
+.sel-toolbar-click-to-unlock-bg{
+    display: none !important;
+}
+
+
+.qv-panel-current-selections .icon-toolbar-locked:before{
+    top: 8px !important;
+    color: #a00606 !important;
+    left: calc(88%) !important;
+}
+
+
+.sel-toolbar-list-item-lockunlock {
+    display: none !important;
+}
+
+
+
+
+/*EXPORT BUTTON */ 
+.fa-download:before {
+    content: url('/cockpit/img/Qlik/iconeDownload.svg') !important;    
+}
+
+
+.qlik-export-button{
+    height: 35px;
+    width: 135px;
+    margin-top: 15px;
+    margin-left: 0px;
+}
+
+
+.qlik-export-img-button{
+    height: 32px;
+    width: 90px;
+    margin-top: 15px;
+    margin-left: 169px;
+    font-family: "QlikView Sans", sans-serif;
+    color: #FFFFFF;
+    background-color: #00AA5A;
+    border-radius: 20px;
+    font-size: 14px;
+    text-align: right;
+    font-weight: bold;
+    border: none;
+    background-image: url('/cockpit/img/Qlik/iconeDownload.svg');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-position-x: 20px;
+    padding-right: 20px;
+    margin-bottom: 0;
+    line-height: 1.42857143;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+
+.qlik-export-pdf-button{
+    height: 32px;
+    width: 180px;
+    margin-top: 30px;
+    margin-left: 15%;
+    color: #FFFFFF;
+    background-color: #00AA5A;
+    border-radius: 20px;
+    font-size: 14px;
+    text-align: right;
+    font-weight: bold;
+    border: none;
+    background-image: url('/cockpit/img/Qlik/iconeDownload.svg');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-position-x: 20px;
+    padding-right: 20px;
+    margin-bottom: 0;
+    line-height: 1.42857143;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+
+
+
+/*EXCLUSIVE QLIK */ 
+
+.qv-object {
+    /*font-family: Raleway !important;*/
+    background-color: transparent !important;
+}
+
+
+.qv-tooltip {
+     font-family: Raleway !important;
+}
+
+
+.qv-object.qv-selections-active {
+    border: none !important;
+}
+
+.sel-toolbar-card{
+    border: none !important;
+}
+
+.object-error.soft-error {
+    background-image: none !important;
+}
+
+.object-error-message{
+    font-size: 18px !important;
+    font-family: Raleway !important;
+}
+
+
+.icon-info:before {
+    color: #00AA5A !important;
+}
+
+
+
+
+/* INFORMATIVE LABEL WHEN CONDICION FILTER IS TRUE */ 
+
+.label-informative-filter-container-G{
+    font-size: 18px !important;
+    font-family: Raleway !important;
+    margin-top: 22%;
+    margin-left: 22%;
+    position: absolute !important;
+    width: 412px;
+    text-align: center;
+}
+
+.label-informative-filter-container-M{
+    font-size: 18px !important;
+    font-family: Raleway !important;
+    margin-top: 48%;
+    margin-left: 14%;
+    position: absolute !important;
+    width: 412px;
+    text-align: center;
+}
+
+.label-informative-filter-container-P{
+    font-size: 18px !important;
+    font-family: Raleway !important;
+    margin-top: 29%;
+    margin-left: 0%;
+    position: absolute !important;
+    width: 412px;
+    text-align: center;
+}
+
+.label-informative-filter-container-GG{
+    font-size: 18px !important;
+    font-family: Raleway !important;
+    margin-top: 17%;
+    margin-left: 28%;
+    position: absolute !important;
+    width: 412px;
+    text-align: center;
+}
+
+
+
+.label-informative-filter-container-PP{
+    font-size: 18px !important;
+    font-family: Raleway !important;
+    margin-top: 48%;
+    margin-left: 7%;
+    position: absolute !important;
+    width: 330px;
+    text-align: center;
+}
+
+
+
+
+/* <----- HEADER FILTER  ------> */  
+
+.label-filter{
+    height: 16px;	
+    width: 35px;	
+    color: #666666;	
+    font-family: Raleway;	
+    font-size: 14px;	
+    font-weight: bold;	
+    line-height: 16px;
+    margin-left: 32px;
+    margin-top: 35px; 
+}
+
+
+.bar-background-filter{
+    background-color: #FFFFFF;
+	padding-bottom: 8px;	
+    width: 750px;
+    margin-left: 45px;
+    margin-top: 20px; 
+}
+
+.qlik-filter-position {
+	height: 36px;	
+    width: 244px;
+    margin-left: 0px;
+    margin-top: 8px;
+}
+
+
+.qlik-filter-label-position-colA {
+	height: 16px;
+	width: 64px;
+	color: #373737;
+	font-family: Raleway;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 16px;
+    margin-left: 30px;
+    margin-top: 15px;
+}
+
+
+.qlik-filter-label-position-colB {
+    height: 28px;
+    width: 102px;
+    color: #373737;
+    font-family: Raleway;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 16px;
+    margin-left: 15px;
+    margin-top: 15px;
+}
+
+
+
+
+/* <----- BAR FILTER OF QLIK  ------> */  
+
+.bar-qlik-currentSelections{
+	height: 45px;	
+    width:892px;
+    margin-left: 0px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: none !important;
+    padding-left: 0px !important;
+}
+
+
+
+/* <-----BUTTON OF QLIK FILTER  ------> */  
+
+.position-btns-filter{
+    margin-left:83px;
+}
+
+.enable-btn-filter{
+    opacity: 1.0 !important;
+    pointer-events: auto !important;
+    cursor:pointer !important;
+}
+
+.disable-btn-filter{
+    opacity: 0.2 ;
+    pointer-events: none ;
+}
+
+.btnFilters{
+    font-size: 27px !important;
+    margin-top: 16px;
+    color: rgb(166, 170, 171) !important;
+    width: 45px;
+    padding-left: 7px !important;
+}
+
+[data-qcmd="forward"] {
+    margin-left: 6px;
+}
+
+
+
+
+/* DESCRIPTION TUTORIAL WITH TOOLTIP */ 
+.label-description{
+    font-family: Raleway ;
+    color: #8668a0;
+}
+
+.button-informative{
+    content: url('/cockpit/img/Qlik/iconInformation.png');
+    height:23px;
+    border: 0;
+    opacity: 0.7;
+}
+
+.tooltip-position-filters-container{
+    margin-left: 0px;
+    margin-top: 18px;
+    width: 0px;
+}
+
+
+.tooltip-filters-size {
+    min-width: 480px !important;
+}
+
+
+
+/* USER MANUAL */ 
+.btn-user-manual{
+    position: relative;
+    color: #FFFFFF;
+    background-color: #79019a;
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    height: 40px;
+    width: 197px;
+    margin-top: 15px;
+    margin-left: 2.8%;
+    border: none;
+    text-align: center;
+    font-family: Raleway ;
+}
+
+
+
+/* ALERT MESSSAGE TO DASHBOADS */ 
+.gen-msg-area {
+	position: fixed;
+	top: 10px;
+	right: 16px;
+	z-index: 1061;
+}
+.cockpit-msg {
+	border-radius: 6px;
+	color: white;
+	min-width: 200px;
+	max-width: 500px;
+	padding: 16px;
+	margin-top:0px;
+	box-shadow: 0 2px 4px 0 rgba(89,89,89,0.5);
+	opacity:0.9;
+	transition: 0.3s opacity linear;
+	z-index:1061;
+}
+.cockpit-msg.success {
+	background-color: #00A24D;
+}
+.cockpit-msg.warning {
+	background-color: #E0B709;
+}
+.cockpit-msg.danger {
+	background-color: #DB5050;
+}
+
+
+
+
+/* DIRECTIVE TAG QLIK-OPACITY */ 
+.hide-elm-rule {
+    opacity: 0;
+}
+

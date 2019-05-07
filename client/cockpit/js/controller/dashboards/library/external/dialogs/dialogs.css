@@ -1,0 +1,18 @@
+/*
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved
+*/ 
+
+/* Custom dialog/modal headers */
+
+.dialog-header-error { background-color: #d2322d; }
+.dialog-header-wait { background-color: #428bca; }
+.dialog-header-notify { background-color: #eeeeee; }
+.dialog-header-confirm { background-color: #333333; }
+	.dialog-header-error span, .dialog-header-error h4,
+	.dialog-header-wait span, .dialog-header-wait h4,
+	.dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }

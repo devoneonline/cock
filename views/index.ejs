@@ -1,0 +1,161 @@
+<!-- 
+ eVA
+ Version: 2.3.0
+ copyright (c) 2018 everis Spain S.A
+ Date: 01 December 2018
+ Author: everis bots@everis.com - Guilherme Ferreira Gomes, Renan Ventura, Evelyn Neves, Luiz Afonso
+ All rights reserved
+ -->
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:regular,black,bold">
+	<link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./css/login.min.css">
+	<link rel="stylesheet" href="./css/login-main.min.css">
+	<link rel="stylesheet" href="./css/modal.min.css" >
+	
+
+  <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../node_modules/angular/angular.min.js"></script>
+  <script type="text/javascript" src="../node_modules/angular-translate/dist/angular-translate.min.js"></script>
+  <script type="text/javascript" src="../node_modules/angular-translate/dist/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+  <script type="text/javascript" src="../node_modules/angular-translate/dist/angular-translate-storage-local/angular-translate-storage-local.min.js"></script>
+  <script src="./node_modules/angular-recaptcha/release/angular-recaptcha.min.js"></script>
+  <script type="text/javascript" src="./node_modules/summernote/dist/summernote.min.js"></script>
+  <script src="./js/login.js"></script>
+  <script type="text/javascript" src="./js/factories/messages-factory.js"></script>
+  
+</head>
+
+<body ng-app="loginApp" ng-controller="loginCtrl">
+
+	<div class="container-fluid">
+		<nav class="login-div">
+			<div class="row">
+				<div class="col-12 col-md-5 form-login">
+					<div class="row">
+						<div class="col-md-12 login-img-system"></div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12 login-title">{{'LOGIN-TITLE' | translate}}</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-12 login-desc">{{'LOGIN-INTRO-PORTAL' | translate}}</div>
+					</div>
+
+					<form ng-submit="login($event)" >
+
+						<div class="row" ng-class="{'login-input-area':wrongEmail}" >
+							<div class="col-xs-2 login-imgUser" ng-class="{inputLoginFailImg:wrongEmail , inputTouched:inputETouched}" ng-style="alterErrorBoxImage"></div>
+							<input class="col-xs-10 input-email" ng-change="verifyEmail($event)" ng-focus="inputETouched=true" ng-click="wrongEmail=false" ng-blur="inputETouched=false" ng-class="{inputLoginFail:wrongEmail}" ng-style="alterErrorBorder" type="text" name="email" placeholder="{{'LOGIN-INPUT-EMAIL-PLACEHOLDER' | translate}}" ng-model="email">
+						</div>
+
+						<div class="row">
+							<div class="col-md-12 login-desc-fail" ng-show="wrongEmail">{{errorText | translate}}</div>
+						</div>
+					
+						<div class="row" ng-class="{'login-input-area':wrongPassword}">
+							<div class="col-xs-2 login-imgPassword" ng-class="{inputLoginFailImg:wrongPassword , inputTouched:inputPTouched} ||{inputLogintouch:inputTouched}" ng-style="alterErrorBoxImage"></div>
+							<input class="col-xs-10 input-senha" ng-focus="inputPTouched=true" ng-click="wrongPassword=false" ng-blur="inputPTouched = false" ng-class="{inputLoginFail:wrongPassword}" ng-style="alterErrorBorder" type="password" name="password" placeholder="{{'LOGIN-INPUT-PASSWORD-PLACEHOLDER' | translate}}" ng-model="password">
+						</div>
+						<div class="row">
+							<div class="col-md-6 login-desc-fail" ng-show="wrongPassword">{{errorText | translate}}</div>
+						</div>
+
+						<div class="row">
+							<div ng-click="toggleResetPass()" class="login-forgot col-md-6">{{'LOGIN-FORGOT-PASSWORD' | translate}}</div>
+						</div>
+
+						<div class="row"><input class="login-button col-md-6" ng-click="login($event)" type="submit" value="{{'LOGIN-BUTTON-LOGIN' | translate}}"/></div>
+
+					</form>
+
+					
+
+				</div>
+
+				<div class="hidden-xs hidden-sm col-12 col-md-7 login-image">
+					<img class="ilustra-img"src="/img/ilustra.svg" alt="">
+				</div>
+
+			</div>
+		</nav>
+	</div>
+
+	<div ng-if='loading' class="cc-loading">
+		<div class="lds-default cc-loading-img">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+	</div>
+
+	<!-- Forgot Password Modal -->
+	<div class="modal fade" id="resetPassModal" role="dialog" >
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-login-btn-close">
+					<button type="button" class="pull-right close-modal-login-btn" data-dismiss="modal"><i class="fas fa-times"></i></button>	
+				</div>
+
+				<div class="modal-header">
+					<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+					<h4 class="modal-title reset-password">{{'FORGOT-PASS' | translate}}</h4>
+				</div>
+				<form ng-submit="resetPassword($event)">
+					<div class="modal-body row">
+						<div class=" col-lg-10 col-lg-offset-1">
+							<label class="modal-label">{{'TYPE-MAIL' | translate}}</label>
+							<input type="email" ng-model="requestEmail" class="modal-input-text cc-login-passwordmodal-input" placeholder="ex: email@email.com" />
+							<div class="input-error">{{directoryError.name | translate}}</div>
+						</div>
+						<div class="col-lg-10 col-lg-offset-1" ng-show="hasCaptcha">
+							<% if (recaptchaKey) { %>
+								<div
+									vc-recaptcha
+									key="'<%=recaptchaKey%>'"
+									ng-model="verify.myRecaptchaResponse"
+								></div>
+							<% } %>
+						</div>
+						<div class="modal-footer" ng-show="!msgSend">
+							<button type="submit" class="cockpit-bt success cc-btn-login">{{'SEND' | translate}}</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130921667-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-130921667-1');
+	</script>
+
+
+</body>
+
+</html>

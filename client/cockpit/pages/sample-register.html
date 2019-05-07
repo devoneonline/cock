@@ -1,0 +1,69 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<link href="/cockpit/css/sample-register.min.css" rel="stylesheet">
+
+
+<!--  Screen Insert  -->
+<div class="form-container"> 
+
+    <!--  Row 1  -->
+    <div  class="row">
+        <div class="col-md-6"> 
+            <label class="sample-label-left">{{'SAMPLE-LABEL-DATE' | translate}}*</label>
+            <input type="text" ng-class="{'empty':!sample.createDate,'error':sampleError.createDate}" placeholder="{{'SAMPLE-PLACEHOLDER-DATE' | translate}}" ng-model="sample.createDate" class="sample-modal-input-text dateMask"  maxlength="10"/>
+            <div class="sample-input-error">{{sampleError.createDate}}</div>
+        </div>
+
+  
+        <!-- List of Channel name -->
+        <div class="col-md-6" >
+            <label class="sample-label-right" >{{'SAMPLE-LABEL-CHANNEL' | translate}}*</label>
+            <select class="sample-modal-select" ng-model="sample.channelId" >
+                <option value="">{{'SAMPLE-PLACEHOLDER-CHANNEL' | translate}}</option>
+                <option value="{{channel.id}}" ng-repeat="channel in channels">{{channel.name}}</option>
+            </select>
+            <div class="sample-input-error">{{sampleError.channelId}}</div>
+        </div>
+    </div>
+              
+     <!--  Row 2  --> 
+    <div  class="row">
+        <div class="col-md-6"> 
+            <label class="sample-label-left" >{{'SAMPLE-LABEL-SAMPLE-AMOUNT' | translate}}*</label>
+            <input type="text" ng-class="{'empty':!sample.sampleBulk,'error':sampleError.sampleBulk}" placeholder="{{'SAMPLE-PLACEHOLDER-SAMPLE-AMOUNT' | translate}}" ng-model="sample.sampleBulk" class="sample-modal-input-text sampleMask"  maxlength="10"/>
+            <div class="sample-input-error">{{sampleError.sampleBulk}}</div>
+        </div>  
+          
+        <div class="col-md-6" > 
+            <label class="sample-label-right"> {{'SAMPLE-LABEL-ASSERTIVENESS-PERCENTAGE' | translate}}*</label>
+            <input type="text"  ng-class="{'empty':!sample.sampleAssertivenessPercentage,'error':sampleError.sampleAssertivenessPercentage}" placeholder=" {{'SAMPLE-PLACEHOLDER-ASSERTIVENESS-PERCENTAGE' | translate}}" ng-model="sample.sampleAssertivenessPercentage" class="sample-modal-input-text porcentMask" maxlength="6"/>
+            <div class="sample-input-error">{{sampleError.sampleAssertivenessPercentage}}</div>
+        </div> 
+    </div>
+
+     <!--  Row 3  -->
+    <div class="row">
+        <div class="col-md-12">
+            <label class="sample-label-left" style="margin-top: 10px !important;">{{'SAMPLE-LABEL-COMMENTARY' | translate}}</label>
+            <textarea maxlength="1000" rows="5" cols="50" class="sample-modal-text-area" ng-class="" placeholder="{{'SAMPLE-DESC-COMMENTARY' | translate}}" ng-model="sample.observation" class="" maxlength="255"/>
+        </div>
+    </div>
+
+
+     <!--  Row 4  --> 
+    <div class="row">
+        <label class="col-md-2 label-mandatory-fields">*{{'SAMPLE-LABEL-REQUIRED-FIELDS' | translate}}</label>
+        <div class="col-md-4" style="margin:14px 0px 0px 287px !important;width: 159px !important;">
+            <button type="button" class="cockpit-bt success" ng-disabled="savingSample" ng-click="saveSample()" >{{(savingSample ? 'SAVING' : 'SAVE') | translate}}</button>
+        </div>
+    </div>
+   
+</div> 
+  
+    

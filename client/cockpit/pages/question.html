@@ -1,0 +1,29 @@
+
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<script>
+  function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+  }
+</script>
+
+<link href="/cockpit/css/qlik-animation-loading.css" rel="stylesheet">
+
+
+<div>   
+
+  <!--  Loading Img  -->
+  <div class="imageLoading image-pos-center"></div>
+
+  <iframe id="iframeReportQuestion" src="pages/dashboards/question_frame.html" width="1100" frameborder="0" scrolling="no" onload="resizeIframe(this)" class="reportIframe"></iframe>
+
+  
+</div>
+
+

@@ -1,0 +1,87 @@
+<!-- /*
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved
+*/ -->
+
+<!-- Directiva Try NOW  -->
+
+<!-- Contiene la parte visual de la ventana de chat con el Bot -->
+<link rel="stylesheet" href="/cockpit/css/try-now.min.css">
+
+<!-- IMPORT SELECT INICIO  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+<!-- IMPORT SELECT FIN -->
+
+ <!-- INICIO Boton Try It  -->
+ <div class="icon-chat" ng-click="showWindowTest()">
+
+    <div class="icon-button-green" ng-if="listMessage.length < 2">
+        <img src="img/eVAButtonGreen.svg" class="icon_chatbot">
+    </div>
+    <div class="icon-button-black icon_chatbot_hover">
+        <img src="img/eVAButtonGreen.svg" >
+        <p>TRY IT</p>
+    </div>
+    <div class="icon-button-white icon_chatbot"  ng-if="listMessage.length > 1">
+        <img src="img/eVAButtonGreen.svg" >
+        <p>TRY IT</p>
+    </div> 
+</div>
+<!-- INICIO Boton Try It  -->
+<div class="panel panel-default panel-body-try no-visible" ng-class="status" ng-init="init()">
+    <div class="panel-content-try">
+        <div class="head">
+            <p>{{'TRY_IT_OUT_TRY_NOW' | translate}}</p>
+            <span ng-if="type == ''">{{'CHOOSE_CHANNEL_TRY_NOW' | translate}}</span>
+            <span ng-if="type != ''">{{type}} | <a class="link-change-channel" ng-click="changeChannel()">{{'CHANGE_CHANNEL_TRY_NOW'  | translate}}</a></span>
+            <button style="font-family: 'Poiret One', cursive;" ng-click="showWindowTest()">&times;</button>
+        </div>
+        <div class="body animationIf" ng-if="type == ''">
+            <input placeholder="{{'SEARCH_CHANNEL_TRY_NOW' | translate}}" id="input_filter_channels" name="input_filter_channels" autocomplete="off" ng-model="filterInput" ng-keyup="filterContent(filterInput)">
+            <i class="fa fa-search icon-search" aria-hidden="true"></i>
+            <div class="content" style="height: 80%;padding-left: 10px;padding-right: 15px;">
+                <div ng-repeat="channel in listChannel">
+                    <p>{{channel.title}}</p>
+                    <button ng-repeat="button in channel.buttons" ng-click="selectChannel(button)">
+                        {{button.title}}
+                    </button>
+                </div>
+                <div ng-if="listChannel.length == 0 && !loading">
+                    {{'NO_DATA_TRY_NOW' | translate}}
+                </div>
+                <div ng-if="loading" style="align-content: center;padding: 5rem;">
+                    <img class="project-nlp-img" ng-src="/cockpit/img/spinner.svg" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="body chat animationIf" ng-if="type != ''">
+            <div class="error-response" ng-if="noAssist">{{'NO_ASSIST_TRY_NOW' | translate}}</div>
+            <div class="content" id="content_test_try_now">
+                <div ng-class="message.type" id="{{message.id}}" ng-repeat="message in listMessage" ng-init="$last ? downScrollContent() : null">
+                    <img ng-if="message.type == 'received'" src="img/icon_bot.svg">
+                    <p ng-if="message.type == 'received'" style="padding-left: 0px;" ng-bind-html="message.text"></p>
+                    <p ng-if="message.type == 'send'" ng-bind-html="message.text"></p>
+                </div>
+                <div class="received" id="9999999" ng-if="searchResponse">
+                <!-- <div class="received" id="9999999">     -->
+                    <img src="img/icon_bot.svg">
+                    <div id="preloader_4">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer animationIf" ng-if="type != ''">
+            <input placeholder="{{'TEST_TRY_ASSIST_TRY_NOW' | translate}}" id="input_send_message" name="input_send_message" autocomplete="off" ng-model="message" ng-keyup="sendMessageKey($event , message)" ng-focus="sendFocus(true)" ng-blur="sendFocus(false)">
+            <!-- <i class="fa fa-paper-plane" aria-hidden="true" ng-click="sendMessage(message)"></i> -->
+            <div id="iconFly" class="icon-fly" ng-click="sendMessage(message)"></div>
+        </div>
+    </div>
+</div>

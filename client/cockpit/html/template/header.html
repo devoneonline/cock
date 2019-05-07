@@ -1,0 +1,74 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+
+<link rel="stylesheet" href="/cockpit/css/header.min.css">
+<link rel="stylesheet" href="/cockpit/css/project-list-directive.min.css">
+<nav class="container-fluid cc-header">
+
+  <ul class="cc-header-list-left">
+    <li class="cc-header-item cc-header-togglenavigation">
+      <div class="cc-header-togglenavigation-icon" ng-click="toggleLeftBar()">
+        <i class="fas fa-times" ng-if="isOpened && projectName() && !showProjects"></i>
+        <i class="fas fa-bars" ng-if="!isOpened && projectName() && !showProjects"></i>
+      </div>
+    </li>
+    <li class="cc-header-item cc-header-logo" ng-click="projectsPage(); toggleProject(false)">
+      <img src="/img/logoSystem.svg" alt="logo do EVA">
+    </li>
+    <li class="cc-header-item cc-header-project" ng-if="projectName()">
+      <span class="cc-header-project-label hidden-xs hidden-sm">{{'PROJECT.TITLE' | translate}}</span>
+      <span ng-click="toggleProject(!showProjects)">
+        <span class="cc-header-project-name">{{projectName() | limitTo:10}}<span ng-if="projectName().length > 10">...</span></span>
+        <span ng-if="projects.length>1"><span class="cc-header-project-icon">
+            <i class="fas fa-angle-down" ng-if="!showProjects" ></i>
+            <i class="fas fa-angle-up" ng-if="showProjects"></i>
+        </span></span>
+      </span>
+    </li>
+  </ul>
+
+  <ul class="pull-right cc-header-list-rigth">
+    <li class="cc-header-item cc-header-translate" ng-class="{'cc-header-translate-open':translateBT}" data-ng-mouseover="translateBT=true" data-ng-mouseleave="translateBT=false">
+      <ul>
+        <li ng-repeat="languageImage in langImgs" ng-show="translateBT">
+          <img ng-if="languageImage && languageImage.img" ng-src="/cockpit/img/{{languageImage.img}}.svg" ng-click="updateLanguage(languageImage.lang)" >
+        </li>
+      </ul>
+      <img ng-hide="translateBT" class="cc-header-translate-selected" src="/cockpit/img/{{langSelected}}.svg" >
+    </li>
+    <li class="cc-header-item cc-header-item-hover cc-header-settings" user-role any="CREATE_STATUS, CREATE_PARAMETER" ui-sref="settings" ng-click="showLoading()">
+      <span class="hidden-xs hidden-sm">{{'HEADER-CONFIG' | translate}}</span>
+      <span class="glyphicon glyphicon-cog"></span>
+    </li>
+    <li class="cc-header-item cc-header-item-hover cc-header-userinfo" ng-click="toggleUserInfo()">
+      <span class="hidden-xs hidden-sm">{{user.name}}</span>
+      <span class="glyphicon glyphicon-user"></span>
+    </li>
+    <li class="cc-header-item cc-header-item-hover cc-header-logout">
+      <a href="/logout">
+        <span class="hidden-xs hidden-sm">{{'HEADER-EXIT' | translate}}</span>
+        <span class="glyphicon glyphicon-log-out"></span>
+      </a>
+    </li>
+  </ul>
+
+</nav>
+
+<div class="cc-selectproject" ng-class="{'cc-selectproject-open':showProjects}">
+  <div class="container cc-selectproject-projects">
+    <projects-list
+      projects="projects"
+      editable="false"
+      createnew="false"
+      pagination="true"
+      on-open="toggleProject"
+      >
+    </projects-list>
+  </div>
+</div>

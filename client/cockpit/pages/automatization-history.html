@@ -1,0 +1,71 @@
+<!-- 
+* eVA
+* Version: 2.0
+* copyright (c) 2018 everis Spain S.A
+* Date: 06 February 2019
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Oscar Carantón, Aric Gutierrez.
+* All rights reserved 
+-->
+<link href="/cockpit/css/automatization-history.min.css" rel="stylesheet">
+<div ng-if="loading">
+    <img class="img-loading" src="img/eVA.svg">
+</div>
+<div class="container-history" ng-if="!loading">
+    <div class="test">
+        <button ng-click="newTest()"
+            class="active">{{'LEFT-BAR-AUTOMATIZATION.TITLE-BUTTON-NEW-TEST' | translate}}</button>
+    </div>
+    <div class="no-data" ng-if="listHistory.length == 0">
+        {{'LEFT-BAR-AUTOMATIZATION.TITLE-NO-DATA-P1' | translate}}<br>
+        {{'LEFT-BAR-AUTOMATIZATION.TITLE-NO-DATA-P2' | translate}}
+    </div>
+    <div ng-if="listHistory.length > 0">
+        <table>
+            <tr class="header">
+                <th>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-DATE' | translate}}</th>
+                <th>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-NAME' | translate}}</th>
+                <th>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-USER' | translate}}</th>
+                <th>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-RESULT' | translate}}</th>
+                <th>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-UTTERANCE' | translate}}</th>
+                <th>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-CHANNEL' | translate}}</th>
+                <th>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-VERSION' | translate}}</th>
+                <th>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-AUTOMATIC' | translate}}</th>
+                <th>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-DETAIL' | translate}}</th>
+                <th>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-EXECUTE' | translate}}</th>
+            <tr>
+            <tr class="body" ng-repeat="historial in listHistory">
+                <td>{{historial.createDate | date:'shortDate'}}</td>
+                <td>{{historial.nameTest}}</td>
+                <td>{{historial.user}}</td>
+                <td>{{historial.confidence | number : '1.2'}} %</td>
+                <td>{{historial.utterances}}</td>
+                <td>{{historial.name}}</td>
+                <td>{{historial.nlpVersion}}</td>
+                <td>
+                    <input type="checkbox" ng-click="setChangeAutomatization(historial.id , historial.flagBatch)" name="automatic_{{historial.id}}" {{(historial.flagBatch)?'checked':''}}>
+                </td>
+                <td><button
+                        ng-click="runDetail(historial.id)" class="execute">{{'LEFT-BAR-AUTOMATIZATION.TITLE-BUTTON-MORE' | translate}}</button>
+                </td>
+                <td><button class="execute active"
+                        ng-click="runBack(historial.id , historial.confidence)">
+                        {{'LEFT-BAR-AUTOMATIZATION.TITLE-BUTTON-EXECUTE' | translate}}
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <div class="pagination" ng-if="pagination.view">
+            <div class="container-buttons">
+                <button id="start" ng-click="sendPagination(0)"> << </button> 
+                <button id="back" ng-click="sendPagination(pagination.pageBack)"> < </button> 
+                <label>
+                    {{pagination.labelSelect}}
+                    {{'LEFT-BAR-AUTOMATIZATION.TITLE-CONNECTOR-PAGINATION' | translate}}
+                    {{pagination.total}}
+                </label>
+                <button id="next" ng-click="sendPagination(pagination.pageNext)"> > </button>
+                <button id="end" ng-click="sendPagination( (pagination.total - 1) )"> >> </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+/*!
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved
+*/
+
+
+/* <----------------------------------  ROW 1  --------------------------------> */ 
+
+
+
+.satisfaction-qlik-volume-kpi{   
+    height: 371px;     
+    width: 192px;  
+    margin: 40px 5px 0px 5px;
+}
+
+
+
+/* <--- Answer evolution of satisfaction search Container Container ------> */ 
+
+.satisfaction-qlik-bar-evolution-graph{
+    height: 375px;
+    width: 770px;
+    margin: 20px 5px 0px 5px;
+}
+
+
+
+/* <----------------------------------  ROW 2  --------------------------------> */ 
+
+
+
+/* <----- Top 12 reviews Container ------> */  
+
+.satisfaction-qlik-top12-review-table{
+    height: 707px;
+    width: 579px;
+    margin: 10px 5px 0px 5px;
+}
+
+
+/* <-----  Satisfaction seacrh Container ------> */  
+
+.satisfaction-qlik-satisfaction-seacrh-donut{   
+    height: 280px;
+    width: 383px;
+    margin: 20px 5px 0px 5px;
+}
+
+
+/* <-----  Doubts resolved Container ------> */ 
+
+
+
+
+

@@ -1,0 +1,27 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+
+<aside class="cc-navigation"
+  ng-class="{'open':isOpened}"
+  ng-mouseleave="mouseNav(false)"
+  ng-mouseover="mouseNav(true)">
+  <div class="cc-navigation-item"
+    ng-repeat="opt in leftBar.options"
+    ng-class="{'cc-navigation-item-selected':opt.selected}"
+    ng-hide="user.groupId == '4' && (opt.textKey == 'LEFT-BAR-ARCHITECTURE' || opt.textKey == 'LEFT-BAR-SAMPLE')"
+    ng-click="opt.select(true)"
+    user-role any="{{opt.permission}}">
+    <div class="cc-navigation-icon">
+      <img ng-if="opt && opt.getImage()" ng-src="/cockpit/img/{{opt.getImage()}}.png" width="{{opt.imgSize}}" />
+    </div>
+    <div class="cc-navigation-name" ng-if="isOpened">
+      <span ng-class="{'selected':opt.selected}">{{opt.textKey | translate}}</span>
+    </div>
+  </div>
+</aside>

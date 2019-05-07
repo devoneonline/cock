@@ -1,0 +1,257 @@
+/*
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved
+*/ 
+
+@import "default";
+
+
+@list-body-row-background: white;
+@list-body-row-color: #373737;
+
+.train-bar{
+    width: 100%;
+    background-color: @borderColor;
+    height: 60px;
+    border-radius: 6px;
+    &-text{
+        width: 191px;
+        height: 32px;
+        font-family: 'Raleway';
+        font-size: 14px;
+        font-weight: bold;
+        line-height: normal;
+        color: #373737;
+        padding-top: 22px;
+        padding-left: 23px;
+        display: inline-block;
+    }
+}
+
+.train-btn{
+    width: 175px;
+    height: 34px;
+    border-radius: 30px;
+    background-color: #373737;
+    margin-top: 13px;
+    margin-right: 8px;
+    float: right;
+    cursor: pointer;
+    &-text{
+        height: 16px;
+        font-family: Raleway;
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+        padding-top: 8px;
+    }
+    &-on{
+        height: 16px;
+        font-family: Raleway;
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin-top: 8px;
+        justify-content: space-evenly;
+    }
+}
+
+.img-loading{
+    display: inline-block;
+}
+
+.progress-bar-train{
+    background-color: #373737;
+    color: #FFF;
+    font-weight: 700;
+    position: relative;
+    padding-top: 8px;
+}
+.progress{
+    position: relative;
+    width: 175px;
+    height: 34px;
+    border-radius: 30px;
+    background-color: #11b27f;
+    margin-top: 13px;
+    margin-right: 8px;
+    float: right;
+    cursor: pointer;
+    &-text{
+        height: 16px;
+        font-family: Raleway;
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+        padding-top: 8px;
+    }
+    &-on{
+        position: absolute;
+        height: 16px;
+        font-family: Raleway;
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin-top: 8px;
+        justify-content: space-evenly;
+        z-index: 1;
+    }
+}
+
+.modal-transition {
+    opacity: 1;
+}
+
+.modal-transition.ng-hide-remove,
+.modal-transition.ng-hide-add {
+  display: block !important;
+}
+
+.modal-transition.ng-hide-add {
+    animation-name: opacity-transition;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+}
+
+@keyframes opacity-transition {
+    0% { opacity: 1; }
+    100% { opacity: 0;}
+}
+
+.training {
+    &-table {
+        &-version {
+            padding-left: 5px;
+            width: 15%;
+            text-align: left;
+        }
+        &-status {
+            width: 20%;
+        }
+        &-user {
+            width: 23%;
+        }
+        &-date {
+            width: 15%;
+        }
+        &-accuracy {
+            text-transform: uppercase;
+            text-align: center;
+            width: 7%;
+            &-content {
+                text-align: center;
+            }
+        }
+        &-options {
+            width: 8%;
+        }
+        &-publish {
+            text-transform: uppercase;
+            width: 12%;
+            text-align: center;
+            padding-right: 5px;
+        }
+        &-btn {
+            &-published {
+                cursor: pointer;
+                text-align: center;
+                font-weight: bold;
+                border-radius: 20px;
+                padding: 5px 2px; 
+                color: #00d693;
+                border: 2px solid #00d693;
+                background-color: transparent;
+            }
+            &-unpublished {
+                cursor: pointer;
+                text-align: center;
+                font-weight: bold;
+                border-radius: 20px;
+                padding: 5px 2px; 
+                color: #000;
+                background-color: @borderColor;
+            }
+        }
+        &-menu {
+            &-bullet {
+                position: relative;
+                text-align: center;
+                & > img {
+                    cursor: pointer;
+                }
+            }
+            &-options {
+                z-index: 100;
+                position: absolute;
+                text-align: center;
+                border-radius: 5px;
+                top: 65%;
+                padding: 10px 20px;
+                background-color: #FFF;
+                left: -10px;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                & :last-child {
+                    margin-top: 10px;
+                }
+                & div {
+                    cursor: pointer;
+                    display: flex;
+                    font-weight: bold;
+                    align-items: flex-end;
+                    & > img {
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+        &-row {
+            & > td:first-child {
+                padding-left: 37px;
+            }
+        }
+        &-status {
+            &-success {
+                padding-left: 10px;
+                position: relative;
+                font-weight: bold;
+                color: #00d693;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 24px;
+                    left: -5px;
+                    height: 10px;
+                    width: 10px;
+                    border-radius: 50%;
+                    background-color: #00d693;
+                }
+            }
+            &-error {
+                padding-left: 10px;
+                font-weight: bold;
+                color: #fe8181;
+                position: relative;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 24px;
+                    left: -5px;
+                    height: 10px;
+                    width: 10px;
+                    border-radius: 50%;
+                    background-color: #fe8181;
+                }
+            }
+        }
+    }
+}

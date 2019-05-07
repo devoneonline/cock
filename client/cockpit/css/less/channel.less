@@ -1,0 +1,199 @@
+/*
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved
+*/ 
+
+@import "default";
+
+/* Page empty Channels */
+.channel-desc-empty{
+    font-family: 'Raleway';
+    font-size: 20px;
+    font-weight: 500;
+    font-style: italic;
+    text-align: center;
+    line-height: 24px;
+    color: #373737;
+    font-weight:500; 
+    margin: 0 auto;
+    margin-top: 147px;
+}
+
+.channel-btn-create,
+.channel-btn-create:hover,
+.channel-btn-create:active,
+.channel-btn-create:visited,
+.channel-btn-create:focus {
+    background-color:rgba(0,170,90,1);
+    margin-left: 47px;
+    margin-top: 20px;
+    font-family: Raleway;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    padding: 6px 30px;
+    color: #FFF;
+    position: relative;
+    text-decoration: none;
+    border: 0px solid rgba(0,170,90,1);
+    width: 235px;
+    height: 32px;
+    font-weight: 700;
+}
+
+.opacity{
+    opacity:0.4;
+}
+
+/* Page list Channels */
+.channel-btn-create-list,
+.channel-btn-create-list:hover,
+.channel-btn-create-list:active,
+.channel-btn-create-list:visited,
+.channel-btn-create-list:focus {
+    background-color:rgba(0,170,90,1);
+    margin-left: 20px;
+    margin-top: 25px;
+    font-family: 'Raleway';
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    padding: 6px 30px;
+    color: #FFFFFF;
+    position: absolute;
+    text-decoration: none;
+    border: 0px solid rgba(0,170,90,1);
+    width: 205px;
+    height: 32px;
+    font-weight:700;
+    outline:0;
+}
+
+.channel-label-channelname{
+    width: 300px;
+    height: 16px;
+    font-family: Raleway;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    color: #373737; 
+    margin-left: 60px;
+    margin-top: 100px;
+}
+
+.channel-label-classification{
+    width: 300px;
+    height: 16px;
+    font-family: Raleway;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    color: #373737;
+    margin-left: 0px;
+    margin-top: 100px; 
+}
+
+.channel-background-list-channel{
+    background-color: #FFFFFF;
+    width: 860px;
+    height: 61px;
+    margin-left: 20px;
+    margin-top: 10px; 
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.channel-value-channelname{
+    width: 300px;
+    height: 21px;
+    font-family: Raleway;
+    font-size: 18px;
+    line-height: 21px;
+    color: #373737;
+    margin-left: 25px;
+    margin-top: 20.5px;
+}
+
+.channel-value-classification{
+    width: 300px;
+    height: 21px;
+    font-family: Raleway;
+    font-size: 18px;
+    line-height: 21px;
+    color: #373737;
+    margin-left: 0px;
+    margin-top: 20px; 
+}
+
+.channel-edit-rem {
+	text-align: right;
+    margin-left: 90px;
+	padding-top: 15px;
+	cursor: pointer;
+}
+
+.channel-edit-rem img {
+	padding-left:20px;
+}
+
+.img-add {
+	background: url('/cockpit/img/add.svg') no-repeat;
+	background-size: 25px;
+	padding-left:35px;
+    height:38px;
+    margin-top: 20px;
+}
+
+.img-channels {
+	background: url('/cockpit/img/left-bar-channels.png') no-repeat;
+	background-size: 25px;
+	padding-left:35px;
+    height:38px;
+    margin-top: 20px;
+}
+
+.channel-elements {
+	clear: both;
+}
+.system-name {
+    
+    &-text {
+        font-size: 11px;
+        border: 0;
+        min-width: 90px;
+        opacity: 8.5;
+        height: 24px;
+        background-color: transparent;
+        display: inline-block;
+
+    }
+    &-label{
+        color: #636363;
+        font-size: 11px;
+        display: inline-block;
+        font-weight: 500;
+        margin-bottom: 0;
+        opacity: 8.5;
+    }
+    &-wrapper {
+        padding-top: 10px;
+        vertical-align: top;
+        margin-top: 20px;
+    }
+    &-info {
+        cursor: pointer;
+        color: #cdcdcd;
+        margin-left: 10px;
+        &:hover {
+            color: @borderColor;
+        }
+    }
+}
+
+.system-name-info:hover {
+    color: @borderColor;
+}

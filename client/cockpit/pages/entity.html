@@ -1,0 +1,239 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<link rel="stylesheet" href="/cockpit/css/intent.min.css">
+<link rel="stylesheet" href="/cockpit/css/entity.min.css">
+<link rel="stylesheet" href="/cockpit/css/table.min.css">
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- Create entity after button -->
+        <div class="col-xs-8 col-xs-offset-2 cp-entity-header" ng-if="entityCreating" >
+            <img class="back-header" src="./img/return.svg" alt="" ng-click="closeNewEntity()">
+            <div class="cp-created-entity-info">
+                <div class="cp-entity-subtitle" ng-if="action == 'create' && entityCreating">
+                    {{'ENTITY.NEW-ENTITY' | translate}}
+                </div>
+                <div class="cp-entity-subtitle" ng-if="action == 'edit' && entityCreating">
+                    {{'ENTITY.EDIT-ENTITY' | translate}}
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="entityCreating" class="col-xs-8 col-xs-offset-2 cp-entity-fields">
+            <div class="cp-entity-creation">
+                <label >{{'ENTITY.NAME' | translate}}</label>
+                <input type="text" maxlength="255" class="modal-input-text empty icon cp-entity-creation-field"
+                    ng-class="{'error':selectedEntityError.name}"
+                    ng-model="data.name"
+                    ng-click="selectedEntityError.name=''"/>
+                <div class= "pull-left posit-icon">
+                    <img class="arroba-input" src="./img/arroba.ico">
+                </div>
+                <span  style="margin-left: -2.5em;" ng-show="emptyName=true" class="input-error">{{selectedEntityError.name | translate}}&nbsp;</span>
+            </div>
+        </div>
+
+        <div ng-if="entityCreating" class="col-xs-8 col-xs-offset-2">
+                <select class="entity-type"  ng-model="data.type" ng-click="selectedEntityError.type=''" >
+                  <option value="">{{'ENTITY.SELECT-TYPE' | translate}}</option>
+                  <option value="Pattern">Pattern</option>
+                  <option value="Synonym">Synonym</option>
+                </select>
+                <span ng-show="emptyType=true" class="input-error">{{selectedEntityError.type | translate}}&nbsp;</span>
+        </div>
+
+        <!-- IF ENTITY PATTERN -->
+        <div ng-if="data.type == 'Pattern' && entityCreating" class="col-xs-8 col-xs-offset-2 cp-entity-fields">
+            <div class="cp-entity-creation">
+                <label >{{'ENTITY.PATTERN' | translate}}</label>
+                <input type="text" maxlength="255" class="modal-input-text cp-entity-creation-field"
+                    ng-class="{'empty':!data.pattern,'error':selectedEntityError.pattern}"
+                    ng-model="data.pattern" 
+                    ng-click="selectedEntityError.pattern=''"/>
+                <span ng-if="emptyPattern=true" class="input-error">{{selectedEntityError.pattern | translate}}&nbsp;</span>
+            </div>
+        </div>
+
+        <!-- NEW VALUE -->
+        <div ng-if="data.type == 'Synonym' && entityCreating && valuesView.length" ng-repeat ="x in valuesView" class="Synonym-border-left col-xs-8 col-xs-offset-2">
+            <div ng-if="data.type == 'Synonym'" class="col-xs-12 Synonym-field">
+                <div class="Synonym-input-box">
+                    <label >{{'ENTITY.SYNONYM-VALUE' | translate}}</label>
+                    <input type="text" maxlength="255" class="cp-entity-creation-Synonym"
+                        ng-class="{'empty':!selectedEntity.name}"
+                        ng-model="x.value" />
+                    <div class= "pull-right posit-icon-trash">
+                            <img ng-click="deleteValue(x)" class="trash-input" src="./img/trash.svg">
+                    </div>
+                    <span class="input-error">{{ sad | translate}}&nbsp;</span>
+                </div>
+            </div>
+    
+            <div ng-if="data.type == 'Synonym'" class="col-xs-12 Synonym-field">
+                <div class="Synonym-input-box">
+                    <label >{{'ENTITY.SYNONYM' | translate}}</label>
+                    <tags-input add-on-enter="false" min-length="2" add-on-comma="true"remove-tag-symbol="X" 
+                        on-tag-added="addTag(x.id,$tag,action)" on-tag-removed = "removeTag(x.id,$tag,action)"
+                        replace-spaces-with-dashes="false" placeholder="" type="text" maxlength="255" class="input-tags" 
+                        ng-class="{'empty':!selectedEntity.name}"
+                        ng-model="x.newSynonyms"></tags-input>
+                    <span class="entity-instruction">Include the synonyms, sepparating them with a comma.</span>
+                </div>
+            </div>
+        </div>
+
+            <!-- IF ENTITY SYNONYM -->
+        <div ng-if="data.type == 'Synonym' && entityCreating" class="Synonym-border-left col-xs-8 col-xs-offset-2">
+            <div ng-if="data.type == 'Synonym'" class="col-xs-12 Synonym-field">
+                <div class="Synonym-input-box">
+                    <label >{{'ENTITY.SYNONYM-VALUE' | translate}}</label>
+                    <input type="text" maxlength="255" class="cp-entity-creation-Synonym"
+                        ng-class="{'empty':!createValue.text,'error':selectedEntityError.value}"
+                        ng-model="createValue.text" 
+                        ng-click="selectedEntityError.value=''" />
+                    <span class="input-error">{{ selectedEntityError.value | translate}}&nbsp;</span>
+                </div>
+            </div>
+    
+            <div ng-if="data.type == 'Synonym'" class="col-xs-12 Synonym-field">
+                <div class="Synonym-input-box">
+                    <label >{{'ENTITY.SYNONYM' | translate}}</label>
+                    <tags-input add-on-enter="false" min-length="2" add-on-comma="true"
+                    remove-tag-symbol="X" on-tag-added="addTag(action)" on-tag-removed = "removeTag(action)"
+                    replace-spaces-with-dashes="false" placeholder="" type="text" maxlength="255" class="input-tags" 
+                        ng-class="{'empty':!createValue.newSynonyms,'error':selectedEntityError.synonym.length}"
+                        ng-model="createValue.newSynonyms"
+                        ng-click="hideError()"></tags-input>
+                    <span class="input-error">{{ selectedEntityError.synonym | translate}}&nbsp;</span>
+                    <span class="entity-instruction">Include the synonyms, sepparating them with a comma.</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- BUTTON FOR CREATE -->
+        <div class="row col-xs-8 col-xs-offset-2 cp-entity-footer" ng-if="entityCreating">
+            <div class="fix-buttons">
+                <button type="button" ng-if="entityCreating && createValue.newSynonyms.length && createValue.text " class="entity-btn-newvalue" ng-click="addNewValue()">
+                        {{'ADD NEW VALUE' | translate}}</button>
+            </div>
+
+            <div class="pull-right">
+                <button type="button" class="entity-btn-save" ng-click="confirmCreateEntity()"
+                ng-if="entityCreating" >{{'SAVE' | translate}}</button>
+                <button type="button" ng-if="entityCreating" class="entity-btn-cancel" ng-click="closeNewEntity()">
+                        {{'CANCEL' | translate}}</button>  
+            </div>   
+        </div>
+
+        <!-- No entities -->
+        <div class="row col-xs-8 col-xs-offset-2" ng-if="!entityCreating">
+            <div class="search-line" ng-class="{'col-xs-12': !myEntities.length, 'col-xs-8': myEntities.length}">    
+                <input type="text" maxlength="255" class="entity-input-text" ng-model="busca.text"
+                    placeholder="{{ 'ENTITY.SEARCH' | translate}}" />                   
+                <div class= "pull-left cp-entity-icons posit-icon">
+                    <img src="./img/search.svg">
+                </div>
+            </div>
+            <div class="col-xs-4" ng-if="myEntities.length" ng-click="openFormEntity('create')" style="margin-top : 2em; padding: 0;">
+                <button class="pull-right entity-btn-create btn-small">{{ 'ENTITY.CREATE_NEW' | translate}}</button>
+            </div> 
+        </div>
+
+        <div class="row col-xs-8 col-xs-offset-2" ng-if="!entityCreating">
+            <div class="select-status">
+                <div class="status-menu" ng-class="{selected:enable}" ng-click="showEnable()">
+                    <span>{{'ENTITY.MY-ENTITIES' | translate}}</span>
+                </div>
+                <div class="status-menu" ng-class="{selected:disable}" ng-click="showDisable()">
+                    <span>{{'ENTITY.SYSTEM-ENTITIES' | translate}}</span>
+                </div>
+            </div>
+            <div class="status-line"> </div>
+        </div>
+
+                        <!--  TABLES -->
+        <div class="row col-xs-8 col-xs-offset-2" ng-if="!entityCreating">
+            <div class="table-responsive-sm" ng-if="myEntities.length && enable">
+                <table class="table w-auto">
+                    <thead>
+                        <tr class="entity-header">
+                                <th class="columns col-xs-4">{{'ENTITY.TAB-HEADER-ENTITY' | translate}}<span> ({{entityQtd}})</span></th>
+                                <th class="columns col-xs-2">{{'ENTITY.TAB-HEADER-TYPE' | translate}}</th>
+                                <th class="columns col-xs-4">{{'ENTITY.TAB-HEADER-LAST-MODIFIED' | translate}}</th>
+                                <th class="col-xs-2"></th>
+                        </tr>
+                    <thead>
+                    <tbody>
+                        <tr class="entity-list" ng-repeat="entity in myEntities">
+                            <td class="columns">@{{entity.name}}</td>
+                            <td class="columns">{{entity.type}}</td>
+                            <td class="columns">{{entity.dif}}</td>
+                            <td class="entity-options">
+                                    <img class="pencil-table" src="./img/pencil.svg" ng-click="openFormEntity('edit', entity)">
+                                    <img class="trash-table" src="./img/trash.svg" ng-click="deleteEntity(entity)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ct-paging count="entityQtd" current-page="currentPage" on-change-page="filterEntities" items-per-page="6" radius='2' is-blocked="blockPagination"/>
+            </div>
+
+            <div ng-if="disable" class="table-responsive-sm" ng-if="systemEntities.length">
+                <table class="table">
+                    <thead>
+                        <tr class="entity-header2">
+                            <th class="columns">{{'ENTITY.TAB-HEADER-ENTITY' | translate}}<span> ({{systemEntities.length}})</span></th>
+                            <th class="columns">{{'ENTITY.TAB-HEADER-DESCRIPTION' | translate}}</th>
+                            <th class="columns">{{'ENTITY.TAB-HEADER-ENABLED-DISABLED' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-class="{'entity-list2 hidetb' : !sentity.enabled , 'entity-list2': sentity.enabled}" class="entity-list2" 
+                        dir-paginate="sentity in systemEntities | filter: busca.text | itemsPerPage : 6">
+                            <div visibility="{{sentity.enabled ? 'visible' : 'collapse'}}">
+                                <td ng-class="{'name-hide': !sentity.enabled , 'name': sentity.enabled }">@{{sentity.name}}</td>
+                                <td ng-class="{'description-hide': !sentity.enabled , 'description':sentity.enabled}">{{sentity.description}}</td>
+                                <td class="enable" ng-click="switchEnable(sentity)">
+                                    <div ng-class="{'cp-entity-enable-switch-off':!sentity.enabled}" class="cp-entity-enable-switch">
+                                        <div ng-class="{'cp-entity-enable-switch-btn':sentity.enabled}" class="cp-entity-enable-switch-btn-off"></div>
+                                    </div>
+                                </td>
+                            </div>
+                        </tr>
+                    </tbody>    
+                </table>
+                <dir-pagination-controls></dir-pagination-controls>
+            </div>
+        </div>
+       
+        <div class="row col-xs-8 col-xs-offset-2" ng-if="!myEntities.length && !entityCreating && enable">
+            <div ng-if="!myEntities.length">
+                <div ng-if="!myEntities.length">
+                    <div class="entity-desc-empty" >
+                        <span class="opacity">{{ 'ENTITY.EMPTY-PT1' | translate}} <br/>
+                        {{ 'ENTITY.EMPTY-PT2' | translate}} </span>
+                    </div>       
+                    <div class="row col-xs-12 text-center" ng-click="openFormEntity('create')"> 
+                        <button class="entity-btn-create">{{ 'ENTITY.CREATE_NEW' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NO ENTITES FOUND -->
+        <div class="row col-xs-8 col-xs-offset-2" ng-if="filteredEntities.length==0 && myEntities.length">
+        <div class="entity-desc-empty">
+                <span class="opacity">{{ 'ENTITY.EMPTY-PT3' | translate}}</span>
+            </div>
+        </div>
+    
+    </div>
+</div>

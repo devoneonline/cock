@@ -1,0 +1,26 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<nav class="col-xs-12 pagination-container">
+    <a class="quote-marks" ng-if="!isFirst && count > itemsPerPage" ng-click="isBlocked ? null : setPage(1)">
+        <img src="/cockpit/img/pagination-first.svg" alt="first page">
+    </a>
+    <a class="quote-marks-first" ng-if="!isFirst && count > itemsPerPage" ng-click="isBlocked ? null : addPage(-1)">
+        <img src="/cockpit/img/pagination-previous.svg" alt="previous page">
+    </a>
+    <span ng-if='count > itemsPerPage' ng-repeat="p in pages">
+        <a ng-click="isBlocked ? null : setPage(p)" ng-if="p != currentPage" >{{p}}  </a>
+        <a class="pagination-selected" ng-if="p == currentPage">{{p}}  </a>
+    </span>
+    <a class="quote-marks-last" ng-if="!isLast && count > itemsPerPage" ng-click="isBlocked ? null : addPage(1)">
+        <img src="/cockpit/img/pagination-next.svg" alt="next page">
+    </a>
+    <a class="quote-marks" ng-if="!isLast && count > itemsPerPage" ng-click="isBlocked ? null : setPage(numPages)">
+        <img src="/cockpit/img/pagination-last.svg" alt="first page">
+    </a>
+</nav>

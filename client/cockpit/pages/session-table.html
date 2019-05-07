@@ -1,0 +1,101 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<link rel="stylesheet" href="/cockpit/css/session-table.min.css">
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="filter-container">
+            <div class="filter-row">
+                <div class="col-xs-10" ng-show="showSessionFilter">
+                    <span class="filter-span">{{ 'SESSION-CODE' | translate }}</span>
+                    <input id="sessionCodeInput" type="text" class="select" ng-model="sessionCode" maxlength="50" placeholder="{{ 'SESSION-FILTER-MESSAGE' | translate }}">
+                </div>
+                <div ng-hide="showSessionFilter">
+                    <div class="col-xs-4 elementFilter-container">
+                        <span class="filter-span">{{ 'SAMPLE-LABEL-DATE' | translate }}: </span>
+                        <input class="select date-filter" ng-model="date" type="text" name="daterange" value="" maxlength="23"/>
+                        <span class="calendarie-icon"></span>
+                    </div>
+                    <div class="col-xs-4 elementFilter-container">
+                        <span class="filter-span">{{ 'CHANNEL' | translate }}:</span>
+                        <div isteven-multi-select
+                            input-model="channels"
+                            output-model="outputChannels"
+                            button-label="icon name"
+                            item-label="icon name maker"
+                            tick-property="ticked"
+                            max-labels="1">
+                        </div>
+                    </div>
+                    <div class="col-xs-4 elementFilter-container">
+                        <span class="filter-span">{{ 'SETTINGS-STATUS-TITLE' | translate }}: </span>
+                        <div isteven-multi-select
+                            input-model="answerStatus"
+                            output-model="outputStatus"
+                            button-label="icon name"
+                            item-label="icon name maker"
+                            tick-property="ticked"
+                            max-labels="1">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-10">
+                    <input type="checkbox" ng-model="showSessionFilter">
+                    <span>&nbsp{{ 'SHOW-SESSION-FILTER' | translate }}</span>
+                </div>
+                <div class="col-xs-2">
+                    <button id="filterBtn" ng-click="filter()" ng-disabled="loading" class="btns filter-btn">{{ 'FILTER' | translate }}</button> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-hide="loadingTable">
+        <div style="display: none" class="export-bt row" ng-click="exportSessions()" ng-hide="loadingTable || loading"> 
+            <div class="export-icon"></div> 
+            <div class="export-text">{{ 'DOWNLOAD-EXCEL' | translate }}</div> 
+        </div>
+
+        <div class="row session-table-header">
+            <div class="col-md-2 text">{{ 'SESSION-CODE-LABEL' | translate }}</div>
+            <div class="col-md-1 text">{{ 'CREATE-DATE-LABEL' | translate }}</div>
+            <div class="col-md-2 text">{{ 'BUSINESS-KEY-LABEL' | translate }}</div>
+            <div class="col-md-2 text">{{ 'SAMPLE-LABEL-CHANNEL' | translate }}</div>
+            <div class="col-md-1 text"></div>
+            <div class="col-md-4 text">{{ 'QUESTION-ANSWER-LABEL' | translate }}</div>
+        </div>
+        <div class="row session-row" ng-repeat="(k, v) in sessions" ng-class="{'sessionGroup collapsed': v.sessionCode != sessions[k-1].sessionCode}">
+            <div class="col-md-2 text">{{v.sessionCode}}</div>
+            <div class="col-md-1 text">{{v.createDate | date  : 'dd/MM HH:mm'}}</div>
+            <div class="col-md-2 text">{{v.businessKey}}</div>
+            <div class="col-md-2 text">{{v.channelName}}</div>
+            <div class="col-md-4 text">
+                <div ng-show="v.title">
+                    #{{v.code}} - {{v.title}}
+                    <br/>
+                    Status: {{v.status}}
+                </div>
+                <div ng-show="v.text">
+                    {{v.text}}
+                </div>
+            </div>
+            <div class="col-md-1 text">
+                <div ng-class="{'vivi-icon': !v.userSent , 'user-icon': v.userSent}"></div>
+            </div>
+        </div>
+    </div>
+    <div class="get-more-sessions" ng-hide="loading || loadingTable">
+        <img src="/cockpit/img/eye_theme_color.svg" ng-click="loadSessionTable()"/>
+        <div><span class="get-more-text" ng-click="loadSessionTable()">{{ 'SAMPLE-LABEL-VIEW-MORE' | translate }}</span></div>
+    </div>
+    
+    <div ng-show="message" class="empty-message">
+        <span>{{ 'TABLE-EMPTY-DATA-PART1' | translate }}</span><br>
+        <span>{{ 'TABLE-EMPTY-DATA-PART2' | translate }}</span>
+    </div>
+</div>

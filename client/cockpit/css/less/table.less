@@ -1,0 +1,87 @@
+/*!
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved
+*/ 
+
+
+@table-header-color: #373737;
+@table-body-row-background: white;
+@table-body-row-color: #373737;
+
+.cp-table-header {
+  &>th, &>div {
+    color: @table-header-color;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: capitalize;
+    border: none;
+  }
+}
+
+.cp-table-body-row {
+  background-color: @table-body-row-background;
+  color: @table-body-row-color;
+  border-radius: 6px;
+  height: 60px;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 10px 0;
+  &>td {
+    padding: 16px 8px;
+    border: none;
+    vertical-align: middle;
+    &:first-child {
+      border-radius: 6px 0 0 6px;
+    }
+    &:last-child {
+      border-radius: 0 6px 6px 0;
+    }
+  }
+  &>div {
+    padding: 20px 15px 0 15px;
+  }
+}
+
+.cp-table-body-icons {
+  img {
+    height: 28px;
+    margin-left: 8px;
+    margin-right: 8px;
+    cursor: pointer;
+    opacity: 1;
+    transition: all .4s ease-in-out;
+    &:hover {
+      opacity: .6;
+    }
+  }
+}
+
+table, table.table, .table {
+  &>thead, &>tbody, &>tfoot {
+    &>tr:first-child {
+      &>th, &>td {
+        border: none;
+      }
+    }
+  }
+  border-collapse: separate;
+  // border-spacing: 0 1em;
+  &.table-slim {
+    border-collapse: unset;
+    border-spacing: unset;
+  }
+  &> tbody, &> {
+    &>tr.cp-table-header {
+      .cp-table-header();
+    }
+    &>tr.cp-table-body-row {
+      .cp-table-body-row();
+    }
+  }
+}

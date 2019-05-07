@@ -1,0 +1,99 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<link rel="stylesheet" href="/cockpit/css/sample-search.min.css">
+    
+    <!--  Screen filters  -->
+    <div class="row">
+        <div class="filter-container col-xs-12">
+            <div class="filter-row">
+                <div class="col-md-4 elementFilter-container">
+                    <span class="filter-span">{{'SAMPLE-LABEL-DATE' | translate}}: </span>
+                    <input class="select date-filter" ng-model="date" type="text" name="daterange" value="" />
+                    <div class="calendarie-icon"></div>
+                </div>
+                <div class="col-md-3 elementFilter-container">
+                    <span class="filter-span">{{'SAMPLE-LABEL-CHANNEL' | translate}}: </span>
+                    <div     
+                        isteven-multi-select
+                        input-model="channels"
+                        output-model="outputChannels"
+                        button-label="icon name"
+                        item-label="icon name maker"
+                        tick-property="ticked"
+                        max-labels="1"
+                    >
+                    </div>
+                </div>
+                <div class="col-md-2" >
+                    <button ng-click="filter()" class="filter-btn">{{'SAMPLE-LABEL-BTN-FILTER' | translate}}</button> 
+                </div>
+        </div>
+    </div>
+
+    <!--  Screen without sample  -->
+	<div ng-if="samples.length == 0 && showNotFind" ng-value="samples" ng-show="filtroSelecionado">
+		<div class="sample-desc-empty">
+			<span class="opacity">
+                {{' SAMPLE-DESC-EMPTY-PART1' | translate}} </br>
+                {{' SAMPLE-DESC-EMPTY-PART2' | translate}}
+            </span>
+		</div>
+	</div>
+
+    <!--  Screen KPI  -->
+    <div class="row"> 
+        <div class="kpi-container col-md-2" ng-show="showResults"> 
+            <div class="row box-kpi"> 
+                <div class="col-md-2  label-kpi-sum-samples"> {{'SAMPLE-LABEL-KPI-BULK' | translate}}</div>
+                <div class="col-md-2  label-kpi-sum-avgAssertiveness"> {{'SAMPLE-LABEL-KPI-ASSERTIVENESS' | translate}}</div>
+            </div>
+            <div class="row"> 
+                <div class="col-md-2 value-kpi-sum-samples">{{sampleKPI.sumSamples}}</div>
+                <div class="col-md-2 value-kpi-sum-avgAssertiveness">{{sampleKPI.avgAssertiveness | number : 2 }}%</div>
+            </div>
+            <div class="row"> 
+                <div class="col-md-2 label-desc-kpi-sum-samples" > {{'SAMPLE-LABEL-KPI-ANSWERS' | translate}}</div>
+            </div>
+        </div>
+
+        <!--  Screen Export Button  -->
+        <div class="export-bt col-md-2" ng-click="exportSessions()" ng-show="showResults"> 
+            <div class="export-icon"></div> 
+            <div class="export-text">Download Excel</div> 
+        </div>
+
+    </div>
+  
+     <!--  Screen with sample  -->
+	<div ng-show="showResults" ng-value="samples">
+        
+        <div class="row sample-table-header">
+                <div class="col-md-2 sample-label-sampledate">{{'SAMPLE-LABEL-DATE' | translate}}</div>
+                <div class="col-md-2 sample-label-channel">{{'SAMPLE-LABEL-CHANNEL' | translate}}</div>
+				<div class="col-md-2 sample-label-count">{{'SAMPLE-LABEL-KPI-BULK' | translate}}</div>
+				<div class="col-md-2 sample-label-count">{{'SAMPLE-LABEL-KPI-ASSERTIVENESS' | translate}}</div>
+				<div class="col-md-2 sample-label-description">{{'SAMPLE-LABEL-COMMENTARY' | translate}}</div>
+        </div>
+       
+        <div class="row sample-row" ng-repeat="sample in samples"> 
+                <div class="col-md-2 sample-value-sampledate">{{sample.createDate | date  : 'dd/MM/yyyy'}}</div>
+                <div class="col-md-2 sample-value-channel">{{sample.name}}</div>
+                <div class="col-md-2 sample-value-count" >{{sample.sampleBulk}}</div>
+                <div class="col-md-2 sample-value-count">{{sample.sampleAssertivenessPercentage}}%</div>
+                <div class="col-md-4 sample-value-comment">{{sample.observation}}</div>
+        </div>
+		
+        <div class="get-more-samples" ng-hide="loading">
+            <img src="/cockpit/img/eye_theme_color.svg" ng-click="loadSampleTable()"/>
+            <div><span class="get-more-text" ng-click="loadSampleTable()">{{'SAMPLE-LABEL-VIEW-MORE' | translate}}</span></div>
+        </div> 
+        <img src="/cockpit/img/spinner.svg" class="imageLoading" ng-show="loading">
+
+	</div>
+

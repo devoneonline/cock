@@ -1,0 +1,78 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<link rel="stylesheet" href="/cockpit/css/intent.min.css">
+<link rel="stylesheet" href="/cockpit/css/table.min.css">
+<link rel="stylesheet" href="/cockpit/css/train-pub.min.css">
+<link rel="stylesheet" href="/cockpit/css/toggle-switch.min.css">
+
+<div class="container-fluid">
+    <div class="row">
+        <div ng-if="newVersion || isTraining" class="col-xs-10 col-xs-offset-1 cp-intent-header modal-transition">
+            <div class="train-bar">
+                <div class="train-bar-text">{{'LAST-VERSION' | translate}} v.{{latestTraining}}</div>                
+                <div ng-if="!isTraining" class="train-btn text-center">     
+                    <div ng-if="!fadeOut" class="train-btn-text" ng-click="startTraining()">{{'PERFORM-TRAINING' | translate}}</div>
+                    <div ng-if="fadeOut"  class="train-btn-text">{{'CONCLUDED' | translate}}</div>
+                </div>
+                <div  ng-show="isTraining" class="progress">
+                    <div class="progress-on">
+                        <span ng-if="isTraining">{{'PROCESSING' | translate}}</span>
+                        <span ng-if="isTraining">{{trainingProgress}}</span>
+                    </div>
+                    <div id='training-progress-bar' class="progress-bar-train text-center progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>      
+        </div>
+
+        <div class="col-xs-11 toggle-switch">
+            <div ng-class="{'toggle-switch-switch-off':!isEnable}" class="toggle-switch-switch" ng-click='toggleSwitch()'>
+                <div ng-class="{'toggle-switch-switch-btn':isEnable}" class="toggle-switch-switch-btn-off"></div>
+            </div>
+            <div ng-class="isEnable ? 'toggle-switch-text' : 'toggle-switch-text-off'"> {{'TRAINING-SHOW-VALID' | translate}} </div>
+        </div>
+
+        <table class="col-xs-10 col-xs-offset-1 table-container">
+            <tr>
+                <th class="training-table-version">{{'TRAINING-VERSION' | translate}}</th>
+                <th class="training-table-status">STATUS</th>
+                <th class="training-table-user">{{'TRAINING-USER' | translate}}</th>
+                <th class="training-table-date">{{'TRAINING-DATE' | translate}}</th>
+                <th class="training-table-accuracy">{{'TRAINING-ACCURACY' | translate}}</th>
+                <th class="training-table-options"> </th>
+                <th class="training-table-publish">{{'TRAINING-PUBLISH' | translate}}</th>
+            </tr>
+            <tr ng-class="training.status == 'ERROR'? 'table-container-error training-table-row' : 'table-container-row training-table-row'" ng-repeat="training in trainingList">
+                <td>v. {{training.version ? training.version : 0}}</td>
+                <td ng-class="training.status=='success' ? 'training-table-status-success' : 'training-table-status-error'">
+                    <span></span>
+                    {{training.status=='success' ? ('TRAINING-VALID'| translate) : ('TRAINING-ERROR'| translate)}}</td>
+                <td>{{training.createdBy}}</td>
+                <td>{{training.trainingTime}}</td>
+                <td class="training-table-accuracy-content">{{training.accuracy ? training.accuracy+'%' : '-'}}</td>
+                <td class="training-table-menu-bullet">
+                    <img src="/cockpit/img/{{training.isToggled ? 'bullet-menu-black' : 'bullet-menu-grey'}}.svg" ng-click='openOtions(training)'>
+                    <span ng-if="training.isToggled" class="training-table-menu-options">
+                        <div><img src="/cockpit/img/export-training.svg"> {{'TRAINING-EXPORT' | translate}}</div>
+                        <div><img src="/cockpit/img/accuracy.svg"> {{'TRAINING-ACCURACY' | translate}}</div>
+                    </span>
+                </td>
+                <td>
+                    <div ng-if="training.status!='ERROR'" ng-class="table-container-error">
+                        <div ng-class="training.published == 'prod'? 'training-table-btn-published' : 'training-table-btn-unpublished'" ng-Click="publishTraining(training)">
+                            {{training.published=="prod" ? ('TRAINING-PUBLISHED'| translate) : ('TRAINING-PUBLISH'| translate)}}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <ct-paging count="trainingsQtd" current-page="currentPage" on-change-page="listTrainings" items-per-page="7" radius='2' is-blocked="blockPagination"/>
+
+    </div>
+</div>

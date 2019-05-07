@@ -1,0 +1,95 @@
+/*!
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved
+*/
+
+/* <----------------------------------  ROW 1  --------------------------------> */  
+
+/* <----- KPI ------> */ 
+.session-qlik-session-kpi{
+	height: 98px;	
+    width: 260px;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+
+
+.session-qlik-negative-question-kpi{
+	height: 90px;	
+    width: 260px;
+    margin-left:245px;
+    margin-top: 5px;
+}
+
+
+.session-qlik-session-kpi-bar{
+	height: 60px;	
+    width: 765px;
+    margin-left: 15px;
+    margin-top: -11px;
+}
+
+
+
+/* <----- Session projection Container ------> */  
+
+
+.session-qlik-projection-kpi{
+    height: 146px;     
+    width: 192px;   
+    margin: 40px 5px 0px 5px;
+}
+
+
+/* <----- Average of sessions Container ------> */  
+
+
+
+
+/* <----------------------------------  ROW 2  --------------------------------> */  
+
+/* <----- sessions by channel Container  ------> */ 
+.session-qlik-bar-graph{
+    height: 375px;
+    width: 996px;
+    margin: 20px 5px 0px 5px;
+}
+
+    
+
+
+/* <----------------------------------  ROW 3  --------------------------------> */
+
+/* <----- sessions RANK Graph Container  ------> */ 
+
+
+
+
+
+/* <----------------------------------  ROW 4  --------------------------------> */  
+
+/* <----- FAQ top 10 Container  ------> */ 
+.session-qlik-top-table{
+    height: 490px;
+    width: 376px;
+    margin: 10px 5px 0px 5px;
+}
+
+
+/* <----- Words top 10 Container  ------> */ 
+
+
+
+
+
+/* <----- Averege questions by session Container  ------> */ 
+.session-qlik-projection-kpi-average {
+    height: 155px;
+    width: 175px;
+    margin: 40px 5px 0px 5px;
+}
+

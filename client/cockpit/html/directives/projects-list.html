@@ -1,0 +1,65 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+
+
+<div>
+
+  <div class="project-directive-item" ng-if="createnew" ng-click="onCreate()" ng-class="{'margin-r0':!projects.length}">
+    <div class="project-directive-add">
+      <span>{{'PROJECT.ADD-NEW'| translate}}</span>
+    </div>
+  </div>
+
+  <div ng-class="{'project-directive-projbox':pagination}" user-role any='SEARCH_PROJECT'>
+    <div id="project-wrap" ng-class="{'project-directive-item-wrap':pagination}">
+      <div class="project-directive-item" ng-repeat="proj in visibleProj">
+        <div class="project-directive-item-img">
+          <div class="project-directive-item-img-wrap"
+            ng-class="editable? 'project-directive-item-img-small' : 'project-directive-item-img-full'" 
+            ng-style="{'background-image':'url(../cockpit/img/no-image.png)'}">
+            <div class="project-directive-item-img-img"
+              ng-click="select(proj); onOpen()"
+              ng-style="{'background-image':'url(/cockpit/v1/projects/{{proj.id}}/img)'}"></div>
+          </div>
+          <div class="project-directive-item-icons" ng-if="editable">
+            <img src="/cockpit/img/trash.svg" ng-click="onRemove(proj.id)"/>
+            <img src="/cockpit/img/pencil.svg" ng-click="onEdit(proj)"/>
+          </div>
+        </div>
+        <div class="project-directive-item-name">
+          <div class="project-directive-item-name-icon" >
+            <img ng-src="/cockpit/img/NLP/{{getNlpName(proj.nlp, 'img')}}" alt="{{proj.name}}">
+          </div>
+          <div class="project-directive-item-name-box">
+            <span class="project-directive-item-name-name">{{proj.name | limitTo:12}}<span ng-show="{{ proj.name.length > 12 }}">...</span></span>
+            <span class="project-directive-item-name-nlp">{{getNlpName(proj.nlp, 'name')}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" ng-show="pagination && (projects.length > itemsPerPage)">
+    <div class="col-xs-12 project-directive-pagination">
+      <ul uib-pagination
+        class="pagination-sm"
+        boundary-links="true"
+        total-items="projects.length"
+        items-per-page="itemsPerPage"
+        ng-model="currentPage"
+        ng-change="pageChanged()"
+        previous-text="&lsaquo;"
+        next-text="&rsaquo;"
+        first-text="&laquo;"
+        last-text="&raquo;">
+      </ul>
+    </div>
+  </div>
+
+</div>

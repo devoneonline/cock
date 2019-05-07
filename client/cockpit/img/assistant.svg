@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="82px" height="78px" viewBox="0 0 82 78" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>icon / assistant</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="icon-/-assistant" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="if_google_assistant_1175535" fill-rule="nonzero">
+            <circle id="Oval" fill="#2196F3" cx="25" cy="25" r="25"></circle>
+            <path d="M82,27 C82,29.7617908 79.7608463,32 77,32 C74.2391537,32 72,29.7617908 72,27 C72,24.2383666 74.2391537,22 77,22 C79.7608463,22 82,24.2383666 82,27 Z" id="Shape" fill="#00C853"></path>
+            <path d="M73,40.0001574 C73,45.5227241 68.5232316,50 63.0000787,50 C57.4764536,50 53,45.5227241 53,40.0001574 C53,34.4772759 57.476611,30 63.0000787,30 C68.523389,30 73,34.4774334 73,40.0001574 Z" id="Shape" fill="#F44336"></path>
+            <path d="M75,66.0001574 C75,72.6278173 69.6281509,78 63.0000787,78 C56.3720065,78 51,72.6278173 51,66.0001574 C51,59.3728124 56.3718491,54 63.0000787,54 C69.6281509,54 75,59.3728124 75,66.0001574 Z" id="Shape" fill="#FFEB3B"></path>
+        </g>
+    </g>
+</svg>

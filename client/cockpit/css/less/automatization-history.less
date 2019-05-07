@@ -1,0 +1,200 @@
+/*
+* eVA
+* Version: 2.0
+* copyright (c) 2018 everis Spain S.A
+* Date: 06 February 2019
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Oscar Carantón, Aric Gutierrez.
+* All rights reserved
+*/ 
+
+@import "default";
+
+@backgroundPage : #e6eeef;
+  
+  @keyframes parpadeo {  
+    0% { 
+        opacity: 1.0; 
+        width: 20rem;
+    }
+    50% { 
+        opacity: 0.5; 
+        margin-left: 42%;
+        width: 15rem;
+    }
+    100% { 
+        opacity: 1.0; 
+        width: 20rem;
+    }
+  }
+
+.img-loading{
+    margin-left: 40%;
+    margin-top: 10%;
+    width: 20rem;
+    animation-name: parpadeo;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    -webkit-animation-name:parpadeo;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+}
+
+.container-history{
+    font-family: 'Raleway';
+    background: @backgroundPage;
+    margin-top: 4rem;
+    .test{
+        margin: 5px;
+        display: flow-root;
+        padding: 10px;
+        // background: #00E79F;
+        border-radius: 8px;
+        margin-left: 6rem;
+        margin-right: 6rem;
+        .active{
+            width: 17rem;
+            color: #010101;
+            float: none;
+            margin-right: 4rem;
+            border-radius: 1rem;
+            font-weight: 600;
+            height: 35px;
+            width: 175px;
+            // border: 1.5px solid #000000;
+            background-color: #00eaa9;
+        }
+        .active:hover{
+            background-color: #010101;
+            color: white;
+        }
+    }
+    .no-data{
+        margin: 20rem;
+        font-size: 20px;
+        text-align: center;
+        color: #acb0b1;
+        font-weight: 500;
+    }
+    table {
+        width: 90%;
+        margin-left: 5%;
+        margin-top: 25px;
+        .header{
+            th{
+                padding: 10px;
+                text-align: center;
+                color: #9e9e9e;
+                font-size: 13px;
+                font-weight: 500;
+                &:nth-child(9){
+                    width: 2rem;
+                }
+                &:nth-child(10){
+                    width: 2rem;
+                }
+            }
+        }
+        .body{
+            td{
+                margin-top: 3px;
+                margin-bottom: 3px;
+                background: white;
+                border-bottom: 10px solid #e9f0f1;
+                border-top: 5px solid #e9f0f1;
+                padding: 10px;
+                font-weight: 500;
+                text-align: center;
+                button{
+                    width: 14rem;
+                    height: 4rem;
+                    border: 2px solid #00e79f;
+                    background: 0 0;
+                    color: #00e79f;
+                    text-align: center;
+                    font-size: 14px;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                    padding-top: 7px;
+                    padding-bottom: 5px;
+                    font-weight: 500;
+                    border-radius: 5rem; 
+                    &.execute{
+                        padding: 5px 0.5rem;
+                        border-radius: 5rem;
+                        height: auto;
+                        min-width: 11rem;
+                        min-height: 3rem;
+                        line-height: 2rem;
+                    }
+                    &.active{
+                        
+                        color: #010101;
+                        background: #00e79f;
+                        padding: 5px;
+                        border: 2px solid #00e79f;
+                        
+                        // float: right;
+                        // margin-right: 3rem;
+                        // border-radius: 1rem;
+                        font-weight: 600;
+                    }
+                    &.active:hover{
+                        background-color: #010101;
+                        color: white;
+                        border:0px;
+                    }
+                }
+                button:hover{
+                    background: #00e79f;
+                    color: white;
+                    border:0px;
+                }
+                
+                &:first-child{
+                    border-top-left-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                }
+                &:last-child{
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                }
+            }
+        }
+    }
+}
+.pagination{
+    padding-left: 35%;
+    padding-right: 35%;
+    margin-bottom: 10rem;
+    width: 100%;
+    height: 2rem;
+    .container-buttons{
+        display: grid;
+        grid-template-columns: 10% 10% 45% 10% 10%;
+        grid-template-rows: 1fr;
+        button{
+            border: none;
+            background: 0 0;
+            color: #010101;
+            font-size: 25px;
+            &#next,
+            &#end {
+                color:#9e9e9e;
+            }
+        }
+        label{
+            margin-top: 0;
+            font-size: 20px;
+            color: #010101;
+            font-weight: 500;
+            text-align: center;
+        }
+        .select-item{
+            border-bottom: 2px solid;
+            width: 30%;
+            margin-left: 35%;
+        }
+    }
+}

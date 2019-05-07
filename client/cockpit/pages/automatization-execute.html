@@ -1,0 +1,165 @@
+<!-- 
+* eVA
+* Version: 2.0
+* copyright (c) 2018 everis Spain S.A
+* Date: 06 February 2019
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Oscar Carantón, Aric Gutierrez.
+* All rights reserved 
+-->
+<link href="/cockpit/css/automatization-execute.min.css" rel="stylesheet">
+<!-- <div ng-if="loading" ng-if="!loading">
+        <img class="img-loading" src="img/eVA.svg">
+    </div> -->
+<div ng-class="container-execute" class="container-execute__">
+        
+    <!-- Adicion del Fichero -->
+    <div class="container-header" ng-if="id == ''">
+        <!-- <label ng-if="(nameFile == '')">{{'LEFT-BAR-AUTOMATIZATION.TITLE-SELECT-CHANNEL' | translate}} </label> -->
+        <h3  ng-if="(nameFile == '')">{{'LEFT-BAR-AUTOMATIZATION.TITLE-LABEL-NEW-TEST' | translate}} <br>
+        </h3>
+        <div  ng-if="(nameFile == '')" class="custom-select">
+            <input type="text" class="input--NoBorder" id="nameTestAutomatization" ng-model="nameTestAutomatization" placeholder="{{'LEFT-BAR-AUTOMATIZATION.TITLE-INPUT-NAME' | translate}}">
+        </div>
+        <!-- <label ng-if="(nameFile == '')">{{'LEFT-BAR-AUTOMATIZATION.TITLE-SELECT-CHANNEL' | translate}} </label> -->
+        <div  ng-if="(nameFile == '')" class="custom-select">
+            <select id="optionsChannel" ng-model="nameChannel">
+                <option value="">{{'LEFT-BAR-AUTOMATIZATION.TITLE-SELECT-CHANNEL-OPTIONS' | translate}}</option>
+                <option ng-repeat="rowResult in channel" value="{{rowResult.id}}">{{rowResult.name}}</option>
+            </select>
+        </div>
+        
+        <!-- <label>{{'LEFT-BAR-AUTOMATIZATION.TITLE-LABEL-NO-FILE' | translate}} <br>
+            <img class="icon-excel" ng-if="(nameFile != '')" src="img/xlsx-file-format.svg">{{nameFile}}
+        </label> -->
+        <div class="test add_file" ng-if="(nameFile == '')">
+            <div></div>
+            <div>
+                <label
+                    ng-class=" (nameFile != '' || id != '')?'select-file':''">{{'LEFT-BAR-AUTOMATIZATION.TITLE-BUTTON-LOAD-FILE' | translate}}</label>
+                <input type="file" file-model-directive file="selectedFile"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+            </div>
+            <!-- <button ng-click="startTest(result.id)" class="active"
+                ng-if="nameFile != '' || id != ''">{{'LEFT-BAR-AUTOMATIZATION.TITLE-BUTTON-EXECUTE' | translate}}</button> -->
+        </div>
+    </div>
+    <section class="container-section" ng-if="(nameFile != '') && id == ''">
+        <button  ng-click="startTest(result.id)" class="active">{{'LEFT-BAR-AUTOMATIZATION.TITLE-BUTTON-EXECUTE' | translate}}</button>
+    </section>
+    <section class="container-section" ng-if="(nameFile == '') && id != ''">
+            <button  ng-click="startTest(result.id)" class="active">{{'LEFT-BAR-AUTOMATIZATION.BUTTON-RETRY-TEST' | translate}}</button>
+        </section>
+    <div class="container-result" ng-if="executeTest">
+            <div>
+                <div class="margin-bottom-2 border">
+                    <span>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-C-UTTERANCE' | translate}}</span>
+                    <br>&nbsp;<br>
+                    <p>{{result.uterrance}}</p>
+    
+                </div>
+                <div class="border">
+                    <span>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-MEDIA' | translate}}</span>
+                    <p>{{result.asert  | number : '1.0'}} %</p>
+                </div>
+            </div>
+            <div class="graphic " ng-if="!detalle">
+                <span>{{'LEFT-BAR-AUTOMATIZATION.TITLE-GRAPHIC' | translate}}</span>
+                <div class="legend-content">
+                  <div class="legend-icon"></div>
+                  <span class="legend-label">Bajo</span>
+
+                  <div class="legend-icon"></div>
+                  <span class="legend-label">Medio</span>
+
+                  <div class="legend-icon"></div>
+                  <span class="legend-label">Alto</span>
+                </div>
+                <canvas id="line" class="chart chart-doughnut graphic-round" chart-data="result.graphic.data"
+                    chart-colors="result.graphic.colors" chart-labels="result.graphic.labels"
+                    chart-options="result.graphic.options" chart-dataset-override="result.graphic.datasetOverride"
+                    chart-click="onClick">
+                </canvas>
+            </div>
+            <div class="graphic" ng-if="detalle">
+                <button ng-click="offDetail()">
+                    <
+                </button>
+                <canvas id="line" class="chart chart-line" 
+                chart-data="graphicDetail.data"
+                chart-labels="graphicDetail.labels"
+                    chart-dataset-override="graphicDetail.datasetOverride"
+                    chart-options="graphicDetail.options">
+                </canvas>
+            </div>
+    </div>
+    <div class="container-result-1" ng-if="executeTest">
+        <p>Filtro</p>
+        <div class="background-color-items">
+            <div class="low"></div>
+            <div class="medium"></div>
+            <div class="high"></div>
+            <p>{{'LEFT-BAR-AUTOMATIZATION.FILTER.LOW' | translate}}</p>
+            <p>{{'LEFT-BAR-AUTOMATIZATION.FILTER.MEDIUM' | translate}}</p>
+            <p>{{'LEFT-BAR-AUTOMATIZATION.FILTER.HIGH' | translate}}</p>
+        </div>
+        <rzslider
+        rz-slider-model="slider.value"
+        rz-slider-options="slider.options"></rzslider>
+    </div>
+    <div class="container-table" ng-if="result.data.length > 0 && !loading">
+        <table>
+            <tr class="header">
+                <th>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-INTENT' | translate}}</th>
+                <th>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-QUESTION' | translate}}</th>
+                <th>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-SUCCESS' | translate}}</th>
+                <th>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-ANSWER' | translate}}</th>
+                <th>{{'LEFT-BAR-AUTOMATIZATION.TITLE-TABLE-SERVICES' | translate}}</th>
+            <tr>
+            <tr class="body" ng-repeat="rowResult in result.data">
+                <td>{{rowResult.intent}}</td>
+                <td>{{rowResult.utterance}}</td>
+                <td
+                    ng-style="{'background-color':colorBackground(rowResult.confidence) , 'color' : colorText(rowResult.confidence)}">
+                    {{textConfidence(rowResult.confidence) | number : '1.2'}} %</td>
+                <td>{{rowResult.text}}</td>
+                <td data-ng-bind-html="trustAsHtml( compareText (rowResult.text , rowResult.textResult ))"> </td>
+            </tr>
+        </table>
+    </div>
+    <div class="pagination" ng-if="pagination.view">
+        <div class="container-buttons">
+            <button id="start" ng-click="onChangePagination(0)"> << </button> 
+            <button id="back" ng-click="onChangePagination(pagination.pageBack)"> < </button> 
+            <label>
+                {{pagination.labelSelect}}
+                {{'LEFT-BAR-AUTOMATIZATION.TITLE-CONNECTOR-PAGINATION' | translate}}
+                {{pagination.total}}
+            </label>
+            <button id="next" ng-click="onChangePagination(pagination.pageNext)"> > </button>
+            <button id="end" ng-click="onChangePagination( (pagination.total - 1) )"> >> </button>
+        </div>
+    </div>
+    <!-- modal -->
+    <div class="modal fade disclaimer" id="disclaimerModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content ">
+                <div class="modal-btn-close">
+                    <button type="button" class="pull-right close-modal-btn" data-dismiss="modal"><i class="fas fa-times"></i></button>	
+                </div>
+                <div class="modal-header">
+                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button>	 -->
+                    <h4 class="modal-title img-channels">{{'LEFT-BAR-AUTOMATIZATION.TITLE-EXECUTE' | translate}}</h4>
+                </div>
+                <div class="modal-body modal-fields">
+                    <p>{{'LEFT-BAR-AUTOMATIZATION.TITLE-LABEL-DISCLAIMER' | translate}}</p>
+                    <!-- OK/CANCEL content-->
+                    <div class="modal-footer">
+                        <button type="button" class="cockpit-bt danger" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+                        <button type="button" class="cockpit-bt success"  ng-click="loadFileAndDoTest()">{{'CONFIRM' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

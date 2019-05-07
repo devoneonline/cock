@@ -1,0 +1,24 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<link rel="stylesheet" href="/cockpit/css/download-page.min.css">
+
+<div class="row session-table-header">
+    <div class="col-md-4 text">{{ 'SETTINGS-USER-NAME' | translate }}</div>
+    <div class="col-md-4 text">{{ 'USED-FILTERS' | translate }}</div>
+    <div class="col-md-2 text">{{ 'LENGTH-LABEL' | translate}}</div>
+    <div class="col-md-1 text"></div>
+    <div class="col-md-1 text"></div>
+</div>
+<div ng-repeat="file in files" class="row session-row sessionGroup" ng-hide="file.deleted">
+    <div class="col-md-4 text" style="overflow-wrap: break-word"> {{ file.fileName }} </div>
+    <div class="col-md-4 text"> <span style="white-space:pre-wrap;">{{ file.usedFilters }}</span> </div>
+    <div class="col-md-2 text"> {{ file.fileSize | number:2 }} MBs</div>
+    <div class="col-md-1 text"> <span ng-click="downloadExcel(file.fileName)" style="float: right; cursor: pointer;">Download</span> </div>
+    <div class="col-md-1 text"> <span ng-click="deleteFile(file.fileName, file)" style="float: right; cursor: pointer;">Deletar</span> </div>
+</div>

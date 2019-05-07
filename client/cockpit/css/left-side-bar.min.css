@@ -1,0 +1,8 @@
+/*!
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved
+*/.cc-navigation{position:relative;overflow-x:hidden;width:75px;transition:width .4s ease;background-color:#fff;height:100%}.cc-navigation-item{display:flex;flex-wrap:nowrap;height:74px;padding-top:25px;padding-left:18px;border-left:6px solid #fff;width:100%;cursor:pointer}.cc-navigation-item.cc-navigation-item-selected{border-left:6px solid #00e79f;background-color:#efefef}.cc-navigation-icon,.cc-navigation-name{display:inline;vertical-align:top}.cc-navigation-name{font-size:18px;font-weight:600;color:#8a8a8a;padding-left:15px}.cc-navigation-name.selected{color:#373737}.cc-navigation.open{width:185px}

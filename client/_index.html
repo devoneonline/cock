@@ -1,0 +1,129 @@
+<!-- 
+ eVA
+ Version: 2.3.0
+ copyright (c) 2018 everis Spain S.A
+ Date: 01 December 2018
+ Author: everis bots@everis.com - Guilherme Ferreira Gomes, Renan Ventura, Evelyn Neves, Luiz Afonso
+ All rights reserved
+ -->
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+	
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.15.1/angular-translate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.15.1/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.15.1/angular-translate-storage-local/angular-translate-storage-local.min.js"></script>
+	<script src="./dependencies/angular-recaptcha/release/angular-recaptcha.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway:regular,black,bold" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	
+	
+	<!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.6/summernote.css" rel="stylesheet"> -->
+
+	<!-- build:css css/_index.min.css-->
+	<link rel="stylesheet" href="./css/login.min.css">
+	<link rel="stylesheet" href="./css/login-main.min.css">
+	<!-- endbuild -->
+
+	<!-- <script src="/client/js/summernote-0.8.1.js"></script> -->
+
+	<!-- build:js js/_index.min.js-->
+	<script src="./js/login.js"></script>
+	<!-- endbuild -->
+	
+</head>
+
+<body ng-app="loginApp" ng-controller="loginCtrl">
+
+	<div class="container">
+		<nav class="login-div">
+			<div class="row">
+				<div class="col-md-12 ">
+					<div class="login-img-logo"></div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-5">
+					<div class="login-img-system"></div>
+					<div class="login-title">{{'LOGIN-TITLE' | translate}}</div>
+
+					<div class="row">
+						<div class="col-md-6 login-desc">{{'LOGIN-INTRO-PORTAL' | translate}}</div>
+						<div class="col-md-6 login-desc-fail" ng-show="wrongEmail || wrongPassword">{{errorText | translate}}</div>
+					</div>
+					
+					<form ng-submit="login($event)">  
+
+						<div class="row" ng-class="{'login-input-area':wrongEmail}">
+							<div class="col-md-2 login-imgUser" ng-class="{inputLoginFailImg:wrongEmail}" ng-style="alterErrorBoxImage"></div>
+							<input class="col-md-10 input-email" ng-class="{inputLoginFail:wrongEmail}" ng-style="alterErrorBorder" type="text" name="email" placeholder="{{'LOGIN-INPUT-EMAIL-PLACEHOLDER' | translate}}" ng-model="email">
+							<div class="col-md-6 login-desc-fail" ng-show="wrongEmail || wrongPassword">{{errorText | translate}}</div>
+						</div>
+
+						<div class="row" ng-class="{'login-input-area':wrongPassword}">
+							<div class="col-md-2 login-imgPassword" ng-class="{inputLoginFailImg:wrongPassword}" ng-style="alterErrorBoxImage"></div>
+							<input class="col-md-10 input-senha" ng-class="{inputLoginFail:wrongPassword}" ng-style="alterErrorBorder" type="password" name="password" placeholder="{{'LOGIN-INPUT-PASSWORD-PLACEHOLDER' | translate}}" ng-model="password">
+						</div>
+
+						<div><input class="login-button" type="submit" value="{{'LOGIN-BUTTON-LOGIN' | translate}}"/></div>
+					
+					</form>
+
+					<button ng-click="toggleResetPass()" class="login-forgot">{{'LOGIN-FORGOT-PASSWORD' | translate}}</button>
+
+				</div>
+
+				<div class="col-md-7 login-ilustracao"></div>
+				
+			</div>
+		</nav>
+	</div>
+
+	<div ng-if='loading' class="cc-loading">
+		<div class="lds-default cc-loading-img"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+	</div>
+
+	<!-- Forgot Password Modal -->
+	<div class="modal fade" id="resetPassModal" role="dialog" >
+		<div class="modal-dialog">	
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title reset-password">{{'FORGOT-PASS' | translate}}</h4>
+				</div>
+				<form ng-submit="verifyCaptcha($event)">
+					<div class="modal-body row">
+						<div class=" col-lg-10 col-lg-offset-1">
+							<label class="modal-label">{{'TYPE-MAIL' | translate}}</label>
+							<input type="email" ng-model="requestEmail" class="modal-input-text cc-login-passwordmodal-input" placeholder="ex: email@email.com" />
+							<div class="input-error">{{directoryError.name | translate}}</div>
+						</div>
+						<div class="col-lg-10 col-lg-offset-1" ng-show="hasCaptcha">
+							<div
+								vc-recaptcha
+								key="'{{siteKey}}'"
+								ng-model="verify.myRecaptchaResponse"
+							></div>
+						</div>
+						<!-- <script>
+							console.log('aqui 3: ', document.getElementById("cpRecaptcha"));
+						</script> -->
+						<div class="modal-footer" ng-show="!msgSend">
+							<button type="submit" class="cockpit-bt success cc-btn-login">{{'SEND' | translate}}</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,241 @@
+/*
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved
+*/ 
+
+@import "../../cockpit/css/less/default";
+
+@bgColor:#e6eeef;
+@opacity:0.4;
+
+body{
+    font-family:Raleway;
+    background-color: white;
+}
+
+.stg-new-user {
+	background: url('/cockpit/img/user-mngt.svg') no-repeat;
+	background-size: 25px;
+	padding-left:40px;
+	height:35px;
+}
+
+.btn-password {
+	float: left;
+}
+
+//campos de modal
+.modal-header {
+	border-bottom: 0;
+}
+.modal-footer {
+	border-top: 0;
+}
+.modal-select {
+	background-color: @baseColor;
+	height: 32px;
+	width: 200px;
+	font-size: 14px;
+	color: white;
+	text-indent: 10px;
+	border:0;
+}
+.modal-separator {
+	margin-top: 20px;
+	font-weight:bold;
+	font-size: 14px;
+	color: #373737;
+}
+.modal-fields {
+	padding:0 50px;
+}
+.input-error {
+	font-size: 10px;
+	color: #CF2020;
+	font-weight: medium;
+	text-align: right;
+	margin-top:5px;
+	height:12px;
+}
+.show-modal-label{
+	visibility: hidden;
+}
+.modal-label {
+	color:#636363;
+	font-size: 12px;
+	display: block;
+	font-weight: 500;
+	margin-bottom: 0;
+}
+.modal-field {
+	padding-top: 5px;
+	padding-right: 8px;
+	display:inline-block;
+	vertical-align: top;
+}
+
+.modal-open {
+	padding-right: 0 !important;
+}
+
+.modal-input-text {
+	border:0;
+	border-bottom: 1px solid #373737;
+	font-weight: bold;
+	height:24px;
+	background-color: transparent;
+	margin-bottom: 15px;
+	width: 100%;
+}
+
+.modal-input-text-project {
+	border:0;
+	border-bottom: 1px solid #373737;
+	width: 500px;
+	font-weight: bold;
+	height:24px;
+	background-color: transparent;
+}
+
+.modal-input-text.error {
+	border-bottom: 1px solid #CF2020;
+}
+.modal-input-text.empty{
+	font-weight: 500;
+	font-size: 12px;
+}
+
+//confirmacao de cancelamento
+.remove-text {
+	padding:0 50px;
+}
+.remove-modal-title {
+	background: url('/cockpit/img/trash.svg') no-repeat;
+	background-size: 26px;
+	font-weight: bold;
+	padding-left: 40px;
+	padding-top: 3px;
+	height:30px;
+}
+.cockpit-bt {
+    border: 0;
+    background-color: #d24444;
+    color: white;
+	font-weight:bold;
+	padding:8px;
+	min-width:120px;
+	margin-left:8px;
+}
+.cockpit-bt.success {
+    background-color: #00aa5a;
+}
+.cockpit-bt.danger {
+    background-color: #d24444;
+}
+.remove-bt {
+	float: right;
+}
+.cancel {
+	float: left;
+}
+.gen-msg-area {
+	position: fixed;
+	top: 74px;
+	right: 16px;
+	z-index: 1061;
+}
+.cockpit-msg {
+	border-radius: 6px;
+	color: white;
+	min-width: 200px;
+	max-width: 500px;
+	padding: 16px;
+	margin-top:16px;
+	box-shadow: 0 2px 4px 0 rgba(89,89,89,0.5);
+	opacity:0.9;
+	transition: 0.3s opacity linear;
+	z-index:1061;
+}
+.cockpit-msg.success {
+	background-color: @successColor;
+}
+.cockpit-msg.warning {
+	background-color: @warningColor;
+}
+.cockpit-msg.danger {
+	background-color: @dangerColor;
+}
+.fadeout {
+	opacity: 0;
+}
+.danger-text {
+	color:@dangerColor;
+}
+.warning-text {
+	color:@warningColor;
+}
+.success-text {
+	color:@successColor;
+}
+
+.fw500 {
+	font-weight: 500;
+}
+.fw600 {
+	font-weight: 600;
+}
+.fw700 {
+	font-weight: 700;
+}
+.fw800 {
+	font-weight: 800;
+}
+.fw900 {
+	font-weight: 900;
+}
+
+.project-new-title {
+    background: url('/cockpit/img/add-button-project-modal.svg') no-repeat;
+    background-size: 32px;
+    height: 32px;
+    padding-left: 55px;
+    padding-top: 3px;
+    background-position-x: 3px;
+    font-weight: bold;
+	}
+
+.modal-text-area{
+	background-color: #EEEEEE;
+	resize: none;
+	padding:15px;
+	box-sizing: border-box;
+	border:0;
+}
+
+.reset-password{
+	height: 32px;
+	padding-top: 3px;
+	background-position-x: 3px;
+	margin-top: 20px;
+}
+
+.opacity{
+    opacity:0.4;
+}
+
+#loading-bar .bar {
+    height: 3px !important;
+    background: white !important;
+}
+
+#loading-bar-spinner .spinner-icon {
+    width: 14px;
+    height: 14px;
+
+    border-top-color:  white !important;
+    border-left-color: white !important;
+}

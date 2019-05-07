@@ -1,0 +1,135 @@
+/*!
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved
+*/ 
+
+.cockpit-modal {
+    &-title {
+        display: inline-block;
+        font-weight: bold;
+        margin-left: 21px;
+        font-size: 16px;
+        &-complement {
+            display: inline-block;
+            font-weight: bold;
+        }
+    }
+    &-subtitle {
+        font-weight: bold;
+        margin-left: 21px;
+        font-size: 16px;
+    }
+    &-fields {
+        margin: 0 21px;
+    }
+    &-header {
+        margin-top: 38px;
+    }
+    &-body {
+        padding: 0 15px;
+    }
+    &-step {
+        &-total {
+            color: #bebebe;
+        }
+        &-current {
+            color: #00e79f;
+        }
+    }
+    &-progress {
+        &-bar {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+        &-step {
+            background-color: #dcdcdc;
+            height: 5px;
+            flex-grow: 1;
+            margin-top: 2px;
+            &-selected {
+                background-color: #00e79f;
+            }
+            &:first-child {
+                margin-right: 3px;
+            }
+            &:not(:first-child):not(:last-child) {
+                margin-left: 1.5px;
+                margin-right: 1.5px;
+            }
+            &:last-child {
+                margin-left: 3px;
+            }
+        }
+    }
+    &-fullbody-img {
+        margin-bottom: 30px;
+        max-width: 500px;
+        transform: translateX(-20px);
+    }
+}
+
+.bot-modal {
+    &-header {
+        margin-top: 28px;
+    }
+    &-separator {
+        width: 100%;
+        margin-top: 10px;
+        border-bottom: 2px solid #737778;
+    }
+    &-input {
+        width: 400px;
+        border:0;
+        border-bottom: 1px solid #373737;
+        font-weight: bold;
+        height:24px;
+        outline: none;
+        // margin-bottom: 30px;
+    }
+}
+
+.modal-centered-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-btn-close {
+    margin-top: -14px;
+    margin-right: -14px;
+}
+
+.close-modal-btn {
+    width: 30px;
+    font-size: 15px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #cdcdcd;
+    padding-top: 7px;
+    padding-left: 1px;
+    color: #FFF;
+    background-color: #cdcdcd;
+    & i {
+        margin-left: 6px;
+        vertical-align: top;
+    }
+}
+
+.lg-success {
+    padding: 8px 50px;
+}
+
+.error {
+	&-input {
+		border-bottom: 2px solid #d0021b;
+	}
+	&-select {
+		border: 2px solid #d0021b;
+	}
+}

@@ -1,0 +1,36 @@
+{
+	"LOGIN-TITLE":"Bem Vindo",
+	"LOGIN-INVALID-CREDENTIALS":"Usuário e senha não conferem",
+	"LOGIN-FIELDS-ERROR":"*Campo obrigatório",
+	"LOGIN-EMAIL-ERROR":"Email inválido",
+	"LOGIN-PASSWORD-ERROR":"Senha inválida",
+	"LOGIN-INTRO-PORTAL":"Por favor, faça o login para acessar o portal de administração do agente virtual do eVA.",
+	"LOGIN-INPUT-EMAIL-PLACEHOLDER":"email",
+	"LOGIN-INPUT-PASSWORD-PLACEHOLDER":"senha",
+	"LOGIN-FORGOT-PASSWORD":"Esqueci minha senha",
+	"LOGIN-BUTTON-LOGIN":"Entrar",
+	"SETTINGS-PARAM-DESCRIPTION-INPUT": "Nova descrição",
+	"RESET-PASSWORD": "Redefinição de senha",
+	"FORMER-PASS": "Senha atual",
+	"NEW-PASS": "Nova senha",
+	"REPEAT-NEW-PASS": "Repita a nova senha",
+	"SEND": "Enviar",
+	"FORGOT-PASS": "Esqueci minha senha",
+	"SYSTEM-MSG": "Mensagem do sistema",
+	"TYPE-MAIL": "Digite o e-mail",
+	"SAVE":"Salvar",
+	"PASSWORD-RESETTED": "Senha alterada com sucesso",
+	"ACCESS": "Acessar",
+	"INVALID-TOKEN1": "O link de redefinição de senha expirou.",
+	"INVALID-TOKEN2": "Solicite a troca de senha novamente.",
+	"PASSWORD-MESSAGE":"A senha deve ter no mínimo 6 dígitos e pelo menos duas das três regras abaixo:",
+	"LETTER":"Letra",
+	"NUMBER":"Número",
+	"SPECIAL-CHARACTER": "Caracter especial (@, !, $, &, *, -, _)"
+	
+}
+
+
+
+
+

@@ -1,0 +1,141 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<link rel="stylesheet" href="/cockpit/css/intent.min.css">
+<link rel="stylesheet" href="/cockpit/css/table.min.css">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 cp-intent-header" ng-if="allIntents.length || intentRegistry" >
+            <div class="cp-created-intent-info">
+                <div class="cp-intent-subtitle" ng-if="intentRegistry">
+                    {{'INTENT.NEW-INTENT' | translate}}
+                </div>
+            </div>
+            <div ng-if="intentRegistry" class="cp-intent-enable" ng-click="switchEnable()">
+                <div class="cp-intent-enable-text"> {{'INTENT.ENABLE' | translate}} </div>
+                <div ng-class="{'cp-intent-enable-switch-off':!isEnable}" class="cp-intent-enable-switch">
+                    <div ng-class="{'cp-intent-enable-switch-btn':isEnable}" class="cp-intent-enable-switch-btn-off"></div>
+                </div>
+                <div class="cp-intent-enable-text"> {{'INTENT.DISABLE' | translate}} </div>
+            </div>
+            <div ng-if="!intentRegistry">
+                <div class="text-center" ng-click="openFormIntent('create', {})"> 
+                    <button class="intent-btn-create">{{ 'INTENT.CREATE_NEW' | translate}}</button>
+                </div>
+            </div>
+        </div>     
+        <div ng-if="!intentRegistry">
+            <div ng-if="!allIntents.length">
+                <div class="intent-desc-empty" >
+                    <span class="opacity">{{ 'INTENT.EMPTY-PT1' | translate}} <br/>
+                    {{ 'INTENT.EMPTY-PT2' | translate}} </span>
+                </div>       
+                <div class="row col-md-12 text-center" ng-click="openFormIntent('create', {})"> 
+                    <button class="intent-btn-create">{{ 'INTENT.CREATE_NEW' | translate}}</button>
+                </div>
+            </div>
+            <div class="col-xs-10 col-xs-offset-1" ng-if="allIntents.length">
+                    <div class="search-line">    
+                        <input type="text" maxlength="255" class="intent-input-text" ng-model="busca"
+                            placeholder="{{ 'INTENT.SEARCH' | translate}}"
+                            ng-model="selectedIntent.search" />                      
+                        <div class= "pull-right cp-intent-icons posit-icon">
+                            <img src="./img/search.svg">
+                        </div>
+                    </div>                   
+                <div>
+                    <div class="select-status">
+                        <div class="status-menu" ng-class="{selected:enable}" ng-click="showEnable()">
+                            <span>{{'INTENT.ENABLE' | translate}}</span>
+                        </div>
+                        <div class="status-menu" ng-class="{selected:disable}" ng-click="showDisable()">
+                            <span>{{'INTENT.DISABLE' | translate}}</span>
+                        </div>
+                    </div>
+                    <div class="status-line"> </div>                                
+                    <div class="intent-list" ng-repeat="intent in intents | filter:busca as result">
+                        <div class="text-intent">{{intent.name}}</div>
+                        <div class="text-right cp-intent-icons">
+                            <img src="./img/pencil.svg" ng-click="openFormIntent('edit', intent)">
+                            <img src="./img/trash.svg" ng-click="deleteIntent(intent)">
+                        </div>
+                    </div>
+                    
+                    <div ng-if="!intents.length">
+                        <div class="intent-desc-empty" >
+                            <span class="opacity">{{ 'INTENT.EMPTY-PT1' | translate}} <br/>
+                            {{ 'INTENT.EMPTY-PT3' | translate}} </span>
+                        </div>
+                    </div>
+                    <div ng-if="result.length==0 && intents.length">
+                        <div class="intent-desc-empty" >
+                            <span class="opacity">{{ 'INTENT.EMPTY-PT4' | translate}} </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>       
+        <div ng-if="intentRegistry" class="col-md-10 col-md-offset-1 cp-intent-fields">
+            <div class="cp-intent-creation">
+                <label ng-if="selectedIntent.name">{{'INTENT.NAME' | translate}}</label>
+                <input type="text" maxlength="255" class="modal-input-text cp-intent-creation-field"
+                    ng-class="{'empty':!selectedIntent.name,'error':selectedIntentError.name}"
+                    placeholder="{{ 'INTENT.NAME' | translate}}"
+                    ng-model="selectedIntent.name" />
+                <span class="input-error">{{selectedIntentError.name | translate}}&nbsp;</span>
+            </div>
+            <div id="cp-intent-description" class="cp-intent-creation">
+                <label ng-if="selectedIntent.description">{{'INTENT.DESCRIPTION' | translate}}</label>
+                <textarea rows="2" maxlength="255" class="modal-input-text cp-intent-creation-field"
+                    ng-class="{'empty':!selectedIntent.description,'error':selectedIntentError.description}"
+                    placeholder="{{ 'INTENT.DESCRIPTION' | translate}}"
+                    ng-model="selectedIntent.description"></textarea>
+                <span class="input-error">{{selectedIntentError.description | translate}}&nbsp;</span>
+            </div>
+            <form class="cp-intent-creation" ng-submit="createIntentExample()">
+                <div class="cp-intent-creation-example">{{'EXAMPLE' | translate}}</div>
+                <i class="cp-quote-icon fas fa-quote-right"></i>
+                <input type="text" maxlength="255" class="modal-input-text cp-intent-creation-field cp-intent-create"
+                    placeholder="{{ 'INTENT.EXAMPLE' | translate}}"
+                    ng-model="newExample.text" />
+                <span class="cp-intent-example-addicon posit-icon-add">
+                    <button id="cp-intent-addicon" class="cockpit-bt cockpit-bt-slim" type="submit">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </span>
+            </form>
+            <div class="col-xs-12 cp-intent-example-container" ng-if="intentExamples && intentExamples.length>0">
+                <div ng-if="!example.isHide" class="cp-intent-example-list" ng-repeat="example in intentExamples">
+                    <i class="cp-quote-icon fas fa-quote-right"></i>
+                    <span class="cp-intent-create-example">{{example.text}}</span>
+                    <span class="cp-intent-example-delete cp-intent-icons posit-icon-del">
+                        <!-- <button class="cp-intent-delicon"> -->
+                            <img class="pull-right" src="./img/trash.svg" ng-click="deleteIntentExample(example)">
+                        <!-- </button> -->
+                    </span>
+                </div>
+            </div>
+            <div class="cp-intent-creation">
+                <button type="button" class="cp-create-answer">{{ 'INTENT.CREATE-ANSWER' | translate}}</button>
+            </div>
+            <div class="cp-intent-footer cp-intent-footer pull-right" style="position:relative;">
+                <button type="button" class="cockpit-bt danger pull-left" ng-click="closeNewIntent()">{{'CANCEL' | translate}}</button>
+                <button type="button" class="cockpit-bt success" ng-click="confirmEditIntent()"
+                    ng-if="action=='edit' && selectedIntent.name">SALVAR</button>
+                <button type="button" class="cockpit-bt success" ng-click="confirmCreateIntent()"
+                    ng-if="action=='create'" >{{'SAVE' | translate}}</button>
+                <!-- DIRECTIVA DE POPUP TRY IT -->
+                <try-now></try-now>
+                <!-- DIRECTIVA DE POPUP TRY IT -->
+               
+            </div>
+        </div>
+    </div>
+
+</div>

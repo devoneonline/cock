@@ -1,0 +1,347 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<link href="/cockpit/css/answer.min.css" rel="stylesheet">
+<div>
+	
+    <!--  Answer Directory Root  -->
+	<div ng-if="!directories.length">
+		<div class="answer-desc-empty" >
+			<div class="answer-desc-empty-content">
+				<span class="opacity">{{' ANSWER-DESC-EMPTY-PART1' | translate}} <br/>
+				{{' ANSWER-DESC-EMPTY-PART2' | translate}} <br/>
+				{{' ANSWER-DESC-EMPTY-PART3' | translate}} </span>
+			</div>
+			<div>
+				<button class="answer-btn-create" ng-click="selectDirectory({})" >{{'ANSWER-BUTTON-CREATE-ROOT-DIR' | translate}}</button>
+			</div>
+		</div>
+	</div>
+
+	<!--  Answer Directory Parent  -->
+	<div class="container-fluid" ng-if="directories.length">
+
+		<div class="row">
+			<div class="col-md-2 answer-label-filter">{{'FILTERS' | translate}}</div>
+
+			<div class="col-md-10 answer-cointainer-filter">
+				<div class="row">				
+					<div class="col-md-2 answer-content-name-label">{{'CONTENT-CODE-FILTER' | translate}}</div>
+					<input type="text" id="code-filter-placeholder" 
+						placeholder="{{'CONTENT-CODE-FILTER-PLACEHOLDER' | translate}}" 
+						ng-model="filter.code" ng-keyup="loadAnswerCodeFilter()"
+						uib-typeahead="faq.code for faq in codesFilter | filter:$viewValue | limitTo:6" 
+						class="faq-filter-select" />
+				</div>
+
+				<div class="row space-row">				
+					<div class="col-md-2 answer-content-name-label">{{'CONTENT-NAME-FILTER' | translate}}</div>
+					<input type="text" id="faq-filter-placeholder" 
+						placeholder="{{'CONTENT-NAME-FILTER-PLACEHOLDER' | translate}}" 
+						ng-model="filter.title" ng-keyup="loadAnswerFaqFilter()"
+						uib-typeahead="faq.title for faq in faqsFilter | filter:$viewValue | limitTo:6" 
+						class="faq-filter-select" />
+				</div>
+
+				<div class="row">
+					<div class="col-md-2 answer-ID-label">{{'CONTENT-TEXT-FILTER' | translate}}</div>
+					<input type="text" id="" placeholder="{{'CONTENT-TEXT-FILTER-PLACEHOLDER' | translate}}" 
+						ng-model="filter.text"
+						class="id-filter-select" />
+				</div>
+
+				<div class="filter-bt">
+					<div class="activeGroupFilter">
+						<input type="checkbox" ng-model="filter.activeGroup"><span>&nbsp{{ 'ACTIVE-GROUP-FILTER-LABEL' | translate }}</span>
+					</div>
+					<button class="cockpit-bt danger" 
+						ng-click="cleanSearch()" ng-show="isSearch">{{'CLEAN-SEARCH' | translate}}</button>
+					<button class="cockpit-bt success" 
+						ng-click="searchFilter()">{{'SEARCH' | translate}}</button>
+				</div>
+			</div>
+		</div>
+
+		<div ng-if="!isSearch" class="cc-answer-list">
+			<button class="answer-btn-create-list" ng-click="selectDirectory({})">{{'ANSWER-BUTTON-CREATE-ROOT-DIR' | translate}}</button>
+			<div class="export-bt" ng-click="exportAnswers()"> 
+				<div class="export-icon"></div> 
+				<div class="export-text">{{ 'DOWNLOAD-EXCEL' | translate }}</div> 
+			</div>
+
+			<directory-tree items="directories" 
+					status-content="statusContent"
+					on-open="loadDirectories" 
+					on-remove="removeNode"
+					on-create-content="createAnswer"
+					on-create-dir="createDirectory"
+					on-edit="selectItem"
+					on-active-group="activeGroupNode" />
+		</div>
+		
+		<div ng-if="isSearch" class="search-results-area">
+			<div ng-if="searchResults.length == 0" class="no-results-found">
+				<span>{{'NO-RESULTS-FOUND' | translate}}</span>
+			</div>
+			<div ng-if="searchResults.length">
+				<div ng-repeat="result in searchResults" class="directory-tree-content-box" ng-class="{'directory-activeGroup': !result.activeGroup}">
+					<div class="directory-tree-content-title" ng-click="selectAnswer(result);">{{result.title}}</div>
+					<span ng-click="activeGroupNode(result)" class="active-group-btn" ng-show="!result.activeGroup">{{ 'ENABLE-CONTENT' | translate }}</span>
+					<span ng-click="activeGroupNode(result)" class="active-group-btn" ng-show="result.activeGroup">{{ 'DISABLE-CONTENT' | translate }}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Answer Modal -->
+<div class="modal fade" id="answerModal" role="dialog" data-backdrop="static">
+	<div class="modal-dialog modal-lg">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-btn-close">
+				<button type="button" class="pull-right close-modal-btn" data-dismiss="modal"><i class="fas fa-times"></i></button>	
+			</div> 
+			<div class="modal-header">
+				<h4 class="modal-title answer-modal-title">{{'TITLE-ADD-ANSWER' | translate}} <span><div class="answer-green-dot"></div>{{'ANSWER-ACTIVE-CHANNELS' | translate}}</span></h4>
+			</div>
+			<div class="modal-body modal-fields">
+				<div class="modal-field">
+					<label class="modal-label" ng-class="{'show-modal-label':!answer.code}">{{'ANSWER-CODE-INPUT' | translate}}</label>
+					<input type="text" ng-class="{'empty':!answer.code,'error':answerError.code, 'error':answerError.characterValidation}" placeholder="{{'ANSWER-CODE-INPUT' | translate}}" ng-model="answer.code" class="modal-input-text text-space cockpit-modal-input" maxlength="100"/>
+					<div ng-if="answerError.name" class="input-error">{{answerError.name}}</div>
+					<div ng-if="answerError.characterValidation" class="input-error character-validation">{{'CHARACTER-VALIDATION' | translate}}</div>
+				</div>
+				<div class="modal-field cockpit-modal-field-left">
+					<label class="modal-label" ng-class="{'show-modal-label':!answer.title}">{{'ANSWER-TITLE-INPUT' | translate}}</label>
+					<input type="text" ng-class="{'empty':!answer.title,'error':answerError.title}" placeholder="{{'ANSWER-TITLE-INPUT' | translate}}" ng-model="answer.title" class="modal-input-text cockpit-modal-input" maxlength="40"/>
+					<div class="input-error">{{answerError.title | translate}}&nbsp;</div>
+				</div>
+				<div class="modal-separator">{{'ANSWER-STATUS-SELECT' | translate}}</div>
+				<div class="modal-field" id= "modal-field-btn">
+					
+					<select class="modal-select" ng-model="answer.statusId" ng-change="userChangeGroup">
+						<option value="">{{'ANSWER-STATUS-EMPTY' | translate}}</option>
+						<option value="{{stat.id}}" ng-repeat="stat in status">{{stat.name | translate}}</option> 
+						<!-- Tradução direto do banco -->
+					</select>
+					<div class= "cp-enable" >
+						<div ng-class="{'cp-enable-switch-off':!isTransactional}" class="cp-enable-switch" ng-click="switchTransactional()">
+							<div ng-class="{'cp-enable-switch-btn':isTransactional}" class="cp-enable-switch-btn-off"></div>
+						</div>
+						<div class="transactionalLabel">
+							<label>{{ 'TRANSACTIONAL' | translate}}</label>
+						</div>
+					</div>
+					<div class="cp-enable">
+							<div ng-class="{'cp-enable-switch-off':!isLikeable}" class="cp-enable-switch" 
+							ng-click="switchLikeable()">
+								<div ng-class="{'cp-enable-switch-btn':isLikeable}" class="cp-enable-switch-btn-off"></div>
+							</div>
+							<div class="likeableLabel">
+								<label>{{ 'ANSWER-CHECK-LIKEABLE' | translate}}</label>
+							</div>
+						</div>
+					<div class="input-error" id="status-error">{{answerError.statusId | translate}}</div>
+				</div>
+
+				<!-- CHANNEL SELECTOR -->
+				<div class="channel-selector">
+					<div class="channel-option" id="channel-ALL"
+							ng-click="setChannelName('ALL')" 
+							ng-class="{'selected':isChannelName('ALL')}">
+						{{'ALL' | translate}}
+					</div>
+					<div class="channel-option" ng-repeat="channel in channels" id="channel-{{replaceChannelName(channel.systemName)}}"
+							ng-click="setChannelName(channel.systemName)" 
+							ng-class="{'selected':isChannelName(channel.systemName)}">
+						{{channel.name}}
+					</div>
+				</div>
+				<!-- CHANNEL SELECTOR - END -->
+
+				<div ng-if="isChannelEnabled(channelName)==false" class="activate-channel">
+					<div class="activate-channel-text">
+						<span>{{'ANSWER-ENABLE-TEXT' | translate}}</span>
+					</div>
+					<button class="answer-btn-create" ng-click="enableContent()" class="answer-btn-space;">{{'ANSWER-ENABLE-CONTENT' | translate}}</button>
+				</div>
+				<div ng-if="isChannelEnabled(channelName)==true">
+					<div class="answer-type">
+							<div ng-if="answerError.html" class="answer-type-choice-empty" ng-class="{selected:answer.byChannel[channelName].answerType == 'HTML'}" ng-click="answer.byChannel[channelName].html = answer.byChannel[channelName].text;answer.byChannel[channelName].answerType = 'HTML'">{{'ANSWER-TYPE-HTML' | translate}}</div>
+							<div ng-if="answerError.html" class="answer-type-choice-empty" ng-class="{selected:answer.byChannel[channelName].answerType == 'TEXT'}" ng-click="answer.byChannel[channelName].text = answer.byChannel[channelName].html;answer.byChannel[channelName].answerType = 'TEXT'">{{'ANSWER-TYPE-TEXT' | translate}}</div>
+							<div ng-if="!answerError.html" class="answer-type-choice" ng-class="{selected:answer.byChannel[channelName].answerType == 'HTML'}" ng-click="answer.byChannel[channelName].html = answer.byChannel[channelName].text;answer.byChannel[channelName].answerType = 'HTML'">{{'ANSWER-TYPE-HTML' | translate}}</div>
+							<div ng-if="!answerError.html" class="answer-type-choice" ng-class="{selected:answer.byChannel[channelName].answerType == 'TEXT'}" ng-click="answer.byChannel[channelName].text = answer.byChannel[channelName].html;answer.byChannel[channelName].answerType = 'TEXT'">{{'ANSWER-TYPE-TEXT' | translate}}</div>
+					</div>
+					<div ng-show="answer.byChannel[channelName].answerType == 'HTML'">
+						<summernote id="answerSummernote" ng-model="answer.byChannel[channelName].html"	ng-class="{'empty':!answer.byChannel[channelName].html, 'error':answerError.html}" config="summerOptions" height="234"></summernote>
+					</div>
+					<div ng-show="answer.byChannel[channelName].answerType == 'TEXT'">
+						<textarea ng-model="answer.byChannel[channelName].text" ng-class="{'empty':!answer.byChannel[channelName].text, 'error':answerError.text}" class="modal-text-area answer-box-channel" placeholder="{{'ANSWER-TEXT-PLACEHOLDER' | translate}}"></textarea>
+					</div>
+
+					<div class="answer-obox-text">
+						<div class="click-area" ng-class="{closed:!openTechText,opened:openTechText}" ng-click="showHideTechText()">{{'ANSWER-TECH-TEXT' | translate}}</div>
+						<section ng-show="openTechText" class="answer-box-separator">
+							<div class="answer-type">
+								<div class="answer-type-choice" ng-class="{selected:answer.byChannel[channelName].techTextType != 'javascript'}" ng-click="changeMode('javascript');">{{'JSON' | translate}}</div>
+								<div class="answer-type-choice" ng-class="{selected:answer.byChannel[channelName].techTextType != 'xml'}" ng-click="changeMode('xml');">{{'XML' | translate}}</div>
+							</div>
+							<textarea ui-codemirror ng-model="answer.byChannel[channelName].technicalText"
+							ui-codemirror-opts="cmOptions"></textarea>
+						</section>
+					</div>
+
+					<div class="answer-add-opt" ng-click="addOption()" ng-if="!isChannelClassification('IVR')">
+						{{'ANSWER-ADD-OPTION' | translate}}
+					</div>
+					<div class="answer-add-opt" ng-click="addOption()" ng-if="isChannelClassification('IVR')">
+						{{'ANSWER-ADD-IVR-OPTION' | translate}}
+					</div>
+
+					<div class="added-options-box" dnd-list="answer.byChannel[channelName].options">
+						<div class="answer-obox-text"  ng-class="{'answer-obox-text-empty': opt.error.title || opt.error.html, 'selected': models.selected === opt}" ng-repeat="opt in answer.byChannel[channelName].options" ng-if="!opt.removed" dnd-draggable="opt" dnd-moved="answer.byChannel[channelName].options.splice($index,1)" dnd-effect-allowed="move" dnd-selected="models.selected = opt" dnd-dragend="refreshOptionOrder(event,dropEffect,opt)">
+							<dnd-nodrag>
+								<div class="click-area option-box-text"  ng-class="{closed:!opt.opened,opened:opt.opened}" ng-click="openOption(opt);">{{opt.title ? opt.title : ('ANSWER-DEFAULT-TITLE' | translate)}}</div>
+								<div class="option-box-btn">
+									<img src="/cockpit/img/trash.svg" ng-click="removeOption(opt)"/>
+									<img dnd-handle src="/cockpit/img/move-dnd.svg">
+								</div>
+									<div class="ivr-number-display-box ivr-number-display" ng-if="isChannelClassification('IVR')"><span>{{opt.ivrOption}}</span></div>
+								<div dnd-nodrag ng-show="opt.opened" class="answer-option-data">
+									<div id="answer-option" class="answer-option" ng-if="!isChannelClassification('IVR')">{{'ANSWER-OPTION' | translate}} {{opt.optionOrder}}</div>
+									<div class="modal-field" ng-if="!isChannelClassification('IVR')">
+										<label class="modal-label" ng-class="{'show-modal-label':!opt.title}">{{'ANSWER-OPT-TITLE' | translate}}</label>
+										<input type="text" ng-class="{'empty':!opt.title,'error':opt.error.title}" placeholder="{{'ANSWER-OPT-TITLE' | translate}}" ng-model="opt.title" class="modal-input-text button-title" maxlength="45"/>
+										<div class="input-error">{{opt.error.title | translate}}</div>
+									</div>
+									<div class="modal-field" ng-if="isChannelClassification('IVR')">
+										<label class="modal-label" ng-class="{'show-modal-label':!opt.title}">{{'ANSWER-IVR-TITLE' | translate}}</label>
+										<input type="text" ng-class="{'empty':!opt.title,'error':opt.error.title}" placeholder="{{'ANSWER-OPT-TITLE' | translate}}" ng-model="opt.title" class="modal-input-text button-title" maxlength="45"/>
+										<div class="input-error">{{opt.error.title | translate}}</div>
+									</div>
+									<div class="modal-field" ng-if="!isChannelClassification('IVR')">
+										<input type="checkbox" ng-model="opt.action" id="optAction{{opt.order}}"/>
+										<label for="optAction{{opt.order}}" class="answer-option-action">{{'ANSWER-HAS-ACTION' | translate}}</label>
+									</div>
+									<div class="modal-field modal-ivr-field" ng-if="isChannelClassification('IVR')">
+										<label class="modal-ivr-label">{{'ANSWER-IVR-OPT' | translate}}</label>
+										<input type="text" value="{{opt.optionOrder}}" name="ivr-number" id="ivr-number" class="ivr-number" ng-model="opt.ivrOption" maxlength="1">
+									</div>
+
+									<div ng-show="!opt.action" ng-if="!isChannelClassification('IVR')">
+										<div class="answer-type">
+											<div ng-if="opt.error.html" class="answer-type-choice-empty" ng-class="{selected:opt.textType == 'HTML'}" ng-click="opt.html = opt.text;opt.textType = 'HTML'">{{'ANSWER-TYPE-HTML' | translate}}</div>
+											<div ng-if="opt.error.text" class="answer-type-choice-empty" ng-class="{selected:opt.textType == 'TEXT'}" ng-click="opt.text = opt.html;opt.textType = 'TEXT'">{{'ANSWER-TYPE-TEXT' | translate}}</div>
+											<div ng-if="!opt.error.html" class="answer-type-choice" ng-class="{selected:opt.textType == 'HTML'}" ng-click="opt.html = opt.text;opt.textType = 'HTML'">{{'ANSWER-TYPE-HTML' | translate}}</div>
+											<div ng-if="!opt.error.text" class="answer-type-choice" ng-class="{selected:opt.textType == 'TEXT'}" ng-click="opt.text = opt.html;opt.textType = 'TEXT'">{{'ANSWER-TYPE-TEXT' | translate}}</div>
+										</div>
+										<div ng-show="opt.textType == 'HTML'" >
+											<summernote ng-model="opt.html" id="answerSummernote" ng-class="{'empty':!opt.html, 'error':opt.error.html}" config="summerOptions" height="234"></summernote>
+										</div>
+										<div ng-show="opt.textType == 'TEXT'">
+											<textarea ng-model="opt.text" ng-class="{'empty':!opt.text, 'error':opt.error.text}" placeholder="{{'ANSWER-TEXT-PLACEHOLDER' | translate}}" class="modal-text-area answer-box-channel"></textarea>
+										</div>
+									</div>
+
+									<div ng-show="opt.action" ng-if="!isChannelClassification('IVR')">
+										<div class="answer-type">
+											<div class="answer-type-choice" ng-class="{selected:opt.textTypeAction == 'WATSON'}" ng-click="opt.textTypeAction = 'WATSON'">{{'ANSWER-TYPE-WATSON' | translate}}</div>
+											<div class="answer-type-choice box-type-choice" ng-class="{selected:opt.textTypeAction == 'ANSWER'}" ng-click="opt.textTypeAction = 'ANSWER'">{{'ANSWER-TYPE-ANSWER' | translate}}</div>
+										</div>
+										<div class="modal-field">
+											<input type="text" ng-class="{'empty':!opt.text,'error':opt.error.text}" placeholder="{{(opt.textTypeAction == 'WATSON' ? 'ANSWER-OPT-WATSON' : 'ANSWER-OPT-ANSWER') | translate}}" ng-model="opt.text" class="modal-input-text" maxlength="255"/>
+											<div class="input-error">{{opt.error.text | translate}}</div>
+										</div>
+									</div>
+									<div ng-if="isChannelClassification('IVR')">
+										<div class="answer-type">
+											<div class="answer-type-choice" ng-class="{selected:opt.textTypeAction == 'WATSON'}" ng-click="opt.textTypeAction = 'WATSON'">{{'ANSWER-TYPE-WATSON' | translate}}</div>
+											<div class="answer-type-choice box-type-choice" ng-class="{selected:opt.textTypeAction == 'ANSWER'}" ng-click="opt.textTypeAction = 'ANSWER'">{{'ANSWER-TYPE-ANSWER' | translate}}</div>
+										</div>
+										<div class="modal-field">
+											<input type="text" ng-class="{'empty':!opt.text,'error':opt.error.text}" placeholder="{{(opt.textTypeAction == 'WATSON' ? 'ANSWER-OPT-WATSON' : 'ANSWER-OPT-ANSWER') | translate}}" ng-model="opt.text" class="modal-input-text" maxlength="255"/>
+											<div class="input-error">{{opt.error.text | translate}}</div>
+										</div>
+									</div>
+								</div>
+							</dnd-nodrag>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" ng-if="isChannelEnabled(channelName)==true" class="cockpit-bt cancel danger button-danger" ng-click="disableContent()">{{'DISABLED-CONTENT' | translate}}</button>
+				<button type="button" class="cockpit-bt danger button-danger" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+				<button type="button" class="cockpit-bt success button-success" ng-disabled="savingAnswer" ng-click="saveAnswer()">{{(savingAnswer ? 'SAVING' : 'SAVE') | translate}}</button>
+
+				<div class="answer-preview-relative" ng-if="!isChannelClassification('IVR')">
+					<div class="answer-preview-absolute">
+						<div class="preview-title">{{'ANSWER-PREVIEW' | translate}}</div>
+						<div class="answer-preview-box">
+							<div ng-if="answer.byChannel[channelName].text || answer.byChannel[channelName].html || answer.byChannel[channelName].options.length">
+								<div class="preview-assistant">{{'ASSISTANT' | translate}}</div>
+								<div class="preview-text">
+									<div class="preview-answer-text" ng-if="answer.byChannel[channelName].answerType == 'HTML'" 
+									ng-bind-html="answer.byChannel[channelName].html"></div>
+									<div class="preview-answer-text" ng-if="answer.byChannel[channelName].answerType == 'TEXT'">
+										{{answer.byChannel[channelName].text}}
+									</div>
+									<div class="preview-options">
+										<div ng-repeat="opt in answer.byChannel[channelName].options">
+											<div class="preview-opt-text" ng-if="!opt.removed">{{opt.title}}</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="answer-no-preview" ng-if="!answer.byChannel[channelName].text && !answer.byChannel[channelName].html && !answer.byChannel[channelName].options.length">
+								{{'ANSWER-NO-PREVIEW' | translate}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Answer Modal END -->
+
+
+<!-- Directory Modal -->
+<div class="modal fade" id="directoryModal" role="dialog" data-backdrop="static">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-btn-close">
+				<button type="button" class="pull-right close-modal-btn" data-dismiss="modal"><i class="fas fa-times"></i></button>	
+			</div>
+			<div class="modal-header">
+				<h4 class="modal-title directory-new-title">{{'DIRECTORY-LABEL-DATA' | translate}}</h4>
+			</div>
+			<div class="modal-body modal-fields">
+				<!-- Field Name Directory content-->
+				<div class="modal-field"> 
+					<label class="modal-label" ng-class="{'show-modal-label':!directory.name}">{{'DIRECTORY-LABEL-NAME' | translate}}</label>
+					<input type="text" ng-class="{'empty':!directory.name,'error':directoryError.name}" 
+							placeholder="{{'DIRECTORY-LABEL-NAME' | translate}}" ng-model="directory.name" 
+							class="modal-input-text folder-name" maxlength="20"/>
+					<div class="input-error">{{directoryError.name | translate}}</div>
+				</div>
+
+				<!-- OK/CANCEL content-->
+				<div class="modal-footer space-footer">
+					<button type="button" class="cockpit-bt danger" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+					<button type="button" class="cockpit-bt success" ng-disabled="savingDir" ng-click="saveDirectory()">{{(savingDir ? 'SAVING' : 'SAVE') | translate}}</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

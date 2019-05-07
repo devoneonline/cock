@@ -1,0 +1,123 @@
+<!-- 
+ eVA
+ Version: 2.3.0
+ copyright (c) 2018 everis Spain S.A
+ Date: 01 December 2018
+ Author: everis bots@everis.com - Guilherme Ferreira Gomes, Renan Ventura, Evelyn Neves, Luiz Afonso
+ All rights reserved -->
+
+<!DOCTYPE HTML>
+<html>
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:regular,black,bold,medium">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../node_modules/summernote/dist/summernote.css">
+  <link rel="stylesheet" href="../node_modules/codemirror/lib/codemirror.css">
+  <link rel="stylesheet" href="../node_modules/codemirror/addon/dialog/dialog.css">
+  <link rel="stylesheet" href="../node_modules/codemirror/addon/display/fullscreen.css">
+  <link rel="stylesheet" href="../node_modules/bootstrap-daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="../node_modules/isteven-angular-multiselect/isteven-multi-select.css">
+  <link rel="stylesheet" href="../node_modules/angular-loading-bar/build/loading-bar.min.css">
+
+  <link rel="stylesheet" href="../ura/css/main.min.css">
+	<link rel="stylesheet" href="../ura/css/left-side-bar.min.css">
+	<link rel="stylesheet" href="../ura/css/submenu.min.css">
+
+  <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../node_modules/angular/angular.min.js"></script>
+  <script type="text/javascript" src="../node_modules/angular-animate/angular-animate.min.js"></script>
+  <script type="text/javascript" src="../node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="../node_modules/angular-translate/dist/angular-translate.min.js"></script>
+  <script type="text/javascript" src="../node_modules/angular-translate/dist/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+  <script type="text/javascript" src="../node_modules/angular-translate/dist/angular-translate-storage-local/angular-translate-storage-local.min.js"></script>
+  <script type="text/javascript" src="../node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+  <script type="text/javascript" src="../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+  <!-- TO DO - import dependecies from node_modules -->
+	<script type="text/javascript" src="../dependencies/other.min.js"></script>
+  <script type="text/javascript" src="../node_modules/codemirror/lib/codemirror.js"></script>
+  <script type="text/javascript" src="../node_modules/codemirror/mode/javascript/javascript.js"></script>
+  <script type="text/javascript" src="../node_modules/codemirror/mode/xml/xml.js"></script>
+  <script type="text/javascript" src="../node_modules/angular-ui-codemirror/src/ui-codemirror.js"></script>
+  <script type="text/javascript" src="../node_modules/summernote/dist/summernote.min.js"></script>
+  <script type="text/javascript" src="../node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+  <script type="text/javascript" src="../node_modules/slick-carousel/slick/slick.min.js"></script>
+  <script type="text/javascript" src="../node_modules/moment/min/moment.min.js"></script>
+  <script type="text/javascript" src="../node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <script type="text/javascript" src="../node_modules/isteven-angular-multiselect/isteven-multi-select.js"></script>
+  <script type='text/javascript' src='../node_modules/angular-loading-bar/build/loading-bar.min.js'></script>
+
+  <script type="text/javascript" src="../ura/js/directoryTree.js"></script>
+	<script type="text/javascript" src="../ura/js/util.js"></script>
+	<script type="text/javascript" src="../ura/script.js"></script>
+	<script type="text/javascript" src="../ura/script.js"></script>
+	<script type="text/javascript" src="../ura/js/factories/confirmModal-factory.js"></script>
+	<script type="text/javascript" src="../ura/js/factories/leftBar-factory.js"></script>
+	<script type="text/javascript" src="../ura/js/factories/loading-factory.js"></script>
+	<script type="text/javascript" src="../ura/js/factories/messages-factory.js"></script>
+	<script type="text/javascript" src="../ura/js/factories/project-factory.js"></script>
+</head>
+
+<body ng-app="cockpitApp" ng-controller="cockpitCtrl" ui-router-styles>
+  <style>
+    .dn { display: none; }
+    .db { display: block; }
+  </style>
+  <div ng-include="'/ura/template/header.html'"></div>
+	<div class="container-fluid">
+		<div class="row" ng-if="showLeftBar()">
+			<div ng-include="'/ura/template/left-side-bar.html'"></div>
+			<div class="col-md-10">
+				<div ng-include="'/ura/template/submenu.html'"></div>
+				<section>
+					<div ng-class="{dn:loading,db:!loading}"><ui-view autoscroll></ui-view></div>
+					<div ng-class="{db:loading,dn:!loading}" style="text-align:center;padding-top:50px">
+						<img src="/ura/img/loading-submenu.svg" width="300"/>
+					</div>
+					<div class="space" style="height:100px;"></div>
+				</section>
+			</div>
+    </div>
+
+		<section ng-if="!showLeftBar()">
+			<div ng-class="{dn:loading,db:!loading}"><ui-view autoscroll></ui-view></div>
+			<div ng-class="{db:loading,dn:!loading}" style="text-align:center;padding-top:50px">
+				<img src="/ura/img/loading.svg"/>
+			</div>
+			<div class="space" style="height:100px;"></div>
+		</section>
+	</div>
+
+	<!-- Confirm Modal -->
+	<div class="modal fade" id="confirmModal" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title remove-modal-title">{{confirmModalTitle | translate}}</h4>
+				</div>
+				<div class="modal-body">
+					<p class="remove-text">{{confirmModalText | translate}}</p>
+				</div>
+				<div class="modal-footer" id="confirmModalBts">
+					<div style="display:none;" data-show-type="remove">
+						<button type="button" class="cockpit-bt cancel success" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+						<button type="button" class="cockpit-bt remove-bt danger" data-dismiss="modal" ng-click="confirmModalCallback()" ng-disabled="isRemoving">{{(isRemoving ? 'REMOVING' : 'REMOVE') | translate}}</button>
+					</div>
+					<div style="display:none;" data-show-type="confirm">
+						<button type="button" class="cockpit-bt cancel danger" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+						<button type="button" class="cockpit-bt remove-bt success" data-dismiss="modal" ng-click="confirmModalCallback()">{{'CONFIRM' | translate}}</button>
+					</div>
+					<div style="display:none; text-align: center;"data-show-type="notify">
+						<button type="button" class="cockpit-bt success" data-dismiss="modal" ng-click="confirmModalCallback()">{{'CONFIRM' | translate}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Confirm Modal - END -->
+</body>
+</html>

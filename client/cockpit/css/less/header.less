@@ -1,0 +1,204 @@
+/*
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved
+*/ 
+
+@import "default";
+
+.cc-header {
+	position: relative;
+	height: 55px;
+	line-height: 55px;
+	background-color: @baseColor;
+	color: white;
+	font-weight: 600;
+	font-size: 16px;
+	z-index: 998;
+	ul {
+		margin: 0;
+		padding: 0;
+		&.cc-header-list-left {
+			li.cc-header-item {
+				margin-right: 10px;
+			}
+		}
+		&.cc-header-list-rigth {
+			li.cc-header-item {
+				margin-left: 24px;
+			}
+		}
+	}
+	li {
+		list-style: none;
+		vertical-align: top;
+	}
+	&-list-left, &-list-rigth {
+		display: inline-block;
+	}
+	&-item {
+		display: inline-block;
+		transition: background-color .4s ease;
+		&-hover {
+			cursor: pointer;
+			padding: 0 12px;
+			&:hover {
+				background-color: #3F3F3F;
+			}
+		}
+		.glyphicon {
+			margin-left: 4px;
+			font-size: 20px;
+			line-height: 53px;
+			vertical-align: top;
+		}
+	}
+	&-togglenavigation {
+		position: relative;
+		display: inline-block;
+		font-size: 24px;
+		&-icon {
+			position: relative;
+			display: inline-block;
+			box-sizing: content-box;
+			padding: 0 10px;
+			margin-right: 16px;
+			width: 21px;
+			cursor: pointer;
+			height: 100%;
+		}
+	}
+	&-logo {
+		padding: 0 10px;
+		cursor: pointer;
+	}
+	&-project {
+		padding: 0 8px;
+		font-size: 18px;
+		&-label {
+			font-weight: bold;
+		}
+		&-name,
+		&-icon {
+			cursor: pointer;
+		}
+		&-name {
+			padding: 0 4px 0 8px;
+			height: 100%;
+			display: inline-block;
+		}
+		&-icon {
+			padding: 0 10px;
+			width: 12px;
+			box-sizing: content-box;
+			display: inline-block;
+		}
+	}
+	&-logout {
+		margin-right: 72px;
+		a {
+			color:white;
+			text-decoration: none;
+			&:hover, &:visited {
+				color:white;
+				text-decoration: none;
+			}
+		}
+	}
+	&-userinfo {
+		img {
+			height: 20px;
+    		margin-top: -4px;
+		}
+	}
+	&-translate {
+		position: relative;
+		display: inline-block;
+		text-align: center;
+		height: 30px;
+		width: 40px;
+		border-radius: 20px;
+		margin-top: 7px;
+		z-index: 999;
+		&-selected {
+			position: absolute;
+			display: inline-block;
+			left: 5px;
+			top: 6px;
+		}
+		ul, li {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			z-index: 1;
+		}
+		ul {
+			transition: height .6s ease;
+			border-radius: 20px;
+			height: 38px;
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+		li {
+			cursor: pointer;
+			height: 40px;
+			box-sizing: border-box;
+			line-height: 40px;
+		}
+		&.open {
+			height: 116px;
+			border-radius: 20px;
+			z-index: 1;
+		}
+		&.cc-header-translate-open {
+			ul {
+				background: #FFF;
+				height: 122px;
+			}
+		}
+	}
+}
+
+.cc-selectproject {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	background-color: #2c2c2c;
+	z-index: 997;
+	max-height: 1px;
+	height: 1px;
+    padding-top: 55px;
+	transition: all .7s ease;
+	&.cc-selectproject-open {
+		max-height: 1198px;
+		height: 100%;
+		.cc-selectproject-projects {
+			display: flex;
+		}
+	}
+	&-projects {
+		display: none;
+		max-height: 570px;
+		height: 100%;
+		align-items: center;
+		overflow-y: auto;
+		&>div {
+			max-width: 1088px;
+			margin: 0 auto;
+		}
+	}
+}
+
+@media (max-width: 991px) {
+	.cc-header ul.cc-header-list-rigth li.cc-header-item {
+		margin-left: 4px;
+		.glyphicon {
+			margin-left: 0;
+		}
+	}
+}

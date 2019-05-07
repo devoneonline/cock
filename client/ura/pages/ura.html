@@ -1,0 +1,126 @@
+<!-- 
+ eVA
+ Version: 2.3.0
+ copyright (c) 2018 everis Spain S.A
+ Date: 01 December 2018
+ Author: everis bots@everis.com - Guilherme Ferreira Gomes, Renan Ventura, Evelyn Neves, Luiz Afonso
+ All rights reserved -->
+ 
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css" />
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<link href="/ura/css/ura.min.css" rel="stylesheet">
+
+
+<div class="closeTreatment" ng-hide="emAtendimento">
+    <div class="container">
+        <!-- <img class="logo" src="/ura/img/vivo_logo.png" alt="Vivo"> -->
+        <div class="aguarde">
+            <img src="/ura/img/_007-headphones.png" alt="">
+            <p>Aguardando o cliente para iniciar o atendimento…</p>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="emAtendimento">
+    <div class="flex-container">
+        <div class="col-lg-3 flex-item">
+            <div class="clientData">
+                <h3>Informações do cliente</h3>
+                <p>
+                    Nome:<strong> Jorge Silva dos Santos</strong>
+                </p>
+                <p>
+                    Número:<strong> {{phoneNumber}}</strong>
+                </p>
+                <p>
+                    Atendimento:<strong> 0201808030041367</strong>
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-6 flex-item">
+            <div class="chatHistory">
+                <div class="container-fluid">
+                    <div class="row history history-line">
+                        <div class="historyContainer" ng-show="$index < 10" ng-repeat="history in dataObj track by $index" ng-class="{'firstBlock': history == dataObj[0]}">
+                            <div class="col-lg-2 date text-center">
+                                <div> {{history.session.createDate | date:'dd'}}
+                                    <span> {{history.session.createDate | date:'MMM'}}</span>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-10 content">
+                                <div class="block">
+                                    <h5>{{ titleProject }}</h5>
+                                    <ul>
+                                        <li class="row" ng-repeat="interactions in history.userInteractions">
+                                            <!--  | orderBy:'history.userInteractions.id' -->
+                                            <span class="col-lg-1 ">
+                                                <img ng-if="history.userInteractions[$index].userSent===true " src="/ura/img/_user.png " alt=" ">
+                                                <img ng-if="history.userInteractions[$index].userSent===false " src="/ura/img/_eva.png " alt=" ">
+                                            </span>
+                                            <div ng-if="history.userInteractions[$index].text==='INIT_CONVERSATION' || history.userInteractions[$index].text===''">
+                                                <p class="col-lg-11">
+                                                    <span>Opção 9</span>
+                                                </p>
+                                            </div>
+                                            <div ng-if="history.userInteractions[$index].text !== 'INIT_CONVERSATION'">
+                                                <p class="col-lg-11">
+                                                    <span style="padding-left:8px;">
+                                                        <ddd ng-if="history.userInteractions[$index].userSent===true">Resposta do cliente: " </ddd>{{history.userInteractions[$index].text}}
+                                                        <ddd ng-if="history.userInteractions[$index].userSent===true">"</ddd>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div style="height:30px "></div>
+                            </div>
+                            <div ng-if="$index==0 " style="margin-left: 120px; ">
+                                <!-- <div class="beta-button " ng-click="sendMensagemBeta($event) ">Pacote Adicional</div>
+                                <div class="beta-button " ng-click="sendMensagemBeta($event) ">Recarga</div>
+                                <div class="beta-button " ng-click="sendMensagemBeta($event) ">Problemas de Internet</div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 flex-item " ng-show="emAtendimento ">
+            <div class="chat-box">
+                <div class="chat-box-header">
+                    <img src="img/_logo_eva_complete_white_small.png" alt="eVA">
+                    <span class="chat-box-toggle">
+                    </span>
+                </div>
+                <div class="chat-box-body">
+                    <div class="chat-logs" id="scroll">
+                        <div class="chat-area">
+                            <div id="rollHeight">
+                                <div id="chatArea"></div>
+                                <div>
+                                    <img src="img/loading.gif" id="loading" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input">
+
+                    <form autocomplete="off">
+                        <input type="text" id="chat-input" placeholder="Send a message..." require autofocus />
+                        <button type="submit" class="chat-submit" id="chat-submit">Send</button>
+                    </form>
+
+                </div>
+
+            </div>
+            <script src="https://assistente-virtual-cockpit.mybluemix.net/js/web-cockpit.js "></script>
+
+        </div>
+    </div>
+
+</div>

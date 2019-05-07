@@ -1,0 +1,350 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:regular,black,bold,medium">
+		<link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+		<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../node_modules/summernote/dist/summernote.css">
+		<link rel="stylesheet" href="../node_modules/codemirror/lib/codemirror.css">
+		<link rel="stylesheet" href="../node_modules/codemirror/addon/dialog/dialog.css">
+		<link rel="stylesheet" href="../node_modules/codemirror/addon/display/fullscreen.css">
+		<link rel="stylesheet" href="../node_modules/codemirror/addon/fold/foldgutter.css">
+		<link rel="stylesheet" href="../node_modules/codemirror/addon/hint/show-hint.css">
+		<link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css">
+		<link rel="stylesheet" href="../node_modules/bootstrap-daterangepicker/daterangepicker.css">
+		<link rel="stylesheet" href="../node_modules/isteven-angular-multiselect/isteven-multi-select.css">
+		<link rel="stylesheet" href="../node_modules/angular-loading-bar/build/loading-bar.min.css">
+		<link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+		<link rel="stylesheet" href="../node_modules/ng-tags-input/build/ng-tags-input.min.css">
+
+		<!-- build:css css/index.min.css-->
+		<link rel="stylesheet" href="../cockpit/css/main.min.css">
+		<link rel="stylesheet" href="../cockpit/css/left-side-bar.min.css">
+		<link rel="stylesheet" href="../cockpit/css/submenu.min.css">
+		<link rel="stylesheet" href="../cockpit/css/reset-pass.min.css">
+		<link rel="stylesheet" href="../cockpit/css/modal.min.css">
+			
+
+		<link rel="stylesheet" href="../cockpit/css/answer.min.css">
+		<link rel="stylesheet" href="../cockpit/css/channel.min.css">
+		<link rel="stylesheet" href="../cockpit/css/default.min.css">
+		<link rel="stylesheet" href="../cockpit/css/download-page.min.css">
+		<link rel="stylesheet" href="../cockpit/css/entity.min.css">
+		<link rel="stylesheet" href="../cockpit/css/header.min.css">
+		<link rel="stylesheet" href="../cockpit/css/intent.min.css">
+		<!-- <link rel="stylesheet" href="../cockpit/css/manual.min.css">
+		<link rel="stylesheet" href="../cockpit/css/manual2.min.css">
+		<link rel="stylesheet" href="../cockpit/css/manual3.min.css"> -->
+		<link rel="stylesheet" href="../cockpit/css/modal-entity.min.css">
+		<link rel="stylesheet" href="../cockpit/css/project-list-directive.min.css">
+		<link rel="stylesheet" href="../cockpit/css/project.min.css">
+		<!-- <link rel="stylesheet" href="../cockpit/css/qlik_design_custom.min.css">
+		<link rel="stylesheet" href="../cockpit/css/qlik-animation-loading.css">
+		<link rel="stylesheet" href="../cockpit/css/qlik-design-custom.min.css"> -->
+		<link rel="stylesheet" href="../cockpit/css/question.min.css">
+		<link rel="stylesheet" href="../cockpit/css/sample-register.min.css">
+		<link rel="stylesheet" href="../cockpit/css/sample-search.min.css">
+		<link rel="stylesheet" href="../cockpit/css/satisfaction.min.css">
+		<link rel="stylesheet" href="../cockpit/css/session-table.min.css">
+		<link rel="stylesheet" href="../cockpit/css/session.min.css">
+		<link rel="stylesheet" href="../cockpit/css/settings.min.css">
+		<link rel="stylesheet" href="../cockpit/css/table.min.css">
+		<link rel="stylesheet" href="../cockpit/css/toggle-switch.min.css">
+		<link rel="stylesheet" href="../cockpit/css/train-pub.min.css">
+		<link rel="stylesheet" href="../cockpit/css/try-now.min.css">
+		<link rel="stylesheet" href="../cockpit/css/type-of-channel.min.css">
+		<!-- endbuild -->
+		
+		<script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../node_modules/angular/angular.min.js"></script>
+		<script type="text/javascript" src="../node_modules/angular-animate/angular-animate.min.js"></script>
+		<script type="text/javascript" src="../node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+		<script type="text/javascript" src="../node_modules/angular-translate/dist/angular-translate.min.js"></script>
+		<script type="text/javascript" src="../node_modules/angular-translate/dist/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+		<script type="text/javascript" src="../node_modules/angular-translate/dist/angular-translate-storage-local/angular-translate-storage-local.min.js"></script>
+		<script type="text/javascript" src="../node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+		<script type="text/javascript" src="../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+		<!-- TO DO - import dependecies from node_modules -->
+		<script type="text/javascript" src="../dependencies/other.min.js"></script>
+		<script type="text/javascript" src="../node_modules/codemirror/lib/codemirror.js"></script>
+		<script type="text/javascript" src="../node_modules/codemirror/mode/javascript/javascript.js"></script>
+		<script type="text/javascript" src="../node_modules/codemirror/mode/xml/xml.js"></script>
+		<script type="text/javascript" src="../node_modules/angular-ui-codemirror/src/ui-codemirror.js"></script>
+		<script type="text/javascript" src="../node_modules/summernote/dist/summernote.min.js"></script>
+		<script type="text/javascript" src="../node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+		<script type="text/javascript" src="../node_modules/vis/dist/vis.min.js"></script>
+		<script type="text/javascript" src="../node_modules/moment/min/moment.min.js"></script>
+		<script type="text/javascript" src="../node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+		<script type="text/javascript" src="../node_modules/isteven-angular-multiselect/isteven-multi-select.js"></script>
+		<script type='text/javascript' src='../node_modules/angular-loading-bar/build/loading-bar.min.js'></script>
+		<script type="text/javascript" src="../node_modules/ng-tags-input/build/ng-tags-input.min.js"></script>
+		<script type="text/javascript" src="../node_modules/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js"></script>
+		
+
+		<!-- build:js js/index.min.js-->
+		<script type="text/javascript" src="../cockpit/js/util.js"></script>
+		<script type="text/javascript" src="../cockpit/script.js"></script>
+		<script type="text/javascript" src="../cockpit/js/factories/bindFileRead-factory.js"></script>
+		<script type="text/javascript" src="../cockpit/js/factories/user-factory.js"></script>
+		<script type="text/javascript" src="../cockpit/js/factories/project-factory.js"></script>
+		<script type="text/javascript" src="../cockpit/js/factories/messages-factory.js"></script>
+		<script type="text/javascript" src="../cockpit/js/factories/loading-factory.js"></script>
+		<script type="text/javascript" src="../cockpit/js/factories/confirmModal-factory.js"></script>
+		<script type="text/javascript" src="../cockpit/js/factories/confirmModal-entity.js"></script>
+		<script type="text/javascript" src="../cockpit/js/factories/leftBar-factory.js"></script>
+		<script type="text/javascript" src="../cockpit/js/factories/header-project-list.js"></script>
+		<script type="text/javascript" src="../cockpit/js/factories/try-it-factory.js"></script>
+		<script type="text/javascript" src="../cockpit/js/factories/confirmModal-publish.js"></script>
+		<script type="text/javascript" src="../cockpit/js/services/cachecleaner-service.js"></script>
+		<script type="text/javascript" src="../cockpit/js/services/project-service.js"></script>
+		<script type="text/javascript" src="../cockpit/js/services/answers-service.js"></script>
+		<script type="text/javascript" src="../cockpit/js/services/intent-service.js"></script>
+		<script type="text/javascript" src="../cockpit/js/services/training-service.js"></script>
+		<script type="text/javascript" src="../cockpit/js/services/entity-service.js"></script>
+		<script type="text/javascript" src="../cockpit/js/services/user-service.js"></script>
+		<script type="text/javascript" src="../cockpit/js/services/try-it-services.js"></script>
+		<script type="text/javascript" src="../cockpit/js/directoryTree.js"></script>
+		<script type="text/javascript" src="../cockpit/js/directives/directive-try-now.js"></script>
+		<script type="text/javascript" src="../cockpit/js/directives/projects-list.js"></script>
+		<script type="text/javascript" src="../cockpit/js/directives/user-permission-directive.js"></script>
+		<script type="text/javascript" src="../cockpit/js/directives/pagination-directive.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/header.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/project.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/channel.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/type-of-channel.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/settings.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/session.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/answer.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/satisfaction.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/question.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/session-table.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/download-page.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/sample-register.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/sample-search.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/flow.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/intent.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/entity.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/train-pub.js"></script>
+		<!-- Automatization Module -->
+		<script src="../node_modules/chart.js/dist/Chart.min.js"></script>
+		<script src="../node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+
+		<script type="text/javascript" src="../cockpit/js/services/automatization-services.js"></script>
+		<script type="text/javascript" src="../cockpit/js/directives/file-upload.js"></script>
+		<script type="text/javascript" src="../cockpit/js/factories/automatization-history-factory.js"></script>
+		<script type="text/javascript" src="../cockpit/js/factories/automatization-execute-factory.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/automatization-history.js"></script>
+		<script type="text/javascript" src="../cockpit/js/controller/automatization-execute.js"></script>
+		<link rel="stylesheet" type="text/css" href="../node_modules/angularjs-slider/dist/rzslider.css"/>
+		<script src="../node_modules/angularjs-slider/dist/rzslider.js"></script>
+
+	<!--<script src="../node_modules/dir-pagination/dirPagination.js"></script> -->
+		<script src="../dependencies/dir-pagination/dirPagination.js"></script>
+	
+	
+
+		
+	</head>
+
+	<body ng-app="cockpitApp" ng-controller="cockpitCtrl" ui-router-styles ng-class="{'cc-open-project-list':dontScroll}">
+		<div ng-controller="headerCtrl" ng-include="'/cockpit/html/template/header.html'"></div>
+		<div class="cc-main-wrap" ng-if="showLeftBar()">
+			<div class="cc-main-leftbar" ng-include="'/cockpit/html/template/left-side-bar.html'"></div>
+			<div class="cc-main" ng-class="{'cc-main-content-retract':isOpened}">
+				<div ng-include="'/cockpit/html/template/submenu.html'"></div>
+				<section>
+					<div ng-if="{loading}">
+						<ui-view autoscroll></ui-view>
+					</div>
+					<div ng-if="!{loading}" class="cc-main-content">
+						<img class="cc-main-smallloading" src="/cockpit/img/loading-submenu.svg"/>
+					</div>
+				</section>
+			</div>
+		</div>
+		<section ng-if="!showLeftBar()">
+			<div ng-if="{loading}">
+				<ui-view autoscroll></ui-view>
+			</div>
+			<div ng-if="!{loading}" class="cc-main-content">
+				<img src="cockpit/css/qlik-animation-loading.css"/>
+			</div>
+		</section>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130921667-1"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', 'UA-130921667-1');
+		</script>
+	</body>
+
+	<!-- USER Modal -->
+	<div class="modal fade" id="userInfoModal" role="dialog">
+		<div class="modal-dialog">
+			<div id="user-info-modal" class="modal-content modal-lg modal-position">
+				<div class="modal-btn-close">
+					<button type="button" class="pull-right close-modal-btn" data-dismiss="modal"><i class="fas fa-times"></i></button>	
+				</div>
+				<div class="modal-header">
+					<h4 class="modal-title stg-new-user">{{'MY-PROFILE' | translate}}</h4>
+				</div>
+				<div class="modal-body modal-fields">
+					<div class="modal-separator">{{'SETTINGS-USER-DATA' | translate}}</div>
+					<div class="modal-field">
+						<label class="modal-label" ng-class="{'show-modal-label':!user.name}">{{'SETTINGS-USER-NAME-INPUT' | translate}}</label>
+						<p ng-class="{'empty':!user.name,'error':userError.name}" ng-model="user.name" class="modal-input-text">{{user.name}}</p>
+						<div class="input-error">{{userError.name | translate}}&nbsp;</div>
+					</div>
+					<div class="modal-field">
+						<label class="modal-label" ng-class="{'show-modal-label':!user.company}">{{'SETTINGS-USER-COMPANY-INPUT' | translate}}</label>
+						<p ng-class="{'empty':!user.company,'error':userError.company}" ng-model="user.company" class="modal-input-text">{{user.company}}</p>
+						<div class="input-error">{{userError.company | translate}}&nbsp;</div>
+					</div>
+					<div class="modal-field">
+						<label class="modal-label" ng-class="{'show-modal-label':!user.position}">{{'SETTINGS-USER-POSITION-INPUT' | translate}}</label>
+						<p ng-class="{'empty':!user.position,'error':userError.position}" ng-model="user.position" class="modal-input-text">{{user.position}}</p>
+						<div class="input-error">{{userError.position | translate}}&nbsp;</div>
+					</div>
+					<div class="modal-field">
+						<label class="modal-label" ng-class="{'show-modal-label':!user.email}">{{'SETTINGS-USER-EMAIL-INPUT' | translate}}</label>
+						<p ng-class="{'empty':!user.email,'error':userError.email}" ng-model="user.email" class="modal-input-text">{{user.email}}</p>
+						<div class="input-error">{{userError.email | translate}}&nbsp;</div>
+					</div>
+				</div>
+				<div class="modal-separator fw500 ng-binding reset-password-subtitle">{{'RESET-PASSWORD' | translate}}</div>
+				<div class="modal-body modal-fields">
+					<div class="modal-field cc-pass-rules">
+											<p>{{'PASSWORD-MESSAGE' | translate}}</p>
+											<li>{{'LETTER' | translate}}</li>
+											<li>{{'NUMBER' | translate}}</li>
+											<li>{{'SPECIAL-CHARACTER' | translate}}</li>
+					</div>
+					<div class="modal-field redef-pass">
+						<label class="modal-label">{{'FORMER-PASS' | translate}}</label>
+						<input type="password" ng-model="currentPass" class="modal-input-text"/>
+						<div class="input-error user-modal">{{changePasswordError.currentPass | translate}}</div>
+					</div>
+					<div class="modal-field redef-pass">
+						<label class="modal-label">{{'NEW-PASS' | translate}}</label>
+						<input type="password" ng-model="newPass" class="modal-input-text"/>
+						<div class="input-error user-modal">{{changePasswordError.newPass | translate}}</div>
+					</div>
+					<div class="modal-field redef-pass">
+						<label class="modal-label">{{'REPEAT-NEW-PASS' | translate}}</label>
+						<input type="password" ng-model="repeatNewPass" class="modal-input-text"/>
+						<div class="input-error user-modal">{{changePasswordError.repeatPass | translate}}</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="cockpit-bt success btn-password" ng-click="changePassword()">{{'RESET-PASSWORD' | translate}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- USER Modal - END -->
+
+	<!-- Confirm Modal -->
+	<div class="modal fade" id="confirmModal" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-btn-close">
+					<button type="button" class="pull-right close-modalX" data-dismiss="modal">X</button>	
+				</div>
+				<div class="modal-header">
+					<h4 class="modal-title remove-modal-title">{{confirmModalTitle | translate}}</h4>
+				</div>
+				<div class="modal-body">
+					<p class="remove-text">{{confirmModalText | translate}}</p>
+				</div>
+				<div class="modal-footer" id="confirmModalBts">
+					<div class="modal-hide" data-show-type="remove">
+						<button type="button" class="modal-btn cancel success" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+						<button type="button" class="modal-btn remove-bt danger" data-dismiss="modal" ng-click="confirmModalCallback()" ng-disabled="isRemoving">{{(isRemoving ? 'REMOVING' : 'DELETE') | translate}}</button>
+					</div>
+					<div class="modal-hide;" data-show-type="confirm">
+						<button type="button" class="cockpit-bt cancel danger" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+						<button type="button" class="cockpit-bt remove-bt success" data-dismiss="modal" ng-click="confirmModalCallback()">{{'CONFIRM' | translate}}</button>
+					</div>
+					<div class="modal-hide text-center" data-show-type="notify">
+						<button type="button" class="cockpit-bt success" data-dismiss="modal" ng-click="confirmModalCallback()">{{'CONFIRM' | translate}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Confirm Modal - END -->
+
+	<!-- Confirm Modal ENTITY -->
+	<div class="modal fade" id="confirmModalEntity" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-btn-close">
+					<button type="button" class="pull-right close-modal-btn" data-dismiss="modal"><i class="fas fa-times"></i></button>	
+				</div>
+				<div class="modal-header">
+					<h4 class="modal-title remove-modal-title">{{HOLA | translate}}</h4>
+				</div>
+				<div class="modal-body">
+					<p class="remove-text">{{confirmModalText | translate}}</p>
+				</div>
+				<div class="modal-footer" id="confirmModalBts">
+					<div class="modal-hide" data-show-type="remove">
+						<button type="button" class="cockpit-bt cancel success" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+						<button type="button" class="cockpit-bt remove-bt danger" data-dismiss="modal" ng-click="confirmModalCallback()" ng-disabled="isRemoving">{{(isRemoving ? 'REMOVING' : 'REMOVE') | translate}}</button>
+					</div>
+					<div class="modal-hide;" data-show-type="confirm">
+						<button type="button" class="cockpit-bt cancel danger" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+						<button type="button" class="cockpit-bt remove-bt success" data-dismiss="modal" ng-click="confirmModalCallback()">{{'CONFIRM' | translate}}</button>
+					</div>
+					<div class="modal-hide text-center" data-show-type="notify">
+						<button type="button" class="cockpit-bt success" data-dismiss="modal" ng-click="confirmModalCallback()">{{'CONFIRM' | translate}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Confirm Modal Training -->
+	<div class="modal fade" id="confirmModalPublish" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-btn-close">
+					<button type="button" class="pull-right close-modalX" data-dismiss="modal">X</button>	
+				</div>
+				<div class="modal-header">
+					<h4 class="modal-title publish-modal-title">{{confirmModalPublishTitle | translate}}</h4>
+				</div>
+				<div class="modal-body">
+					<p class="remove-text">{{confirmModalPublishTextFirst | translate}} v.{{publishedVersion}} {{confirmModalPublishTextSecond | translate}} v.{{publishVersion}}?</p>
+				</div>
+				<div class="modal-footer" id="publishModalBts">
+					<div class="modal-hide" data-show-type="publish">
+						<button type="button" class="modal-btn cancel success" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+						<button type="button" class="modal-btn remove-bt publish" data-dismiss="modal" ng-click="confirmModalPublishCallback()" ng-disabled="isRemoving">{{(isRemoving ? 'PUBLISHING' : 'PUBLISH') | translate}}</button>
+					</div>
+					<div class="modal-hide;" data-show-type="confirm">
+						<button type="button" class="cockpit-bt cancel danger" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+						<button type="button" class="cockpit-bt remove-bt success" data-dismiss="modal" ng-click="confirmModalCallback()">{{'CONFIRM' | translate}}</button>
+					</div>
+					<div class="modal-hide text-center" data-show-type="notify">
+						<button type="button" class="cockpit-bt success" data-dismiss="modal" ng-click="confirmModalCallback()">{{'CONFIRM' | translate}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Confirm Modal Training - END -->
+
+</html>

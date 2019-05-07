@@ -1,0 +1,80 @@
+<!-- 
+* eVA
+* Version: 2.3.0
+* copyright (c) 2018 everis Spain S.A
+* * Date: 01 December 2018
+* Author: everis bots@everis.com - Guilherme Ferreira Gomes, Luiz Afonso Andre, Renan Ventura Silva, Evelyn Neves Barreto.
+* All rights reserved -->
+
+<link rel="stylesheet" href="/cockpit/css/type-of-channel.min.css">
+<link rel="stylesheet" href="/cockpit/css/modal.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+<div>
+    <h3 id="channel-subtitle">{{'SELECT-CHANNEL-CREAT-TYPE' | translate}}</h3>
+    
+    <div class="row">
+        <div ng-repeat="channelClassification in channelClassifications">
+            <div class="channel-group" ng-click="open = !open">
+                <div class="channel-header" >{{channelClassification.name}} <i class="fas fa-chevron-down close-acordion"></i></div>
+                <div ng-class="{'openChannel': open, 'closeChannel': !open}" class= "channel-wrap row"  >
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 channel-box" ng-repeat="child in channelClassification.content">
+                        <div class="channel-content" ng-click="selectChannel(child)">
+                            <img ng-src="/cockpit/img/{{child.imageTitle}}.png">
+                            <div class="channel-content-name">{{child.name}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Channel Modal -->
+<div class="modal fade" id="newChannelModal" role="dialog">
+    <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content ">
+        <div class="modal-btn-close">
+            <button type="button" class="pull-right close-modal-btn" data-dismiss="modal"><i class="fas fa-times"></i></button>	
+        </div>
+        <div class="modal-header cockpit-modal-header">
+            <h4 class="modal-title cockpit-modal-title">{{'CHANNEL-LABEL-NEW-CHANNEL' | translate}}</h4>
+        </div>
+        <div class="cockpit-modal-body cockpit-modal-fields">
+            <!-- Field Name Channel content-->
+            <div class="modal-field"> 
+                <label class="modal-label" ng-class="{'show-modal-label':!channel.name}">{{'CHANNELS-LABEL-NAME' | translate}}</label>
+                <input type="text" ng-class="{'empty':!channel.name,'error':channelError.name || channelError.characterValidation}" placeholder="{{'CHANNELS-LABEL-NAME' | translate}}" ng-model="channel.name" class="modal-input-text" maxlength="45"/>
+                <div ng-if="channelError.name" class="input-error">{{channelError.name}}</div>
+                <div ng-if="channelError.characterValidation" class="input-error character-validation">{{'CHARACTER-VALIDATION' | translate}}</div>
+            </div>
+        </div>
+
+        <div class="type-channel-elements;"></div>
+            <!-- Text Area Description -->
+        <div class="modal-header">
+            <div class="modal-title cockpit-modal-subtitle">{{'CHANNELS-LABEL-DESCRIPTION' | translate}}</div>
+        </div>
+        <div class="modal-body cockpit-modal-fields">
+            <div class="modal-field">
+                <textarea maxlength="1000" rows="5" cols="50" class="modal-text-area" ng-class="{'empty':!channel.description,'error':channelError.description}" placeholder="{{'CHANNELS-PLACEHOLDER-DESCRIPTION' | translate}}" ng-model="channel.description" class="" maxlength="255"/>
+            </div>
+
+            <div class="type-channel-elements;"></div>
+
+            <!-- OK/CANCEL content-->
+            <div class="modal-footer">
+                <button type="button" class="cockpit-bt danger" data-dismiss="modal">{{'CANCEL' | translate}}</button>
+                <button type="button" class="cockpit-bt success" ng-disabled="savingChannel" ng-click="saveNewChannel()">{{(savingChannel ? 'SAVING' : 'SAVE') | translate}}</button>
+            </div>
+            
+
+        </div>
+    </div>
+
+    </div>
+</div>
